@@ -1,104 +1,125 @@
+import { NextResponse } from 'next/server'
 import { MongoClient } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
-import { NextResponse } from 'next/server'
 
-// MongoDB connection
-let client
-let db
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost:27017'
+const DB_NAME = process.env.DB_NAME || 'storvbox_db'
 
-async function connectToMongo() {
-  if (!client) {
-    client = new MongoClient(process.env.MONGO_URL)
-    await client.connect()
-    db = client.db(process.env.DB_NAME)
+let cachedClient = null
+let cachedDb = null
+
+async function connectToDatabase() {
+  if (cachedClient && cachedDb) {
+    return { client: cachedClient, db: cachedDb }
   }
-  return db
+
+  const client = await MongoClient.connect(MONGO_URL)
+  const db = client.db(DB_NAME)
+
+  cachedClient = client
+  cachedDb = db
+
+  return { client, db }
 }
 
-// Helper function to handle CORS
-function handleCORS(response) {
-  response.headers.set('Access-Control-Allow-Origin', process.env.CORS_ORIGINS || '*')
-  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
-  response.headers.set('Access-Control-Allow-Credentials', 'true')
-  return response
+export async function GET(request) {
+  return NextResponse.json({ message: 'STORVBOX API is running' })
 }
 
-// OPTIONS handler for CORS
-export async function OPTIONS() {
-  return handleCORS(new NextResponse(null, { status: 200 }))
-}
+export async function POST(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
 
-// Route handler function
-async function handleRoute(request, { params }) {
-  const { path = [] } = params
-  const route = `/${path.join('/')}`
-  const method = request.method
-
-  try {
-    const db = await connectToMongo()
-
-    // Root endpoint - GET /api/root (since /api/ is not accessible with catch-all)
-    if (route === '/root' && method === 'GET') {
-      return handleCORS(NextResponse.json({ message: "Hello World" }))
-    }
-    // Root endpoint - GET /api/root (since /api/ is not accessible with catch-all)
-    if (route === '/' && method === 'GET') {
-      return handleCORS(NextResponse.json({ message: "Hello World" }))
-    }
-
-    // Status endpoints - POST /api/status
-    if (route === '/status' && method === 'POST') {
+  // Quote Request Endpoint
+  if (pathname === '/api/quote-request') {
+    try {
       const body = await request.json()
-      
-      if (!body.client_name) {
-        return handleCORS(NextResponse.json(
-          { error: "client_name is required" }, 
+      const { name, email, phone, company, serviceType, quantity, description, timeline } = body
+
+      // Validation
+      if (!name || !email || !phone || !serviceType || !quantity || !description) {
+        return NextResponse.json(
+          { error: 'Моля, попълнете всички задължителни полета' },
           { status: 400 }
-        ))
+        )
       }
 
-      const statusObj = {
+      const { db } = await connectToDatabase()
+
+      // Create quote request document
+      const quoteRequest = {
         id: uuidv4(),
-        client_name: body.client_name,
-        timestamp: new Date()
+        name,
+        email,
+        phone,
+        company: company || '',
+        serviceType,
+        quantity: parseInt(quantity),
+        description,
+        timeline: timeline || '',
+        status: 'pending',
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }
 
-      await db.collection('status_checks').insertOne(statusObj)
-      return handleCORS(NextResponse.json(statusObj))
+      await db.collection('quote_requests').insertOne(quoteRequest)
+
+      return NextResponse.json(
+        { 
+          message: 'Заявката беше изпратена успешно!',
+          requestId: quoteRequest.id 
+        },
+        { status: 201 }
+      )
+    } catch (error) {
+      console.error('Error creating quote request:', error)
+      return NextResponse.json(
+        { error: 'Грешка при изпращане на заявката' },
+        { status: 500 }
+      )
     }
-
-    // Status endpoints - GET /api/status
-    if (route === '/status' && method === 'GET') {
-      const statusChecks = await db.collection('status_checks')
-        .find({})
-        .limit(1000)
-        .toArray()
-
-      // Remove MongoDB's _id field from response
-      const cleanedStatusChecks = statusChecks.map(({ _id, ...rest }) => rest)
-      
-      return handleCORS(NextResponse.json(cleanedStatusChecks))
-    }
-
-    // Route not found
-    return handleCORS(NextResponse.json(
-      { error: `Route ${route} not found` }, 
-      { status: 404 }
-    ))
-
-  } catch (error) {
-    console.error('API Error:', error)
-    return handleCORS(NextResponse.json(
-      { error: "Internal server error" }, 
-      { status: 500 }
-    ))
   }
-}
 
-// Export all HTTP methods
-export const GET = handleRoute
-export const POST = handleRoute
-export const PUT = handleRoute
-export const DELETE = handleRoute
-export const PATCH = handleRoute
+  // Contact Form Endpoint
+  if (pathname === '/api/contact') {
+    try {
+      const body = await request.json()
+      const { name, email, phone, subject, message } = body
+
+      if (!name || !email || !message) {
+        return NextResponse.json(
+          { error: 'Моля, попълнете всички задължителни полета' },
+          { status: 400 }
+        )
+      }
+
+      const { db } = await connectToDatabase()
+
+      const contactMessage = {
+        id: uuidv4(),
+        name,
+        email,
+        phone: phone || '',
+        subject: subject || 'Общо запитване',
+        message,
+        status: 'unread',
+        createdAt: new Date().toISOString()
+      }
+
+      await db.collection('contact_messages').insertOne(contactMessage)
+
+      return NextResponse.json(
+        { message: 'Съобщението беше изпратено успешно!' },
+        { status: 201 }
+      )
+    } catch (error) {
+      console.error('Error creating contact message:', error)
+      return NextResponse.json(
+        { error: 'Грешка при изпращане на съобщението' },
+        { status: 500 }
+      )
+    }
+  }
+
+  return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
+}
