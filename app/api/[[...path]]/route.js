@@ -26,6 +26,116 @@ async function connectToDB() {
 }
 
 export async function GET(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+
+  // Get all products
+  if (pathname === '/api/products') {
+    try {
+      const { db } = await connectToDB()
+      const products = await db.collection('products')
+        .find({ inStock: true })
+        .sort({ createdAt: -1 })
+        .toArray()
+      
+      return NextResponse.json({ products })
+    } catch (error) {
+      console.error('Error fetching products:', error)
+      return NextResponse.json(
+        { error: 'Грешка при зареждане на продуктите', products: [] },
+        { status: 500 }
+      )
+    }
+  }
+
+  // Get single product by slug
+  const slugMatch = pathname.match(/^\/api\/products\/(.+)$/)
+  if (slugMatch) {
+    const slug = slugMatch[1]
+    try {
+      const { db } = await connectToDB()
+      const product = await db.collection('products').findOne({ slug })
+      
+      if (!product) {
+        return NextResponse.json(
+          { error: 'Продуктът не е намерен' },
+          { status: 404 }
+        )
+      }
+      
+      return NextResponse.json({ product })
+    } catch (error) {
+      console.error('Error fetching product:', error)
+      return NextResponse.json(
+        { error: 'Грешка при зареждане на продукта' },
+        { status: 500 }
+      )
+    }
+  }
+
+  // Get user orders
+  if (pathname === '/api/orders') {
+    try {
+      const session = await getSession()
+      if (!session) {
+        return NextResponse.json(
+          { error: 'Неоторизиран достъп' },
+          { status: 401 }
+        )
+      }
+
+      const { db } = await connectToDB()
+      const orders = await db.collection('orders')
+        .find({ userId: session.userId })
+        .sort({ createdAt: -1 })
+        .toArray()
+      
+      return NextResponse.json({ orders })
+    } catch (error) {
+      console.error('Error fetching orders:', error)
+      return NextResponse.json(
+        { error: 'Грешка при зареждане на поръчките' },
+        { status: 500 }
+      )
+    }
+  }
+
+  // Get single order
+  const orderMatch = pathname.match(/^\/api\/orders\/(.+)$/)
+  if (orderMatch) {
+    const orderId = orderMatch[1]
+    try {
+      const session = await getSession()
+      if (!session) {
+        return NextResponse.json(
+          { error: 'Неоторизиран достъп' },
+          { status: 401 }
+        )
+      }
+
+      const { db } = await connectToDB()
+      const order = await db.collection('orders').findOne({ 
+        id: orderId,
+        userId: session.userId 
+      })
+      
+      if (!order) {
+        return NextResponse.json(
+          { error: 'Поръчката не е намерена' },
+          { status: 404 }
+        )
+      }
+      
+      return NextResponse.json({ order })
+    } catch (error) {
+      console.error('Error fetching order:', error)
+      return NextResponse.json(
+        { error: 'Грешка при зареждане на поръчката' },
+        { status: 500 }
+      )
+    }
+  }
+
   return NextResponse.json({ message: 'STORVBOX API is running' })
 }
 
@@ -251,12 +361,19 @@ export async function POST(request) {
       const session = await getSession()
       if (!session) {
         return NextResponse.json(
-          { error: 'Неоторизиран достъп' },
+          { error: 'Моля, влезте в профила си' },
           { status: 401 }
         )
       }
 
       const { items, total, shippingAddress, notes } = await request.json()
+
+      if (!items || items.length === 0 || !shippingAddress) {
+        return NextResponse.json(
+          { error: 'Моля, попълнете всички задължителни полета' },
+          { status: 400 }
+        )
+      }
 
       const { db } = await connectToDB()
 
@@ -288,6 +405,65 @@ export async function POST(request) {
       console.error('Error creating order:', error)
       return NextResponse.json(
         { error: 'Грешка при създаване на поръчка' },
+        { status: 500 }
+      )
+    }
+  }
+
+  // Seed sample product (for initial setup)
+  if (pathname === '/api/seed-product') {
+    try {
+      const { db } = await connectToDB()
+      
+      // Check if product already exists
+      const existing = await db.collection('products').findOne({ slug: 'brandirani-teniski-s-broderia' })
+      if (existing) {
+        return NextResponse.json({ message: 'Sample product already exists', productId: existing.id })
+      }
+
+      const product = {
+        id: uuidv4(),
+        name: 'Брандирани тениски с бродерия',
+        slug: 'brandirani-teniski-s-broderia',
+        description: 'Висококачествени памучни тениски с машинна бродерия на лого или текст. Идеални за корпоративни събития, екипни облекла и промоционални кампании. Минимална поръчка: 10 броя. Срок на изработка: 5-7 работни дни.',
+        category: 'embroidery',
+        categoryName: 'Машинна бродерия',
+        image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800',
+        images: [
+          'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800',
+          'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800'
+        ],
+        priceTiers: [
+          { tierName: 'standard', price: 25.00 },
+          { tierName: 'premium', price: 22.00 },
+          { tierName: 'vip', price: 20.00 }
+        ],
+        sku: 'EMBR-TSHIRT-001',
+        inStock: true,
+        minQuantity: 10,
+        maxQuantity: 5000,
+        features: [
+          'Висока устойчивост на изпиране',
+          '100% памучна тъкан, 180g/m²',
+          'Персонализация с лого',
+          'Доставка за 5-7 работни дни'
+        ],
+        metaDescription: 'Брандирани тениски с машинна бродерия в София, България. Качествена персонализация за корпоративни клиенти.',
+        metaKeywords: ['бродирани тениски софия', 'корпоративни облекла'],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }
+
+      await db.collection('products').insertOne(product)
+
+      return NextResponse.json(
+        { message: 'Sample product created successfully', productId: product.id },
+        { status: 201 }
+      )
+    } catch (error) {
+      console.error('Error seeding product:', error)
+      return NextResponse.json(
+        { error: 'Failed to seed product' },
         { status: 500 }
       )
     }
