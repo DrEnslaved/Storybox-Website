@@ -13,7 +13,7 @@ function Navigation() {
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-green-700 text-white py-2 px-4 text-sm">
+      <div className="bg-brand-green text-white py-2 px-4 text-sm">
         <div className="container mx-auto flex flex-wrap justify-between items-center">
           <div className="flex gap-4 flex-wrap">
             <a href="tel:+359898973000" className="flex items-center gap-1 hover:text-green-200">
@@ -43,40 +43,40 @@ function Navigation() {
             {/* Logo */}
             <Link href="/" className="flex items-center">
               <div className="text-2xl font-bold">
-                <span className="text-green-700">STORVBOX</span>
+                <span className="text-brand-green">STORVBOX</span>
                 <div className="text-xs text-gray-600 font-normal">Embroidery Print Design</div>
               </div>
             </Link>
 
             {/* Navigation Links */}
             <div className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+              <Link href="/" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
                 НАЧАЛО
               </Link>
-              <Link href="/services" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+              <Link href="/services" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
                 УСЛУГИ
               </Link>
-              <Link href="/shop" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+              <Link href="/shop" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
                 МАГАЗИН
               </Link>
-              <Link href="/projects" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+              <Link href="/projects" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
                 ПРОЕКТИ
               </Link>
-              <Link href="/blog" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+              <Link href="/blog" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
                 БЛОГ
               </Link>
-              <Link href="/about" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+              <Link href="/about" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
                 ЗА НАС
               </Link>
-              <Link href="/contact" className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 font-medium transition-colors">
+              <Link href="/contact" className="bg-brand-green text-white px-6 py-2 rounded-md hover:bg-brand-green-dark font-medium transition-colors">
                 КОНТАКТИ
               </Link>
               
               {/* Cart Icon */}
-              <Link href="/cart" className="relative text-gray-700 hover:text-green-700">
+              <Link href="/cart" className="relative text-gray-700 hover:text-brand-green">
                 <ShoppingCart size={24} />
                 {getItemCount() > 0 && (
-                  <span className="absolute -top-2 -right-2 bg-green-700 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 bg-brand-green text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                     {getItemCount()}
                   </span>
                 )}
@@ -85,7 +85,7 @@ function Navigation() {
               {/* User Account */}
               {user ? (
                 <div className="relative group">
-                  <button className="flex items-center gap-2 text-gray-700 hover:text-green-700">
+                  <button className="flex items-center gap-2 text-gray-700 hover:text-brand-green">
                     <User size={20} />
                     <span className="text-sm">{user.name}</span>
                   </button>
@@ -102,7 +102,7 @@ function Navigation() {
                   </div>
                 </div>
               ) : (
-                <Link href="/login" className="flex items-center gap-2 text-gray-700 hover:text-green-700">
+                <Link href="/login" className="flex items-center gap-2 text-gray-700 hover:text-brand-green">
                   <User size={20} />
                   <span className="text-sm">Вход</span>
                 </Link>
@@ -128,7 +128,7 @@ function Footer() {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold text-green-500 mb-4">STORVBOX</h3>
+            <h3 className="text-xl font-bold text-brand-green-light mb-4">STORVBOX</h3>
             <p className="text-gray-400 text-sm">
               Професионални услуги по машинна бродерия, сублимация, трансферен печат и лазерно рязане.
             </p>
@@ -137,20 +137,20 @@ function Footer() {
           <div>
             <h4 className="text-lg font-semibold mb-4">Услуги</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link href="/services" className="hover:text-green-500">Машинна бродерия</Link></li>
-              <li><Link href="/services" className="hover:text-green-500">Сублимация</Link></li>
-              <li><Link href="/services" className="hover:text-green-500">Трансферен печат</Link></li>
-              <li><Link href="/services" className="hover:text-green-500">Лазерно рязане</Link></li>
+              <li><Link href="/services" className="hover:text-brand-green-light">Машинна бродерия</Link></li>
+              <li><Link href="/services" className="hover:text-brand-green-light">Сублимация</Link></li>
+              <li><Link href="/services" className="hover:text-brand-green-light">Трансферен печат</Link></li>
+              <li><Link href="/services" className="hover:text-brand-green-light">Лазерно рязане</Link></li>
             </ul>
           </div>
           
           <div>
             <h4 className="text-lg font-semibold mb-4">За нас</h4>
             <ul className="space-y-2 text-gray-400 text-sm">
-              <li><Link href="/about" className="hover:text-green-500">Кои сме ние</Link></li>
-              <li><Link href="/projects" className="hover:text-green-500">Нашите проекти</Link></li>
-              <li><Link href="/blog" className="hover:text-green-500">Блог</Link></li>
-              <li><Link href="/contact" className="hover:text-green-500">Контакти</Link></li>
+              <li><Link href="/about" className="hover:text-brand-green-light">Кои сме ние</Link></li>
+              <li><Link href="/projects" className="hover:text-brand-green-light">Нашите проекти</Link></li>
+              <li><Link href="/blog" className="hover:text-brand-green-light">Блог</Link></li>
+              <li><Link href="/contact" className="hover:text-brand-green-light">Контакти</Link></li>
             </ul>
           </div>
           

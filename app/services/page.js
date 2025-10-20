@@ -8,7 +8,7 @@ export default function ServicesPage() {
   const services = [
     {
       id: 1,
-      icon: <Scissors className="w-16 h-16 text-green-700" />,
+      icon: <Scissors className="w-16 h-16 text-brand-green" />,
       title: 'Машинна бродерия',
       description: 'Добра бродерия винаги прави страхотно впечатление. Качеството е в детайлите.',
       longDescription: 'Машинната бродерия е най-качественият начин за персонализация на текстил. Използваме най-съвременното оборудване за създаване на траен и елегантен изглед на вашите продукти. Подходяща за корпоративни облекла, промоционални материали, спортни екипи и много повече.',
@@ -24,7 +24,7 @@ export default function ServicesPage() {
     },
     {
       id: 2,
-      icon: <Droplet className="w-16 h-16 text-green-700" />,
+      icon: <Droplet className="w-16 h-16 text-brand-green" />,
       title: 'Сублимация',
       description: 'Впечатяваме Вашия проект в материя или върху предмет. Качество при високи тиражи.',
       longDescription: 'Сублимационният печат предлага ярки цветове и фотографско качество. Технологията позволява трансфер на изображения върху полиестерни материали чрез термичен процес. Идеална за спортни екипи, знамена, рекламни материали и персонализирани подаръци.',
@@ -40,7 +40,7 @@ export default function ServicesPage() {
     },
     {
       id: 3,
-      icon: <ImageIcon className="w-16 h-16 text-green-700" />,
+      icon: <ImageIcon className="w-16 h-16 text-brand-green" />,
       title: 'Трансферен печат',
       description: 'Лесен начин за прехвърляне на образци, надписи и цифри на различни материали.',
       longDescription: 'Трансферният печат е универсален метод за нанасяне на дизайни върху текстил, керамика и други материали. Използва се за малки серии и персонализация. Подходящ за промоционални продукти, тениски, чаши и рекламни материали.',
@@ -56,7 +56,7 @@ export default function ServicesPage() {
     },
     {
       id: 4,
-      icon: <Zap className="w-16 h-16 text-green-700" />,
+      icon: <Zap className="w-16 h-16 text-brand-green" />,
       title: 'Лазерно рязане и kroене',
       description: 'Добавете контури, изрежете форми, прерязвайте идеи - бързо, прецизно и ефектно.',
       longDescription: 'Лазерното рязане и гравиране предлага непревзходена прецизност и възможности за детайлизация. Подходящо за създаване на сложни форми, персонализирани продукти и прототипи. Работим с широка гама от материали.',
@@ -75,7 +75,7 @@ export default function ServicesPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-700 to-green-900 text-white py-20">
+      <section className="bg-gradient-to-br from-brand-green to-green-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Нашите услуги</h1>
           <p className="text-xl max-w-3xl mx-auto">
@@ -116,7 +116,7 @@ export default function ServicesPage() {
                     <ul className="space-y-2">
                       {service.features.map((feature, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <span className="text-green-700 mt-1">✓</span>
+                          <span className="text-brand-green mt-1">✓</span>
                           <span className="text-gray-700">{feature}</span>
                         </li>
                       ))}
@@ -125,7 +125,7 @@ export default function ServicesPage() {
                   
                   <Link
                     href="/contact"
-                    className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-md font-semibold transition-colors inline-flex items-center gap-2"
+                    className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-3 rounded-md font-semibold transition-colors inline-flex items-center gap-2"
                   >
                     Поискайте оферта
                     <ArrowRight size={20} />
@@ -146,7 +146,7 @@ export default function ServicesPage() {
           </p>
           <Link
             href="/contact"
-            className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
+            className="bg-brand-green hover:bg-brand-green-dark text-white px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
           >
             Свържете се с нас
             <ArrowRight size={20} />

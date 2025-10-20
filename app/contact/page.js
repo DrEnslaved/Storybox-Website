@@ -99,7 +99,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Contact Information */}
             <div className="lg:col-span-1">
-              <div className="bg-green-700 text-white p-8 rounded-lg h-full">
+              <div className="bg-brand-green text-white p-8 rounded-lg h-full">
                 <h2 className="text-2xl font-bold mb-8">Контактна информация</h2>
                 
                 <div className="space-y-6">
@@ -148,7 +148,7 @@ export default function ContactPage() {
                 </p>
 
                 {submitStatus === 'success' && (
-                  <div className="mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                  <div className="mb-6 bg-green-100 border border-green-400 text-brand-green px-4 py-3 rounded">
                     <p className="font-semibold">Благодарим за заявката!</p>
                     <p className="text-sm">Ще се свържем с вас скоро.</p>
                   </div>
@@ -174,7 +174,7 @@ export default function ContactPage() {
                         value={formData.name}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                       />
                     </div>
 
@@ -189,7 +189,7 @@ export default function ContactPage() {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                       />
                     </div>
                   </div>
@@ -206,7 +206,7 @@ export default function ContactPage() {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                       />
                     </div>
 
@@ -220,7 +220,7 @@ export default function ContactPage() {
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                       />
                     </div>
                   </div>
@@ -236,7 +236,7 @@ export default function ContactPage() {
                         value={formData.serviceType}
                         onChange={handleChange}
                         required
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                       >
                         <option value="">Изберете...</option>
                         {services.map((service) => (
@@ -261,7 +261,7 @@ export default function ContactPage() {
                         max="5000"
                         required
                         placeholder="1-5000"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                       />
                     </div>
                   </div>
@@ -277,7 +277,7 @@ export default function ContactPage() {
                       value={formData.timeline}
                       onChange={handleChange}
                       placeholder="Напр. 2 седмици"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                     />
                   </div>
 
@@ -293,14 +293,14 @@ export default function ContactPage() {
                       required
                       rows={5}
                       placeholder="Моля, опишете какво имате предвид за проекта..."
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
                     ></textarea>
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-md text-lg font-semibold transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full bg-brand-green hover:bg-brand-green-dark text-white px-8 py-4 rounded-md text-lg font-semibold transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     {isSubmitting ? (
                       <>Изпращане...</>

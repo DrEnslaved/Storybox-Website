@@ -7,28 +7,28 @@ import { Scissors, Droplet, Image as ImageIcon, Zap, CheckCircle, ArrowRight } f
 export default function HomePage() {
   const services = [
     {
-      icon: <Scissors className="w-12 h-12 text-green-700" />,
+      icon: <Scissors className="w-12 h-12 text-brand-green" />,
       title: 'Машинна бродерия',
       description: 'Добра бродерия винаги прави страхотно впечатление. Качеството е в детайлите.',
       image: 'https://images.unsplash.com/photo-1497997092403-f091fcf5b6c4?w=600',
       slug: 'machine-embroidery'
     },
     {
-      icon: <Droplet className="w-12 h-12 text-green-700" />,
+      icon: <Droplet className="w-12 h-12 text-brand-green" />,
       title: 'Сублимация',
       description: 'Впечатяваме Вашия проект в материя или върху предмет. Качество при високи тиражи.',
       image: 'https://images.unsplash.com/photo-1503694978374-8a2fa686963a?w=600',
       slug: 'sublimation'
     },
     {
-      icon: <ImageIcon className="w-12 h-12 text-green-700" />,
+      icon: <ImageIcon className="w-12 h-12 text-brand-green" />,
       title: 'Трансферен печат',
       description: 'Лесен начин за прехвърляне на образци, надписи и цифри на различни материали.',
       image: 'https://images.unsplash.com/photo-1569852741721-ee5a94bf719e?w=600',
       slug: 'transfer-print'
     },
     {
-      icon: <Zap className="w-12 h-12 text-green-700" />,
+      icon: <Zap className="w-12 h-12 text-brand-green" />,
       title: 'Лазерно рязане и кроене',
       description: 'Добавете контури, изрежете форми, прерязвайте идеи - бързо, прецизно и ефектно.',
       image: 'https://images.unsplash.com/photo-1738162837451-2041c1418f54?w=600',
@@ -38,22 +38,22 @@ export default function HomePage() {
 
   const features = [
     {
-      icon: <CheckCircle className="w-8 h-8 text-green-700" />,
+      icon: <CheckCircle className="w-8 h-8 text-brand-green" />,
       title: 'Качество',
       description: 'Държим на качеството във всички наши проект. Вярваме в страхотното впечатление.'
     },
     {
-      icon: <CheckCircle className="w-8 h-8 text-green-700" />,
+      icon: <CheckCircle className="w-8 h-8 text-brand-green" />,
       title: 'Екип с дългогодишен опит',
       description: 'Имаме повече от 15 години опит в областта на машинната бродерия и текстилния печат.'
     },
     {
-      icon: <CheckCircle className="w-8 h-8 text-green-700" />,
+      icon: <CheckCircle className="w-8 h-8 text-brand-green" />,
       title: 'Кратки срокове',
       description: 'Високо качество на изработката в конкурентни срокове за изпълнение.'
     },
     {
-      icon: <CheckCircle className="w-8 h-8 text-green-700" />,
+      icon: <CheckCircle className="w-8 h-8 text-brand-green" />,
       title: 'Бързата гама от услуги',
       description: 'Особен брандиране, можем да Ви дадем персонализиран опит върху всякакъв вид текстил.'
     }
@@ -103,7 +103,7 @@ export default function HomePage() {
             <div className="flex gap-4 flex-wrap">
               <Link
                 href="/contact"
-                className="bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
+                className="bg-brand-green hover:bg-brand-green-dark text-white px-8 py-3 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
               >
                 Поискайте оферта
                 <ArrowRight size={20} />
@@ -149,7 +149,7 @@ export default function HomePage() {
                   <p className="text-gray-600 mb-4">{service.description}</p>
                   <Link
                     href={`/services`}
-                    className="text-green-700 font-semibold hover:text-green-800 inline-flex items-center gap-1"
+                    className="text-brand-green font-semibold hover:text-brand-green-dark inline-flex items-center gap-1"
                   >
                     Повече информация
                     <ArrowRight size={16} />
@@ -214,7 +214,7 @@ export default function HomePage() {
           <div className="text-center mt-12">
             <Link
               href="/projects"
-              className="bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
+              className="bg-brand-green hover:bg-brand-green-dark text-white px-8 py-3 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
             >
               Вижте всички проекти
               <ArrowRight size={20} />
@@ -242,7 +242,7 @@ export default function HomePage() {
           </p>
           <Link
             href="/contact"
-            className="bg-white text-green-800 hover:bg-gray-100 px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
+            className="bg-white text-brand-green-dark hover:bg-gray-100 px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
           >
             Свържете се с нас
             <ArrowRight size={20} />

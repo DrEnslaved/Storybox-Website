@@ -37,7 +37,7 @@ export default function BlogPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-700 to-green-900 text-white py-20">
+      <section className="bg-gradient-to-br from-brand-green to-green-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Блог</h1>
           <p className="text-xl max-w-3xl mx-auto">
@@ -68,7 +68,7 @@ export default function BlogPage() {
                       className="object-cover"
                     />
                     <div className="absolute top-4 left-4">
-                      <span className="bg-green-700 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                      <span className="bg-brand-green text-white px-3 py-1 rounded-full text-sm font-semibold">
                         {post.category}
                       </span>
                     </div>
@@ -82,7 +82,7 @@ export default function BlogPage() {
                     <p className="text-gray-600 mb-4">{post.excerpt}</p>
                     <Link
                       href={`/blog/${post.id}`}
-                      className="text-green-700 font-semibold hover:text-green-800 inline-flex items-center gap-1"
+                      className="text-brand-green font-semibold hover:text-brand-green-dark inline-flex items-center gap-1"
                     >
                       Прочети повече →
                     </Link>
@@ -105,9 +105,9 @@ export default function BlogPage() {
             <input
               type="email"
               placeholder="Вашият имейл адрес"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-700"
+              className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
             />
-            <button className="bg-green-700 hover:bg-green-800 text-white px-6 py-3 rounded-md font-semibold transition-colors">
+            <button className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-3 rounded-md font-semibold transition-colors">
               Абонирай се
             </button>
           </div>

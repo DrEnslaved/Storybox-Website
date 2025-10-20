@@ -66,7 +66,7 @@ export default function ProjectsPage() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-700 to-green-900 text-white py-20">
+      <section className="bg-gradient-to-br from-brand-green to-green-900 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Нашите проекти</h1>
           <p className="text-xl max-w-3xl mx-auto">
@@ -82,7 +82,7 @@ export default function ProjectsPage() {
             {categories.map((category) => (
               <button
                 key={category}
-                className="px-4 py-2 rounded-full border-2 border-green-700 text-green-700 hover:bg-green-700 hover:text-white transition-colors font-medium"
+                className="px-4 py-2 rounded-full border-2 border-brand-green text-brand-green hover:bg-brand-green hover:text-white transition-colors font-medium"
               >
                 {category}
               </button>
@@ -108,7 +108,7 @@ export default function ProjectsPage() {
                     className="object-cover"
                   />
                   <div className="absolute top-4 left-4">
-                    <span className="bg-green-700 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                    <span className="bg-brand-green text-white px-3 py-1 rounded-full text-sm font-semibold">
                       {project.category}
                     </span>
                   </div>
@@ -130,7 +130,7 @@ export default function ProjectsPage() {
                   </div>
                   
                   <div className="border-t pt-4">
-                    <p className="text-green-700 font-semibold">{project.results}</p>
+                    <p className="text-brand-green font-semibold">{project.results}</p>
                   </div>
                 </div>
               </div>
@@ -148,7 +148,7 @@ export default function ProjectsPage() {
           </p>
           <Link
             href="/contact"
-            className="bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-md text-lg font-semibold transition-colors"
+            className="bg-brand-green hover:bg-brand-green-dark text-white px-8 py-4 rounded-md text-lg font-semibold transition-colors"
           >
             Започнете сега
           </Link>

@@ -14,22 +14,22 @@ export default function AboutPage() {
 
   const values = [
     {
-      icon: <CheckCircle className="w-12 h-12 text-green-700" />,
+      icon: <CheckCircle className="w-12 h-12 text-brand-green" />,
       title: 'Качество',
       description: 'Използваме най-съвременното оборудване и материали за гарантиране на най-високо качество.'
     },
     {
-      icon: <Users className="w-12 h-12 text-green-700" />,
+      icon: <Users className="w-12 h-12 text-brand-green" />,
       title: 'Професионализъм',
       description: 'Нашият екип от опитни специалисти е на ваше разположение за консултация и подкрепа.'
     },
     {
-      icon: <Clock className="w-12 h-12 text-green-700" />,
+      icon: <Clock className="w-12 h-12 text-brand-green" />,
       title: 'Бързина',
       description: 'Разбираме важността на сроковете и винаги доставяме навреме.'
     },
     {
-      icon: <Award className="w-12 h-12 text-green-700" />,
+      icon: <Award className="w-12 h-12 text-brand-green" />,
       title: 'Иновации',
       description: 'Следим най-новите технологии и тенденции в индустрията.'
     }
@@ -66,7 +66,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-5xl font-bold text-green-700 mb-2">{stat.number}</div>
+                <div className="text-5xl font-bold text-brand-green mb-2">{stat.number}</div>
                 <div className="text-gray-600 text-lg">{stat.label}</div>
               </div>
             ))}
@@ -151,7 +151,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-green-700 text-white py-20">
+      <section className="bg-brand-green text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl font-bold mb-6">Готови да работим заедно?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -159,7 +159,7 @@ export default function AboutPage() {
           </p>
           <Link
             href="/contact"
-            className="bg-white text-green-800 hover:bg-gray-100 px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-block"
+            className="bg-white text-brand-green-dark hover:bg-gray-100 px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-block"
           >
             Свържете се с нас
           </Link>
