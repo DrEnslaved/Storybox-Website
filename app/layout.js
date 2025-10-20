@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Phone, Mail, MapPin, ShoppingCart, User } from 'lucide-react'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import { CartProvider, useCart } from '@/contexts/CartContext'
+import CookieConsentBanner from '@/components/CookieConsent'
 
 function Navigation() {
   const { user, logout } = useAuth()
