@@ -304,7 +304,7 @@ This is a private business project. For questions or support, contact the STORVB
 
 ## 📞 Contact
 
-- **Website:** https://headless-bizsite.preview.emergentagent.com (preview)
+- **Website:** https://storvbox-business.preview.emergentagent.com (preview)
 - **Email:** office@storvbox.bg
 - **Phone:** +359 898 973 000
 - **Address:** гр. Стралджа 27, ж.к. Горубляне, 1138 София
