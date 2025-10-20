@@ -191,6 +191,8 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </footer>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   )
