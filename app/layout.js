@@ -2,12 +2,134 @@
 
 import './globals.css'
 import Link from 'next/link'
-import { Phone, Mail, MapPin } from 'lucide-react'
+import { Phone, Mail, MapPin, ShoppingCart, User } from 'lucide-react'
+import { AuthProvider } from '@/contexts/AuthContext'
+import { CartProvider, useCart } from '@/contexts/CartContext'
+import { useAuth } from '@/contexts/AuthContext'
+
+function Navigation() {
+  const { user, logout } = useAuth()
+  const { getItemCount } = useCart()
+
+  return (
+    <>
+      {/* Top Bar */}
+      <div className="bg-green-700 text-white py-2 px-4 text-sm">
+        <div className="container mx-auto flex flex-wrap justify-between items-center">
+          <div className="flex gap-4 flex-wrap">
+            <a href="tel:+359898973000" className="flex items-center gap-1 hover:text-green-200">
+              <Phone size={14} />
+              +359 898 973 000
+            </a>
+            <a href="mailto:office@storvbox.bg" className="flex items-center gap-1 hover:text-green-200">
+              <Mail size={14} />
+              office@storvbox.bg
+            </a>
+            <span className="flex items-center gap-1">
+              <MapPin size={14} />
+              гр. Стралджа 27, ж.к. Горубляне, 1138 София
+            </span>
+          </div>
+          <div className="flex gap-3">
+            <a href="#" className="hover:text-green-200">Facebook</a>
+            <a href="#" className="hover:text-green-200">Instagram</a>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="bg-white shadow-md sticky top-0 z-50">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-between items-center py-4">
+            {/* Logo */}
+            <Link href="/" className="flex items-center">
+              <div className="text-2xl font-bold">
+                <span className="text-green-700">STORVBOX</span>
+                <div className="text-xs text-gray-600 font-normal">Embroidery Print Design</div>
+              </div>
+            </Link>
+
+            {/* Navigation Links */}
+            <div className="hidden md:flex items-center gap-8">
+              <Link href="/" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                НАЧАЛО
+              </Link>
+              <Link href="/services" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                УСЛУГИ
+              </Link>
+              <Link href="/shop" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                МАГАЗИН
+              </Link>
+              <Link href="/projects" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                ПРОЕКТИ
+              </Link>
+              <Link href="/blog" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                БЛОГ
+              </Link>
+              <Link href="/about" className="text-gray-700 hover:text-green-700 font-medium transition-colors">
+                ЗА НАС
+              </Link>
+              <Link href="/contact" className="bg-green-700 text-white px-6 py-2 rounded-md hover:bg-green-800 font-medium transition-colors">
+                КОНТАКТИ
+              </Link>
+              
+              {/* Cart Icon */}
+              <Link href="/cart" className="relative text-gray-700 hover:text-green-700">
+                <ShoppingCart size={24} />
+                {getItemCount() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-green-700 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {getItemCount()}
+                  </span>
+                )}
+              </Link>
+
+              {/* User Account */}
+              {user ? (
+                <div className="relative group">
+                  <button className="flex items-center gap-2 text-gray-700 hover:text-green-700">
+                    <User size={20} />
+                    <span className="text-sm">{user.name}</span>
+                  </button>
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block">
+                    <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Моят акаунт
+                    </Link>
+                    <Link href="/account/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Моите поръчки
+                    </Link>
+                    <button onClick={logout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                      Изход
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link href="/login" className="flex items-center gap-2 text-gray-700 hover:text-green-700">
+                  <User size={20} />
+                  <span className="text-sm">Вход</span>
+                </Link>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button className="md:hidden text-gray-700">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </>
+  )
+}
 
 export default function RootLayout({ children }) {
   return (
     <html lang="bg">
       <body>
+        <AuthProvider>
+          <CartProvider>
+            <Navigation />
         {/* Top Bar */}
         <div className="bg-green-700 text-white py-2 px-4 text-sm">
           <div className="container mx-auto flex flex-wrap justify-between items-center">
