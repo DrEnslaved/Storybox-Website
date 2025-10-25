@@ -565,6 +565,64 @@ export async function POST(request) {
       return NextResponse.json(
         { error: 'Грешка при изпращане на заявката' },
         { status: 500 }
+
+
+export async function PUT(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+
+  // Medusa: Update line item quantity
+  const updateLineItemMatch = pathname.match(/^\/api\/medusa\/cart\/([^/]+)\/line-items\/([^/]+)$/)
+  if (updateLineItemMatch) {
+    const [, cartId, lineItemId] = updateLineItemMatch
+    try {
+      const { quantity } = await request.json()
+      const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+      
+      const response = await fetch(`${MEDUSA_URL}/store/carts/${cartId}/line-items/${lineItemId}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quantity })
+      })
+      
+      const data = await response.json()
+      return NextResponse.json({ cart: data.cart })
+    } catch (error) {
+      console.error('Error updating line item:', error)
+      return NextResponse.json({ error: 'Failed to update item' }, { status: 500 })
+    }
+  }
+
+  return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
+}
+
+export async function DELETE(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+
+  // Medusa: Delete line item from cart
+  const deleteLineItemMatch = pathname.match(/^\/api\/medusa\/cart\/([^/]+)\/line-items\/([^/]+)$/)
+  if (deleteLineItemMatch) {
+    const [, cartId, lineItemId] = deleteLineItemMatch
+    try {
+      const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+      
+      const response = await fetch(`${MEDUSA_URL}/store/carts/${cartId}/line-items/${lineItemId}`, {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      
+      const data = await response.json()
+      return NextResponse.json({ cart: data.cart })
+    } catch (error) {
+      console.error('Error deleting line item:', error)
+      return NextResponse.json({ error: 'Failed to remove item' }, { status: 500 })
+    }
+  }
+
+  return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
+}
+
       )
     }
   }
