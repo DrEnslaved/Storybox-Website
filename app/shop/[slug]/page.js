@@ -210,34 +210,39 @@ export default function ProductDetailPage() {
                 <span className="text-gray-500">/ бр.</span>
               </div>
 
-              {/* Variant Selection */}
-              {product.variants && product.variants.length > 0 && (
+              {/* Variant Selection - Only show if user logged in OR only 1 variant */}
+              {product.variants && product.variants.length > 0 && user && (
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-3">
-                    Изберете ценово ниво:
+                    Вашето ценово ниво:
                   </label>
-                  <div className="grid grid-cols-3 gap-3">
-                    {product.variants.map((variant) => (
-                      <button
-                        key={variant.id}
-                        onClick={() => handleVariantChange(variant)}
-                        className={`p-4 rounded-lg border-2 transition-all ${
-                          selectedVariant?.id === variant.id
-                            ? 'border-brand-green bg-green-50 ring-2 ring-brand-green ring-offset-2'
-                            : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        <div className="font-semibold text-sm text-gray-900">
-                          {variant.title}
-                        </div>
-                        <div className="text-lg font-bold text-brand-green mt-1">
-                          {variant.price.toFixed(2)} лв
-                        </div>
-                      </button>
-                    ))}
+                  <div className="p-4 rounded-lg border-2 border-brand-green bg-green-50">
+                    <div className="font-semibold text-sm text-gray-900">
+                      {selectedVariant?.title}
+                    </div>
+                    <div className="text-lg font-bold text-brand-green mt-1">
+                      {selectedVariant?.price.toFixed(2)} лв
+                    </div>
                   </div>
                   
-                  {user && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    Персонална цена за вашето ниво: <span className="font-semibold capitalize">{user.priceTier}</span>
+                  </p>
+                </div>
+              )}
+              
+              {/* Show login prompt if not logged in */}
+              {!user && product.variants && product.variants.length > 0 && (
+                <div className="p-4 rounded-lg border-2 border-gray-200 bg-gray-50">
+                  <p className="text-sm text-gray-600 mb-2">
+                    Цената зависи от вашето ценово ниво
+                  </p>
+                  <Link href="/login" className="text-brand-green hover:underline font-semibold">
+                    Влезте в профила си
+                  </Link>
+                  {' '}за да видите вашата персонална цена
+                </div>
+              )}
                     <p className="text-sm text-gray-600 mt-2">
                       Вашето ценово ниво: <span className="font-semibold capitalize">{user.priceTier}</span>
                     </p>
