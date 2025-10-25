@@ -271,27 +271,43 @@ export default function CheckoutPage() {
               </h2>
 
               <div className="space-y-4 mb-6">
-                {cart.map((item) => (
-                  <div key={item.id} className="flex gap-3">
-                    <div className="relative w-16 h-16 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-semibold text-sm line-clamp-2">{item.name}</h4>
-                      <div className="text-sm text-gray-600">
-                        {item.quantity} x {item.price.toFixed(2)} лв
+                {cart.items.map((item) => {
+                  const thumbnail = item.thumbnail || item.variant?.product?.thumbnail
+                  const title = item.title || item.variant?.product?.title
+                  const unitPrice = (item.unit_price || 0) / 100
+                  const subtotal = (item.subtotal || 0) / 100
+                  
+                  return (
+                    <div key={item.id} className="flex gap-3">
+                      <div className="relative w-16 h-16 flex-shrink-0 bg-gray-200 rounded overflow-hidden">
+                        {thumbnail ? (
+                          <Image
+                            src={thumbnail}
+                            alt={title}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                            N/A
+                          </div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm line-clamp-2">{title}</h4>
+                        {item.variant?.title && (
+                          <p className="text-xs text-gray-500">{item.variant.title}</p>
+                        )}
+                        <div className="text-sm text-gray-600">
+                          {item.quantity} x {unitPrice.toFixed(2)} лв
+                        </div>
+                      </div>
+                      <div className="text-brand-green font-bold">
+                        {subtotal.toFixed(2)} лв
                       </div>
                     </div>
-                    <div className="text-brand-green font-bold">
-                      {(item.price * item.quantity).toFixed(2)} лв
-                    </div>
-                  </div>
-                ))}
+                  )
+                })}
               </div>
 
               <div className="border-t pt-4">
