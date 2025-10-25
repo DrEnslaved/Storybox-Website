@@ -3,18 +3,26 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCart } from '@/contexts/CartContext'
-import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react'
+import { useCart } from '@/contexts/MedusaCartContext'
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Loader2 } from 'lucide-react'
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity, getTotal, getItemCount, clearCart } = useCart()
+  const { cart, removeFromCart, updateQuantity, getTotal, getItemCount, clearCart, loading } = useCart()
 
-  const handleUpdateQuantity = (productId, newQuantity, min = 1, max = 5000) => {
+  const handleUpdateQuantity = (lineItemId, newQuantity, min = 1, max = 5000) => {
     const validQuantity = Math.max(min, Math.min(max, newQuantity))
-    updateQuantity(productId, validQuantity)
+    updateQuantity(lineItemId, validQuantity)
   }
 
-  if (cart.length === 0) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
+        <Loader2 className="w-12 h-12 animate-spin text-brand-green" />
+      </div>
+    )
+  }
+
+  if (!cart?.items || cart.items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
         <div className="text-center max-w-md mx-auto px-4">
