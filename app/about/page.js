@@ -82,7 +82,7 @@ export default function AboutPage() {
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Нашата история</h2>
               <div className="space-y-4 text-gray-700 text-lg">
                 <p>
-                  STORVBOX започна своята дейност през 2009 година с мисията да предостави 
+                  Storybox започна своята дейност през 2009 година с мисията да предостави 
                   на българския пазар професионални услуги по машинна бродерия и персонализация на текстил.
                 </p>
                 <p>
