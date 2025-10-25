@@ -11,6 +11,7 @@ import CookieConsentBanner from '@/components/CookieConsent'
 function Navigation() {
   const { user, logout } = useAuth()
   const { getItemCount } = useCart()
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
   return (
     <>
