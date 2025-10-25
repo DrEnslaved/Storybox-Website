@@ -87,19 +87,34 @@ function Navigation() {
 
               {/* User Account */}
               {user ? (
-                <div className="relative group">
-                  <button className="flex items-center gap-2 text-gray-700 hover:text-brand-green">
+                <div className="relative">
+                  <button 
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center gap-2 text-gray-700 hover:text-brand-green"
+                  >
                     <User size={20} />
                     <span className="text-sm">{user.name}</span>
                   </button>
-                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden group-hover:block">
-                    <Link href="/account" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      Моят акаунт
-                    </Link>
-                    <Link href="/account/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                      Моите поръчки
-                    </Link>
-                    <button onClick={logout} className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50">
+                      <Link 
+                        href="/account" 
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        Моят акаунт
+                      </Link>
+                      <Link 
+                        href="/account/orders" 
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        Моите поръчки
+                      </Link>
+                      <button 
+                        onClick={() => { logout(); setIsDropdownOpen(false); }} 
+                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
                       Изход
                     </button>
                   </div>
