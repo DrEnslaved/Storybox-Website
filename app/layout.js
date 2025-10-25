@@ -12,27 +12,29 @@ function Navigation() {
   const { user, logout } = useAuth()
   const { getItemCount } = useCart()
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   return (
     <>
       {/* Top Bar */}
-      <div className="bg-brand-green text-white py-2 px-4 text-sm">
-        <div className="container mx-auto flex flex-wrap justify-between items-center">
-          <div className="flex gap-4 flex-wrap">
-            <a href="tel:+359899973002" className="flex items-center gap-1 hover:text-green-200">
-              <Phone size={14} />
-              +359899973002
+      <div className="bg-brand-green text-white py-2 px-4 text-xs sm:text-sm">
+        <div className="container mx-auto flex flex-wrap justify-between items-center gap-2">
+          <div className="flex gap-2 sm:gap-4 flex-wrap text-xs sm:text-sm">
+            <a href="tel:+359899973002" className="flex items-center gap-1 hover:text-green-200 whitespace-nowrap">
+              <Phone size={12} className="sm:w-3.5 sm:h-3.5" />
+              <span className="hidden sm:inline">+359899973002</span>
+              <span className="sm:hidden">+359899973002</span>
             </a>
-            <a href="mailto:office@storvbox.bg" className="flex items-center gap-1 hover:text-green-200">
+            <a href="mailto:office@storybox.bg" className="hidden sm:flex items-center gap-1 hover:text-green-200">
               <Mail size={14} />
-              office@storvbox.bg
+              office@storybox.bg
             </a>
             <span className="flex items-center gap-1">
-              <MapPin size={14} />
+              <MapPin size={12} className="sm:w-3.5 sm:h-3.5" />
               гр. София
             </span>
           </div>
-          <div className="flex gap-3">
+          <div className="hidden sm:flex gap-3 text-xs sm:text-sm">
             <a href="#" className="hover:text-green-200">Facebook</a>
             <a href="#" className="hover:text-green-200">Instagram</a>
           </div>
@@ -45,30 +47,30 @@ function Navigation() {
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
             <Link href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-gray-900">Storybox</span>
+              <span className="text-xl sm:text-2xl font-bold text-gray-900">Storybox</span>
             </Link>
 
-            {/* Navigation Links */}
-            <div className="hidden md:flex items-center gap-8">
-              <Link href="/" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
+            {/* Desktop Navigation Links */}
+            <div className="hidden md:flex items-center gap-6 lg:gap-8">
+              <Link href="/" className="text-gray-700 hover:text-brand-green font-medium transition-colors text-sm">
                 НАЧАЛО
               </Link>
-              <Link href="/services" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
+              <Link href="/services" className="text-gray-700 hover:text-brand-green font-medium transition-colors text-sm">
                 УСЛУГИ
               </Link>
-              <Link href="/shop" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
+              <Link href="/shop" className="text-gray-700 hover:text-brand-green font-medium transition-colors text-sm">
                 МАГАЗИН
               </Link>
-              <Link href="/projects" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
+              <Link href="/projects" className="text-gray-700 hover:text-brand-green font-medium transition-colors text-sm">
                 ПРОЕКТИ
               </Link>
-              <Link href="/blog" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
+              <Link href="/blog" className="text-gray-700 hover:text-brand-green font-medium transition-colors text-sm">
                 БЛОГ
               </Link>
-              <Link href="/about" className="text-gray-700 hover:text-brand-green font-medium transition-colors">
+              <Link href="/about" className="text-gray-700 hover:text-brand-green font-medium transition-colors text-sm">
                 ЗА НАС
               </Link>
-              <Link href="/contact" className="bg-brand-green text-white px-6 py-2 rounded-md hover:bg-brand-green-dark font-medium transition-colors">
+              <Link href="/contact" className="bg-brand-green text-white px-4 lg:px-6 py-2 rounded-md hover:bg-brand-green-dark font-medium transition-colors text-sm">
                 КОНТАКТИ
               </Link>
               
@@ -132,14 +134,128 @@ function Navigation() {
               )}
             </div>
 
-            {/* Mobile Menu Button */}
-            <button className="md:hidden text-gray-700">
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            {/* Mobile Cart & Menu Button */}
+            <div className="flex md:hidden items-center gap-4">
+              <Link href="/cart" className="relative text-gray-700">
+                <ShoppingCart size={22} />
+                {getItemCount() > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-brand-green text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                    {getItemCount()}
+                  </span>
+                )}
+              </Link>
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="text-gray-700"
+                aria-label="Toggle menu"
+              >
+                {isMobileMenuOpen ? (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden bg-white border-t border-gray-200">
+            <div className="container mx-auto px-4 py-4 space-y-3">
+              <Link 
+                href="/" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                НАЧАЛО
+              </Link>
+              <Link 
+                href="/services" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                УСЛУГИ
+              </Link>
+              <Link 
+                href="/shop" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                МАГАЗИН
+              </Link>
+              <Link 
+                href="/projects" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                ПРОЕКТИ
+              </Link>
+              <Link 
+                href="/blog" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                БЛОГ
+              </Link>
+              <Link 
+                href="/about" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                ЗА НАС
+              </Link>
+              <Link 
+                href="/contact" 
+                className="block py-2 text-gray-700 hover:text-brand-green font-medium"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                КОНТАКТИ
+              </Link>
+              
+              <div className="border-t border-gray-200 pt-3 mt-3">
+                {user ? (
+                  <>
+                    <Link 
+                      href="/account" 
+                      className="flex items-center gap-2 py-2 text-gray-700 hover:text-brand-green"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <User size={20} />
+                      <span>{user.name}</span>
+                    </Link>
+                    <Link 
+                      href="/account/orders" 
+                      className="block py-2 pl-7 text-sm text-gray-600 hover:text-brand-green"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      Моите поръчки
+                    </Link>
+                    <button 
+                      onClick={() => { logout(); setIsMobileMenuOpen(false); }} 
+                      className="block w-full text-left py-2 pl-7 text-sm text-gray-600 hover:text-brand-green"
+                    >
+                      Изход
+                    </button>
+                  </>
+                ) : (
+                  <Link 
+                    href="/login" 
+                    className="flex items-center gap-2 py-2 text-gray-700 hover:text-brand-green"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <User size={20} />
+                    <span>Вход</span>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </nav>
     </>
   )
