@@ -142,7 +142,7 @@ export default function AboutPage() {
 
           <div className="bg-white p-8 rounded-lg shadow-lg text-center max-w-3xl mx-auto">
             <p className="text-lg text-gray-700">
-              Екипът на STORVBOX се състои от опитни специалисти в областта на машинната бродерия, 
+              Екипът на Storybox се състои от опитни специалисти в областта на машинната бродерия, 
               дизайна и текстилната индустрия. Всеки член на екипа е посветен на предоставянето на 
               най-добрите решения за нашите клиенти.
             </p>
