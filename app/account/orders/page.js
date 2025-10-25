@@ -231,6 +231,26 @@ export default function OrdersPage() {
                           Платете сега
                         </button>
                       )}
+                      {/* Cancel button - only show if order can be cancelled */}
+                      {['pending_payment', 'processing'].includes(order.status) && (
+                        <button
+                          onClick={() => handleCancelOrder(order.id)}
+                          disabled={cancellingOrder === order.id}
+                          className="flex items-center justify-center gap-2 bg-red-100 hover:bg-red-200 text-red-700 px-4 py-2 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                          {cancellingOrder === order.id ? (
+                            <>
+                              <Loader2 size={16} className="animate-spin" />
+                              Анулиране...
+                            </>
+                          ) : (
+                            <>
+                              <XCircle size={16} />
+                              Анулирай
+                            </>
+                          )}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
