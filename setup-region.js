@@ -43,9 +43,7 @@ async function setupRegion() {
     const regionData = {
       name: 'Bulgaria',
       currency_code: 'bgn',
-      countries: ['bg'],
-      payment_providers: [],
-      fulfillment_providers: []
+      countries: ['bg']
     };
 
     const regionResponse = await api.post('/admin/regions', regionData);
