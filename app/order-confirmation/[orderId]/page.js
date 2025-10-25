@@ -270,12 +270,12 @@ export default function OrderConfirmationPage() {
             За въпроси относно вашата поръчка:
           </p>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center items-center text-sm">
-            <a href="tel:+359898973000" className="text-brand-green hover:text-brand-green-dark font-semibold">
-              +359 898 973 000
+            <a href="tel:+359899973002" className="text-brand-green hover:text-brand-green-dark font-semibold">
+              +359899973002
             </a>
             <span className="hidden sm:inline text-gray-400">|</span>
-            <a href="mailto:office@storvbox.bg" className="text-brand-green hover:text-brand-green-dark font-semibold">
-              office@storvbox.bg
+            <a href="mailto:office@storybox.bg" className="text-brand-green hover:text-brand-green-dark font-semibold">
+              office@storybox.bg
             </a>
           </div>
         </div>
