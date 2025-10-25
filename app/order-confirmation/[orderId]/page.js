@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { CheckCircle, CreditCard, MapPin, Printer } from 'lucide-react'
+import { CheckCircle, CreditCard, MapPin, Printer, XCircle, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 
 export default function OrderConfirmationPage() {
@@ -12,6 +12,8 @@ export default function OrderConfirmationPage() {
   const { user } = useAuth()
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [cancelling, setCancelling] = useState(false)
+  const [cancelError, setCancelError] = useState('')
 
   useEffect(() => {
     if (params.orderId) {
