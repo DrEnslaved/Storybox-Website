@@ -147,58 +147,6 @@ export default function CartPage() {
                 </div>
               )
             })}
-                          className="p-2 hover:bg-gray-100 transition-colors"
-                          disabled={item.quantity <= (item.minQuantity || 1)}
-                          aria-label="Намали количеството"
-                        >
-                          <Minus size={18} />
-                        </button>
-                        <input
-                          type="number"
-                          value={item.quantity}
-                          onChange={(e) => handleUpdateQuantity(
-                            item.id,
-                            parseInt(e.target.value) || item.minQuantity || 1,
-                            item.minQuantity,
-                            item.maxQuantity
-                          )}
-                          className="w-16 text-center py-2 focus:outline-none font-semibold"
-                          min={item.minQuantity || 1}
-                          max={item.maxQuantity || 5000}
-                          aria-label="Количество"
-                        />
-                        <button
-                          onClick={() => handleUpdateQuantity(
-                            item.id,
-                            item.quantity + (item.minQuantity || 1),
-                            item.minQuantity,
-                            item.maxQuantity
-                          )}
-                          className="p-2 hover:bg-gray-100 transition-colors"
-                          disabled={item.quantity >= (item.maxQuantity || 5000)}
-                          aria-label="Увеличи количеството"
-                        >
-                          <Plus size={18} />
-                        </button>
-                      </div>
-
-                      <div className="flex items-center gap-4 text-sm text-gray-600">
-                        <span>Subtotal: <strong className="text-brand-green text-lg">{(item.price * item.quantity).toFixed(2)} лв</strong></span>
-                      </div>
-
-                      <button
-                        onClick={() => removeFromCart(item.id)}
-                        className="ml-auto text-red-600 hover:text-red-800 transition-colors flex items-center gap-2"
-                        aria-label="Премахни от количката"
-                      >
-                        <Trash2 size={18} />
-                        <span className="hidden sm:inline">Премахни</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
 
             {/* Clear Cart */}
             <div className="flex justify-end">
