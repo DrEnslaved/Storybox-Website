@@ -107,7 +107,7 @@ export default function ContactPage() {
                     <Phone className="w-6 h-6 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold mb-1">Телефон</h3>
-                      <p>+359 898 973 000</p>
+                      <p>+359899973002</p>
                     </div>
                   </div>
                   
@@ -115,7 +115,7 @@ export default function ContactPage() {
                     <Mail className="w-6 h-6 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold mb-1">Имейл</h3>
-                      <p>office@storvbox.bg</p>
+                      <p>office@storybox.bg</p>
                     </div>
                   </div>
                   
@@ -123,7 +123,7 @@ export default function ContactPage() {
                     <MapPin className="w-6 h-6 mt-1 flex-shrink-0" />
                     <div>
                       <h3 className="font-semibold mb-1">Адрес</h3>
-                      <p>гр. Стралджа 27<br />ж.к. Горубляне<br />1138 София</p>
+                      <p>гр. София</p>
                     </div>
                   </div>
                 </div>
