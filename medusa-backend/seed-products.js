@@ -55,7 +55,7 @@ async function seedMedusaProducts() {
         description: 'Висококачествени памучни тениски с машинна бродерия на лого или текст. Идеални за корпоративни събития, екипни облекла и промоционални кампании.',
         is_giftcard: false,
         options: [
-          { title: 'Ниво' }
+          { title: 'Ниво', values: ['Standard', 'Premium', 'VIP'] }
         ],
         variants: [
           {
@@ -100,7 +100,7 @@ async function seedMedusaProducts() {
         description: 'Персонализирани керамични чаши с пълноцветен сублимационен печат. Устойчиво изображение, подходящо за миялна машина.',
         is_giftcard: false,
         options: [
-          { title: 'Ниво' }
+          { title: 'Ниво', values: ['Standard', 'Premium', 'VIP'] }
         ],
         variants: [
           {
