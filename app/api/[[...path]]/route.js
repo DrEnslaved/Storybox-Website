@@ -565,7 +565,12 @@ export async function POST(request) {
       return NextResponse.json(
         { error: 'Грешка при изпращане на заявката' },
         { status: 500 }
+      )
+    }
+  }
 
+  return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
+}
 
 export async function PUT(request) {
   const url = new URL(request.url)
