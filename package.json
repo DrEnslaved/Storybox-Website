@@ -7,7 +7,14 @@
         "dev:no-reload": "next dev --hostname 0.0.0.0 --port 3000",
         "dev:webpack": "next dev --hostname 0.0.0.0 --port 3000",
         "build": "next build",
-        "start": "next start"
+        "start": "next start",
+        "test": "jest --watch",
+        "test:ci": "jest --ci --coverage",
+        "test:e2e": "playwright test",
+        "test:e2e:ui": "playwright test --ui",
+        "test:e2e:headed": "playwright test --headed",
+        "lint": "next lint",
+        "type-check": "tsc --noEmit"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.1.1",
