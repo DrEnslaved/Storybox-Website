@@ -78,7 +78,15 @@ export default function CheckoutPage() {
     }
   }
 
-  if (cart.length === 0) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
+        <Loader2 className="w-12 h-12 animate-spin text-brand-green" />
+      </div>
+    )
+  }
+
+  if (!cart?.items || cart.items.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
         <div className="text-center max-w-md mx-auto px-4">
