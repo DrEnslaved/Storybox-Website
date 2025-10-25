@@ -386,3 +386,75 @@ export async function POST(request) {
 
   return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
 }
+
+export async function PUT(request) {
+  const url = new URL(request.url)
+  const pathname = url.pathname
+
+  // Cancel/Annul Order
+  const cancelOrderMatch = pathname.match(/^\/api\/orders\/(.+)\/cancel$/)
+  if (cancelOrderMatch) {
+    const orderId = cancelOrderMatch[1]
+    try {
+      const session = await getSession()
+      if (!session) {
+        return NextResponse.json(
+          { error: 'Неоторизиран достъп' },
+          { status: 401 }
+        )
+      }
+
+      const { db } = await connectToDB()
+
+      // Find the order and verify ownership
+      const order = await db.collection('orders').findOne({ 
+        id: orderId,
+        userId: session.userId 
+      })
+
+      if (!order) {
+        return NextResponse.json(
+          { error: 'Поръчката не е намерена' },
+          { status: 404 }
+        )
+      }
+
+      // Check if order can be cancelled (only pending_payment and processing status)
+      if (!['pending_payment', 'processing'].includes(order.status)) {
+        return NextResponse.json(
+          { error: 'Тази поръчка не може да бъде анулирана' },
+          { status: 400 }
+        )
+      }
+
+      // Update order status to cancelled
+      await db.collection('orders').updateOne(
+        { id: orderId },
+        { 
+          $set: { 
+            status: 'cancelled',
+            cancelledAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          } 
+        }
+      )
+
+      return NextResponse.json(
+        { 
+          message: 'Поръчката е анулирана успешно',
+          orderId: orderId 
+        },
+        { status: 200 }
+      )
+    } catch (error) {
+      console.error('Error cancelling order:', error)
+      return NextResponse.json(
+        { error: 'Грешка при анулиране на поръчка' },
+        { status: 500 }
+      )
+    }
+  }
+
+  return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
+}
+
