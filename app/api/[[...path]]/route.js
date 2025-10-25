@@ -29,7 +29,75 @@ export async function GET(request) {
   const url = new URL(request.url)
   const pathname = url.pathname
 
-  // Get all products
+  // Medusa products proxy endpoint
+  if (pathname === '/api/medusa/products') {
+    try {
+      const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+      
+      // Login to get admin token
+      const authRes = await fetch(`${MEDUSA_URL}/auth/user/emailpass`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: 'admin@storybox.bg',
+          password: 'Pandora2019+'
+        })
+      })
+      
+      if (!authRes.ok) {
+        throw new Error('Failed to authenticate with Medusa')
+      }
+      
+      const authData = await authRes.json()
+      const token = authData.token
+      
+      // Fetch products from admin API
+      const productsRes = await fetch(`${MEDUSA_URL}/admin/products?fields=*variants,*images&limit=100`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      
+      if (!productsRes.ok) {
+        throw new Error('Failed to fetch products from Medusa')
+      }
+      
+      const productsData = await productsRes.json()
+      
+      // Transform Medusa products to match frontend expectations
+      const transformedProducts = (productsData.products || []).map(product => ({
+        id: product.id,
+        name: product.title,
+        slug: product.handle,
+        description: product.description,
+        image: product.images?.[0]?.url || product.thumbnail,
+        images: product.images?.map(img => img.url) || [],
+        priceTiers: product.variants?.map(variant => ({
+          tierName: variant.title?.toLowerCase() || 'standard',
+          price: variant.prices?.[0]?.amount ? variant.prices[0].amount / 100 : 0,
+          variantId: variant.id,
+          sku: variant.sku
+        })) || [],
+        inStock: true,
+        medusaProduct: true,
+        variants: product.variants || []
+      }))
+      
+      return NextResponse.json({ 
+        products: transformedProducts,
+        source: 'medusa' 
+      })
+    } catch (error) {
+      console.error('Error fetching Medusa products:', error)
+      return NextResponse.json(
+        { error: 'Грешка при зареждане на продуктите от Medusa', products: [] },
+        { status: 500 }
+      )
+    }
+  }
+
+  // Get all products (MongoDB fallback)
   if (pathname === '/api/products') {
     try {
       const { db } = await connectToDB()
