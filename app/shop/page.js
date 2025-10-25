@@ -30,7 +30,7 @@ export default function ShopPage() {
 
   const fetchProducts = async () => {
     try {
-      // Try fetching from Medusa first
+      // Fetch from Medusa using new clean API
       let response = await fetch('/api/medusa/products')
       let source = 'medusa'
       
