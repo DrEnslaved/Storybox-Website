@@ -347,16 +347,18 @@ export default function RootLayout({ children }) {
           Към основното съдържание
         </a>
         
-        <AuthProvider>
-          <CartProvider>
-            <Navigation />
-            <main id="main-content" className="min-h-screen">
-              {children}
-            </main>
-            <Footer />
-            <CookieConsentBanner />
-          </CartProvider>
-        </AuthProvider>
+        <AnalyticsProvider>
+          <AuthProvider>
+            <CartProvider>
+              <Navigation />
+              <main id="main-content" className="min-h-screen">
+                {children}
+              </main>
+              <Footer />
+              <CookieConsentBanner />
+            </CartProvider>
+          </AuthProvider>
+        </AnalyticsProvider>
       </body>
     </html>
   )
