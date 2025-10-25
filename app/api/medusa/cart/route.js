@@ -1,21 +1,29 @@
 import { NextResponse } from 'next/server'
 
 const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
 
 // POST: Create new cart
 export async function POST(request) {
   try {
+    const headers = {
+      'Content-Type': 'application/json'
+    }
+    
+    if (PUBLISHABLE_KEY) {
+      headers['x-publishable-api-key'] = PUBLISHABLE_KEY
+    }
+    
     const response = await fetch(`${MEDUSA_URL}/store/carts`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        region_id: 'reg_01K8EFA3PT2R7FCEA5RJ2J6B1G',
-        sales_channel_id: 'sc_01K8EFA3PT2R7FCEA5RJ2J6B1G'
-      })
+      headers,
+      body: JSON.stringify({})
     })
     
     if (!response.ok) {
-      return NextResponse.json({ error: 'Failed to create cart' }, { status: 500 })
+      const errorData = await response.json()
+      console.error('Medusa cart creation error:', errorData)
+      return NextResponse.json({ error: 'Failed to create cart', details: errorData }, { status: 500 })
     }
     
     const data = await response.json()
