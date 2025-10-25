@@ -115,9 +115,10 @@ function Navigation() {
                         onClick={() => { logout(); setIsDropdownOpen(false); }} 
                         className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                      Изход
-                    </button>
-                  </div>
+                        Изход
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <Link href="/login" className="flex items-center gap-2 text-gray-700 hover:text-brand-green">
