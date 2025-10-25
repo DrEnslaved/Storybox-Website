@@ -55,49 +55,98 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Cart Items */}
           <div className="lg:col-span-2 space-y-4">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-lg shadow-md p-4 md:p-6"
-              >
-                <div className="flex flex-col sm:flex-row gap-4">
-                  {/* Product Image */}
-                  <Link href={`/shop/${item.slug}`} className="flex-shrink-0">
-                    <div className="relative w-full sm:w-32 h-32 bg-gray-200 rounded-lg overflow-hidden">
-                      <Image
-                        src={item.image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
+            {cart.items.map((item) => {
+              const thumbnail = item.thumbnail || item.variant?.product?.thumbnail
+              const title = item.title || item.variant?.product?.title
+              const unitPrice = (item.unit_price || 0) / 100 // Medusa stores in cents
+              const subtotal = (item.subtotal || 0) / 100
+              
+              return (
+                <div
+                  key={item.id}
+                  className="bg-white rounded-lg shadow-md p-4 md:p-6"
+                >
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    {/* Product Image */}
+                    <div className="flex-shrink-0">
+                      <div className="relative w-full sm:w-32 h-32 bg-gray-200 rounded-lg overflow-hidden">
+                        {thumbnail ? (
+                          <Image
+                            src={thumbnail}
+                            alt={title}
+                            fill
+                            className="object-cover"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                            Няма изображение
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </Link>
 
-                  {/* Product Info */}
-                  <div className="flex-1 min-w-0">
-                    <Link
-                      href={`/shop/${item.slug}`}
-                      className="block mb-2"
+                    {/* Product Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="block mb-2">
+                        <h3 className="text-lg md:text-xl font-bold text-gray-900 line-clamp-2">
+                          {title}
+                        </h3>
+                        {item.variant?.title && (
+                          <p className="text-sm text-gray-600 mt-1">
+                            Вариант: {item.variant.title}
+                          </p>
+                        )}
+                      </div>
+                      
+                      <div className="text-brand-green font-bold text-xl mb-4">
+                        {unitPrice.toFixed(2)} лв / бр.
+                      </div>
+
+                      {/* Quantity Controls */}
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                        <div className="flex items-center border-2 border-gray-300 rounded-lg">
+                          <button
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1, 1, 5000)}
+                            className="px-3 py-2 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={item.quantity <= 1}
+                          >
+                            <Minus size={18} />
+                          </button>
+                          <input
+                            type="number"
+                            value={item.quantity}
+                            onChange={(e) => handleUpdateQuantity(item.id, parseInt(e.target.value) || 1, 1, 5000)}
+                            className="w-16 md:w-20 text-center border-x-2 border-gray-300 py-2 focus:outline-none"
+                            min="1"
+                            max="5000"
+                          />
+                          <button
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1, 1, 5000)}
+                            className="px-3 py-2 hover:bg-gray-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            disabled={item.quantity >= 5000}
+                          >
+                            <Plus size={18} />
+                          </button>
+                        </div>
+
+                        <div className="text-gray-900 font-bold text-lg">
+                          Общо: {subtotal.toFixed(2)} лв
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Remove Button */}
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      className="self-start sm:self-center p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
+                      aria-label="Remove item"
                     >
-                      <h3 className="text-lg md:text-xl font-bold text-gray-900 hover:text-brand-green transition-colors line-clamp-2">
-                        {item.name}
-                      </h3>
-                    </Link>
-                    
-                    <div className="text-brand-green font-bold text-xl mb-4">
-                      {item.price.toFixed(2)} лв / бр.
-                    </div>
-
-                    {/* Quantity Controls */}
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                      <div className="flex items-center border-2 border-gray-300 rounded-lg">
-                        <button
-                          onClick={() => handleUpdateQuantity(
-                            item.id,
-                            item.quantity - (item.minQuantity || 1),
-                            item.minQuantity,
-                            item.maxQuantity
-                          )}
+                      <Trash2 size={20} />
+                    </button>
+                  </div>
+                </div>
+              )
+            })}
                           className="p-2 hover:bg-gray-100 transition-colors"
                           disabled={item.quantity <= (item.minQuantity || 1)}
                           aria-label="Намали количеството"
