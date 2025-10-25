@@ -8,7 +8,7 @@ import { Phone, Mail, MapPin, ShoppingCart, User } from 'lucide-react'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import { CartProvider, useCart } from '@/contexts/MedusaCartContext'
 import CookieConsentBanner from '@/components/CookieConsent'
-import { initAnalytics, trackPageView } from '@/lib/analytics'
+import AnalyticsProvider from '@/components/AnalyticsProvider'
 
 function Navigation() {
   const { user, logout } = useAuth()
