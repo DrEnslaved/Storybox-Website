@@ -11,6 +11,21 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Cookie Consent Mobile Optimization */
+@media (max-width: 640px) {
+    .CookieConsent {
+        flex-direction: column !important;
+        gap: 12px !important;
+        padding: 12px !important;
+    }
+    
+    .cookie-consent-buttons {
+        display: flex !important;
+        width: 100% !important;
+        gap: 8px !important;
+    }
+}
+
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
