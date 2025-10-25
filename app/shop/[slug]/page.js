@@ -243,12 +243,6 @@ export default function ProductDetailPage() {
                   {' '}за да видите вашата персонална цена
                 </div>
               )}
-                    <p className="text-sm text-gray-600 mt-2">
-                      Вашето ценово ниво: <span className="font-semibold capitalize">{user.priceTier}</span>
-                    </p>
-                  )}
-                </div>
-              )}
 
               {/* Description */}
               {product.description && (
