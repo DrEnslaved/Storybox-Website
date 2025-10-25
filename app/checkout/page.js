@@ -5,13 +5,13 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
-import { useCart } from '@/contexts/CartContext'
-import { CreditCard, MapPin, Package, ArrowLeft } from 'lucide-react'
+import { useCart } from '@/contexts/MedusaCartContext'
+import { CreditCard, MapPin, Package, ArrowLeft, Loader2 } from 'lucide-react'
 
 export default function CheckoutPage() {
   const router = useRouter()
   const { user } = useAuth()
-  const { cart, getTotal, clearCart } = useCart()
+  const { cart, getTotal, clearCart, loading } = useCart()
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState('')
   
