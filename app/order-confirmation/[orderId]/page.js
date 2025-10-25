@@ -215,6 +215,27 @@ export default function OrderConfirmationPage() {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {/* Cancel button - only show if order can be cancelled */}
+          {order.status && ['pending_payment', 'processing'].includes(order.status) && (
+            <button
+              onClick={handleCancelOrder}
+              disabled={cancelling}
+              className="flex items-center justify-center gap-2 bg-red-100 hover:bg-red-200 text-red-700 px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {cancelling ? (
+                <>
+                  <Loader2 size={20} className="animate-spin" />
+                  Анулиране...
+                </>
+              ) : (
+                <>
+                  <XCircle size={20} />
+                  Анулирай поръчката
+                </>
+              )}
+            </button>
+          )}
+          
           <button
             onClick={() => window.print()}
             className="flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-900 px-6 py-3 rounded-lg font-semibold transition-colors"
@@ -235,6 +256,13 @@ export default function OrderConfirmationPage() {
             Продължи пазаруването
           </Link>
         </div>
+
+        {/* Cancel Error Message */}
+        {cancelError && (
+          <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700 text-center">
+            {cancelError}
+          </div>
+        )}
 
         {/* Contact Info */}
         <div className="mt-8 text-center">
