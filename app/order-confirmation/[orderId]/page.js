@@ -38,6 +38,37 @@ export default function OrderConfirmationPage() {
     }
   }
 
+  const handleCancelOrder = async () => {
+    if (!confirm('Сигурни ли сте, че искате да анулирате тази поръчка?')) {
+      return
+    }
+
+    setCancelling(true)
+    setCancelError('')
+
+    try {
+      const response = await fetch(`/api/orders/${params.orderId}/cancel`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' }
+      })
+
+      if (response.ok) {
+        // Refresh order data
+        await fetchOrder()
+        alert('Поръчката е анулирана успешно')
+      } else {
+        const data = await response.json()
+        setCancelError(data.error || 'Грешка при анулиране на поръчката')
+      }
+    } catch (error) {
+      console.error('Error cancelling order:', error)
+      setCancelError('Грешка при анулиране на поръчката')
+    } finally {
+      setCancelling(false)
+    }
+  }
+
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
