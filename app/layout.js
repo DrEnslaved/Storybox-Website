@@ -90,13 +90,20 @@ function Navigation() {
                 <div className="relative">
                   <button 
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-2 text-gray-700 hover:text-brand-green"
+                    className="flex items-center gap-2 text-gray-700 hover:text-brand-green transition-colors"
                   >
                     <User size={20} />
                     <span className="text-sm">{user.name}</span>
                   </button>
                   {isDropdownOpen && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50">
+                      <Link 
+                        href="/account" 
+                        className="block px-4 py-2 text-sm font-semibold text-gray-900 hover:bg-gray-100 border-b"
+                        onClick={() => setIsDropdownOpen(false)}
+                      >
+                        {user.name}
+                      </Link>
                       <Link 
                         href="/account" 
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
