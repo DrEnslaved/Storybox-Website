@@ -1,5 +1,6 @@
 'use client'
 
+import React, { useState } from 'react'
 import './globals.css'
 import Link from 'next/link'
 import { Phone, Mail, MapPin, ShoppingCart, User } from 'lucide-react'
