@@ -1,12 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import './globals.css'
 import Link from 'next/link'
 import { Phone, Mail, MapPin, ShoppingCart, User } from 'lucide-react'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
 import { CartProvider, useCart } from '@/contexts/MedusaCartContext'
 import CookieConsentBanner from '@/components/CookieConsent'
+import { initAnalytics, trackPageView } from '@/lib/analytics'
 
 function Navigation() {
   const { user, logout } = useAuth()
