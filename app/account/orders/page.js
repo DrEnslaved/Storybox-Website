@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
-import { Package, User, LogOut, FileText } from 'lucide-react'
+import { Package, User, LogOut, FileText, XCircle, Loader2 } from 'lucide-react'
 
 export default function OrdersPage() {
   const router = useRouter()
   const { user, logout, loading } = useAuth()
   const [orders, setOrders] = useState([])
   const [loadingOrders, setLoadingOrders] = useState(true)
+  const [cancellingOrder, setCancellingOrder] = useState(null)
 
   useEffect(() => {
     if (!loading && !user) {
