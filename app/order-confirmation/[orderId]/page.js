@@ -150,24 +150,32 @@ export default function OrderConfirmationPage() {
         <div className="bg-white rounded-lg shadow-lg p-6 md:p-8 mb-6 md:mb-8">
           <h2 className="text-2xl font-bold text-gray-900 mb-6">Поръчани продукти</h2>
           <div className="space-y-4">
-            {order.items.map((item, index) => (
+            {order.items && Array.isArray(order.items) && order.items.map((item, index) => (
               <div key={index} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-4 border-b last:border-b-0">
                 <div className="flex-1">
-                  <div className="font-semibold text-gray-900">{item.name}</div>
+                  <div className="font-semibold text-gray-900">{item.name || item.title}</div>
+                  {item.variant?.title && (
+                    <div className="text-xs text-gray-500">{item.variant.title}</div>
+                  )}
                   <div className="text-sm text-gray-600">
-                    {item.quantity} x {item.price.toFixed(2)} лв
+                    {item.quantity} x {(item.price || item.unit_price / 100 || 0).toFixed(2)} лв
                   </div>
                 </div>
                 <div className="font-bold text-brand-green">
-                  {(item.price * item.quantity).toFixed(2)} лв
+                  {((item.price || item.unit_price / 100 || 0) * item.quantity).toFixed(2)} лв
                 </div>
               </div>
             ))}
+            {(!order.items || !Array.isArray(order.items) || order.items.length === 0) && (
+              <div className="text-center text-gray-500 py-4">
+                Няма продукти в тази поръчка
+              </div>
+            )}
           </div>
           <div className="mt-6 pt-6 border-t flex justify-between items-center">
             <span className="text-xl font-semibold">Общо:</span>
             <span className="text-3xl font-bold text-brand-green">
-              {order.total.toFixed(2)} лв
+              {(order.total || 0).toFixed(2)} лв
             </span>
           </div>
         </div>
