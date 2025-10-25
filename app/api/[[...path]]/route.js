@@ -295,6 +295,68 @@ export async function POST(request) {
   const url = new URL(request.url)
   const pathname = url.pathname
 
+  // Medusa: Create new cart
+  if (pathname === '/api/medusa/cart') {
+    try {
+      const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+      const response = await fetch(`${MEDUSA_URL}/store/carts`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          region_id: 'reg_01K8EFA3PT2R7FCEA5RJ2J6B1G', // Default region
+          sales_channel_id: 'sc_01K8EFA3PT2R7FCEA5RJ2J6B1G'
+        })
+      })
+      
+      const data = await response.json()
+      return NextResponse.json({ cart: data.cart })
+    } catch (error) {
+      console.error('Error creating cart:', error)
+      return NextResponse.json({ error: 'Failed to create cart' }, { status: 500 })
+    }
+  }
+
+  // Medusa: Add line item to cart
+  const addLineItemMatch = pathname.match(/^\/api\/medusa\/cart\/([^/]+)\/line-items$/)
+  if (addLineItemMatch) {
+    const cartId = addLineItemMatch[1]
+    try {
+      const { variant_id, quantity } = await request.json()
+      const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+      
+      const response = await fetch(`${MEDUSA_URL}/store/carts/${cartId}/line-items`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ variant_id, quantity })
+      })
+      
+      const data = await response.json()
+      return NextResponse.json({ cart: data.cart })
+    } catch (error) {
+      console.error('Error adding line item:', error)
+      return NextResponse.json({ error: 'Failed to add item to cart' }, { status: 500 })
+    }
+  }
+
+  // Medusa: Complete cart (create order)
+  const completeCartMatch = pathname.match(/^\/api\/medusa\/cart\/([^/]+)\/complete$/)
+  if (completeCartMatch) {
+    const cartId = completeCartMatch[1]
+    try {
+      const MEDUSA_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+      const response = await fetch(`${MEDUSA_URL}/store/carts/${cartId}/complete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      })
+      
+      const data = await response.json()
+      return NextResponse.json({ order: data.order || data.data })
+    } catch (error) {
+      console.error('Error completing cart:', error)
+      return NextResponse.json({ error: 'Failed to complete order' }, { status: 500 })
+    }
+  }
+
   // Auth Routes
   if (pathname === '/api/auth/register') {
     try {
