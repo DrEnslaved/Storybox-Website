@@ -1,8 +1,8 @@
 const axios = require('axios');
 
 const MEDUSA_URL = 'http://localhost:9000';
-const ADMIN_EMAIL = 'admin@storvbox.com';
-const ADMIN_PASSWORD = 'admin123456';
+const ADMIN_EMAIL = 'admin@storybox.bg';
+const ADMIN_PASSWORD = 'Pandora2019+';
 
 async function setupMedusa() {
   try {
