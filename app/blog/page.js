@@ -12,7 +12,7 @@ export default function BlogPage() {
       image: 'https://images.unsplash.com/photo-1497997092403-f091fcf5b6c4?w=800',
       category: 'Съвети',
       date: '15 Януари 2025',
-      author: 'STORVBOX Team'
+      author: 'Storybox Team'
     },
     {
       id: 2,
@@ -21,7 +21,7 @@ export default function BlogPage() {
       image: 'https://images.unsplash.com/photo-1623919268210-99a34497afde?w=800',
       category: 'Тенденции',
       date: '10 Януари 2025',
-      author: 'STORVBOX Team'
+      author: 'Storybox Team'
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ export default function BlogPage() {
       image: 'https://images.unsplash.com/photo-1526290766257-c015850e4629?w=800',
       category: 'Технологии',
       date: '5 Януари 2025',
-      author: 'STORVBOX Team'
+      author: 'Storybox Team'
     }
   ]
 
