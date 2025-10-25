@@ -19,9 +19,9 @@ function Navigation() {
       <div className="bg-brand-green text-white py-2 px-4 text-sm">
         <div className="container mx-auto flex flex-wrap justify-between items-center">
           <div className="flex gap-4 flex-wrap">
-            <a href="tel:+359898973000" className="flex items-center gap-1 hover:text-green-200">
+            <a href="tel:+359899973002" className="flex items-center gap-1 hover:text-green-200">
               <Phone size={14} />
-              +359 898 973 000
+              +359899973002
             </a>
             <a href="mailto:office@storvbox.bg" className="flex items-center gap-1 hover:text-green-200">
               <Mail size={14} />
@@ -29,7 +29,7 @@ function Navigation() {
             </a>
             <span className="flex items-center gap-1">
               <MapPin size={14} />
-              гр. Стралджа 27, ж.к. Горубляне, 1138 София
+              гр. София
             </span>
           </div>
           <div className="flex gap-3">
