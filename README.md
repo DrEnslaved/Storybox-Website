@@ -33,6 +33,9 @@ Professional Bulgarian embroidery and textile printing business website with ful
 **Backend:** Medusa.js v2, MongoDB, PostgreSQL, Redis
 **CMS:** Sanity Studio
 **Auth:** JWT, Google OAuth
+**Testing:** Jest, React Testing Library, Playwright
+**CI/CD:** GitHub Actions
+**Monitoring:** Sentry Error Tracking
 
 ## 📋 Prerequisites
 
