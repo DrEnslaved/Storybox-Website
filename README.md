@@ -58,6 +58,15 @@ cp .env.example .env
 
 # Start development
 yarn dev
+
+# Run tests
+yarn test              # Unit tests (watch mode)
+yarn test:ci           # Unit tests with coverage
+yarn test:e2e          # E2E tests
+
+# Build for production
+yarn build
+yarn start
 ```
 
 ## 📖 Documentation
@@ -66,6 +75,56 @@ yarn dev
 - [Medusa Integration](./docs/MEDUSA_INTEGRATION.md)
 - [Deployment Guide](./docs/DEPLOYMENT.md)
 - [API Documentation](./docs/API.md)
+- [Testing Guide](./docs/TESTING.md) ⭐ NEW
+- [CI/CD Pipeline](./docs/CI-CD.md) ⭐ NEW
+
+## 🧪 Testing
+
+### Test Coverage
+
+The application has comprehensive test coverage for critical flows:
+- ✅ Authentication (login, register, logout)
+- ✅ Shopping (browse, cart, checkout)
+- ✅ Order Management (view, annul)
+- ✅ Mobile Responsiveness
+- ✅ Navigation & UI
+
+See [Testing Guide](./docs/TESTING.md) for details.
+
+### Running Tests
+
+```bash
+# Unit/Integration Tests
+yarn test              # Watch mode
+yarn test:ci           # CI mode with coverage
+
+# E2E Tests
+yarn test:e2e          # Run all E2E tests
+yarn test:e2e:ui       # Run with Playwright UI
+yarn test:e2e:headed   # Run in headed mode
+```
+
+## 🚢 CI/CD
+
+Automated pipeline with GitHub Actions:
+- ✅ Linting and code quality checks
+- ✅ Unit and integration testing
+- ✅ E2E testing with Playwright
+- ✅ Production build validation
+- ✅ Automatic deployment (main branch)
+- ✅ Sentry release tracking
+
+See [CI/CD Guide](./docs/CI-CD.md) for configuration.
+
+## 📊 Monitoring
+
+**Sentry Error Tracking**
+- Real-time error monitoring
+- Session replay on errors
+- Performance tracking
+- Release tracking
+
+Dashboard: https://sentry.io
 
 ## 📞 Contact
 
