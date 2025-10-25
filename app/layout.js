@@ -44,11 +44,8 @@ function Navigation() {
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-4">
             {/* Logo */}
-            <Link href="/" className="flex items-center">
-              <div className="text-2xl font-bold">
-                <span className="text-brand-green">STORVBOX</span>
-                <div className="text-xs text-gray-600 font-normal">Embroidery Print Design</div>
-              </div>
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="text-2xl font-bold text-gray-900">Storybox</span>
             </Link>
 
             {/* Navigation Links */}
