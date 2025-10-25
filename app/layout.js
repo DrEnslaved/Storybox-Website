@@ -337,10 +337,18 @@ export default function RootLayout({ children }) {
         <title>Storybox - \u041c\u0430\u0448\u0438\u043d\u043d\u0430 \u0411\u0440\u043e\u0434\u0435\u0440\u0438\u044f \u0438 \u0422\u0435\u043a\u0441\u0442\u0438\u043b\u0435\u043d \u041f\u0435\u0447\u0430\u0442 | \u0421\u043e\u0444\u0438\u044f, \u0411\u044a\u043b\u0433\u0430\u0440\u0438\u044f</title>
       </head>
       <body>
+        {/* Skip to main content link for accessibility */}
+        <a 
+          href="#main-content" 
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:bg-brand-green focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:outline-none focus:ring-2 focus:ring-white"
+        >
+          Към основното съдържание
+        </a>
+        
         <AuthProvider>
           <CartProvider>
             <Navigation />
-            <main className="min-h-screen">
+            <main id="main-content" className="min-h-screen">
               {children}
             </main>
             <Footer />
