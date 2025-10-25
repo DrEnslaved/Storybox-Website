@@ -162,19 +162,19 @@ export default function HomePage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20">
+      <section className="py-12 sm:py-16 md:py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Защо Storybox?</h2>
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Защо Storybox?</h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
             {features.map((feature, index) => (
-              <div key={index} className="flex gap-4">
+              <div key={index} className="flex gap-3 sm:gap-4">
                 <div className="flex-shrink-0">{feature.icon}</div>
                 <div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
-                  <p className="text-gray-600">{feature.description}</p>
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{feature.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -183,19 +183,19 @@ export default function HomePage() {
       </section>
 
       {/* Projects Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Избрани проекти</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 md:mb-4">Избрани проекти</h2>
+            <p className="text-base sm:text-lg md:text-xl text-gray-600 max-w-2xl mx-auto px-4">
               Вижте някои от нашите последни реализации
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
             {projects.map((project, index) => (
               <div key={index} className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <div className="relative h-64">
+                <div className="relative h-48 sm:h-56 md:h-64">
                   <Image
                     src={project.image}
                     alt={project.title}
@@ -203,28 +203,28 @@ export default function HomePage() {
                     className="object-cover"
                   />
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
-                  <p className="text-gray-600">{project.description}</p>
+                <div className="p-4 sm:p-5 md:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{project.title}</h3>
+                  <p className="text-sm sm:text-base text-gray-600">{project.description}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-10 md:mt-12">
             <Link
               href="/projects"
-              className="bg-brand-green hover:bg-brand-green-dark text-white px-8 py-3 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
+              className="bg-brand-green hover:bg-brand-green-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-md text-base sm:text-lg font-semibold transition-colors inline-flex items-center gap-2"
             >
               Вижте всички проекти
-              <ArrowRight size={20} />
+              <ArrowRight size={18} className="sm:w-5 sm:h-5" />
             </Link>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-20 overflow-hidden">
+      <section className="relative py-12 sm:py-16 md:py-20 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1758269664127-1f744a56e06c?w=1920"
@@ -236,16 +236,16 @@ export default function HomePage() {
         </div>
         
         <div className="container mx-auto px-4 z-10 relative text-center text-white">
-          <h2 className="text-4xl font-bold mb-6">Готови ли сте да започнем?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Готови ли сте да започнем?</h2>
+          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
             Свържете се с нас за безплатна консултация и оферта за вашия проект
           </p>
           <Link
             href="/contact"
-            className="bg-white text-brand-green-dark hover:bg-gray-100 px-8 py-4 rounded-md text-lg font-semibold transition-colors inline-flex items-center gap-2"
+            className="bg-white text-brand-green-dark hover:bg-gray-100 px-6 sm:px-8 py-3 sm:py-4 rounded-md text-base sm:text-lg font-semibold transition-colors inline-flex items-center gap-2"
           >
             Свържете се с нас
-            <ArrowRight size={20} />
+            <ArrowRight size={18} className="sm:w-5 sm:h-5" />
           </Link>
         </div>
       </section>
