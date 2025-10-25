@@ -165,7 +165,7 @@ export default function HomePage() {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Защо STORVBOX?</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">Защо Storybox?</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
