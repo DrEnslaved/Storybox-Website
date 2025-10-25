@@ -182,7 +182,7 @@ function Footer() {
             <ul className="space-y-2 text-gray-400 text-sm">
               <li className="flex items-start gap-2">
                 <Phone size={16} className="mt-1 flex-shrink-0" />
-                <span>+359 898 973 000</span>
+                <span>+359899973002</span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="mt-1 flex-shrink-0" />
@@ -190,7 +190,7 @@ function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-1 flex-shrink-0" />
-                <span>гр. Стралджа 27, ж.к. Горубляне, 1138 София</span>
+                <span>гр. София</span>
               </li>
             </ul>
           </div>
