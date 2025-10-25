@@ -55,40 +55,43 @@ async function seedMedusaProducts() {
         description: 'Висококачествени памучни тениски с машинна бродерия на лого или текст. Идеални за корпоративни събития, екипни облекла и промоционални кампании.',
         is_giftcard: false,
         options: [
-          { title: 'Ниво', values: ['Standard', 'Premium', 'VIP'] }
+          { title: 'Ниво' }
         ],
         variants: [
           {
             title: 'Standard',
+            sku: 'EMBR-TSHIRT-STD',
             prices: [
-              { amount: 2500, currency_code: 'bgn', region_id: regionId }
+              { amount: 2500, currency_code: 'bgn' }
             ],
-            options: [{ option_title: 'Ниво', value: 'Standard' }],
-            inventory_quantity: 1000,
-            manage_inventory: true
+            options: {
+              'Ниво': 'Standard'
+            }
           },
           {
             title: 'Premium',
+            sku: 'EMBR-TSHIRT-PREM',
             prices: [
-              { amount: 2200, currency_code: 'bgn', region_id: regionId }
+              { amount: 2200, currency_code: 'bgn' }
             ],
-            options: [{ option_title: 'Ниво', value: 'Premium' }],
-            inventory_quantity: 1000,
-            manage_inventory: true
+            options: {
+              'Ниво': 'Premium'
+            }
           },
           {
             title: 'VIP',
+            sku: 'EMBR-TSHIRT-VIP',
             prices: [
-              { amount: 2000, currency_code: 'bgn', region_id: regionId }
+              { amount: 2000, currency_code: 'bgn' }
             ],
-            options: [{ option_title: 'Ниво', value: 'VIP' }],
-            inventory_quantity: 1000,
-            manage_inventory: true
+            options: {
+              'Ниво': 'VIP'
+            }
           }
         ],
         images: [
-          'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800',
-          'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800'
+          { url: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800' },
+          { url: 'https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=800' }
         ]
       },
       {
@@ -97,39 +100,42 @@ async function seedMedusaProducts() {
         description: 'Персонализирани керамични чаши с пълноцветен сублимационен печат. Устойчиво изображение, подходящо за миялна машина.',
         is_giftcard: false,
         options: [
-          { title: 'Ниво', values: ['Standard', 'Premium', 'VIP'] }
+          { title: 'Ниво' }
         ],
         variants: [
           {
             title: 'Standard',
+            sku: 'SUBL-MUG-STD',
             prices: [
-              { amount: 1200, currency_code: 'bgn', region_id: regionId }
+              { amount: 1200, currency_code: 'bgn' }
             ],
-            options: [{ option_title: 'Ниво', value: 'Standard' }],
-            inventory_quantity: 1000,
-            manage_inventory: true
+            options: {
+              'Ниво': 'Standard'
+            }
           },
           {
             title: 'Premium',
+            sku: 'SUBL-MUG-PREM',
             prices: [
-              { amount: 1000, currency_code: 'bgn', region_id: regionId }
+              { amount: 1000, currency_code: 'bgn' }
             ],
-            options: [{ option_title: 'Ниво', value: 'Premium' }],
-            inventory_quantity: 1000,
-            manage_inventory: true
+            options: {
+              'Ниво': 'Premium'
+            }
           },
           {
             title: 'VIP',
+            sku: 'SUBL-MUG-VIP',
             prices: [
-              { amount: 900, currency_code: 'bgn', region_id: regionId }
+              { amount: 900, currency_code: 'bgn' }
             ],
-            options: [{ option_title: 'Ниво', value: 'VIP' }],
-            inventory_quantity: 1000,
-            manage_inventory: true
+            options: {
+              'Ниво': 'VIP'
+            }
           }
         ],
         images: [
-          'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=800'
+          { url: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=800' }
         ]
       }
     ];
