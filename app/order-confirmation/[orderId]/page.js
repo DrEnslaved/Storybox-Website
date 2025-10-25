@@ -121,7 +121,7 @@ export default function OrderConfirmationPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <div className="text-sm text-gray-600 mb-1">Бенефициент:</div>
-                <div className="font-bold text-gray-900">STORVBOX EOOD</div>
+                <div className="font-bold text-gray-900">Storybox EOOD</div>
               </div>
               <div>
                 <div className="text-sm text-gray-600 mb-1">IBAN:</div>
