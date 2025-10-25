@@ -160,19 +160,23 @@ export default function OrdersPage() {
                     {/* Order Items */}
                     <div className="mb-4">
                       <div className="space-y-2">
-                        {order.items?.map((item, index) => (
-                          <div
-                            key={index}
-                            className="flex justify-between items-center text-sm"
-                          >
-                            <span className="text-gray-700">
-                              {item.name} <span className="text-gray-500">x{item.quantity}</span>
-                            </span>
-                            <span className="font-semibold text-gray-900">
-                              {(item.price * item.quantity).toFixed(2)} лв
-                            </span>
-                          </div>
-                        ))}
+                        {order.items && Array.isArray(order.items) ? (
+                          order.items.map((item, index) => (
+                            <div
+                              key={index}
+                              className="flex justify-between items-center text-sm"
+                            >
+                              <span className="text-gray-700">
+                                {item.name || item.title} <span className="text-gray-500">x{item.quantity}</span>
+                              </span>
+                              <span className="font-semibold text-gray-900">
+                                {((item.price || item.unit_price / 100 || 0) * item.quantity).toFixed(2)} лв
+                              </span>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-sm text-gray-500">Няма информация за продуктите</div>
+                        )}
                       </div>
                     </div>
 
