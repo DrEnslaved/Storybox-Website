@@ -628,10 +628,6 @@ export async function DELETE(request) {
   return NextResponse.json({ error: 'Endpoint not found' }, { status: 404 })
 }
 
-      )
-    }
-  }
-
   // Create Order
   if (pathname === '/api/orders/create') {
     try {
