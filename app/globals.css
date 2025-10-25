@@ -11,6 +11,55 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Accessibility: Enhanced Focus Styles */
+*:focus-visible {
+    outline: 3px solid #90B000;
+    outline-offset: 2px;
+    border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 3px solid #90B000;
+    outline-offset: 2px;
+}
+
+/* Accessibility: Skip to main content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.sr-only:focus,
+.focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: inherit;
+    margin: inherit;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+}
+
+/* Accessibility: Touch Targets (minimum 44x44px) */
+@media (pointer: coarse) {
+    button,
+    a,
+    input[type="checkbox"],
+    input[type="radio"] {
+        min-width: 44px;
+        min-height: 44px;
+    }
+}
+
 /* Cookie Consent Mobile Optimization */
 @media (max-width: 640px) {
     .CookieConsent {
@@ -23,6 +72,18 @@ body {
         display: flex !important;
         width: 100% !important;
         gap: 8px !important;
+    }
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
