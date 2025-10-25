@@ -41,7 +41,7 @@ export default function CheckoutPage() {
       return
     }
 
-    if (cart.length === 0) {
+    if (!cart?.items || cart.items.length === 0) {
       setError('Количката ви е празна')
       return
     }
