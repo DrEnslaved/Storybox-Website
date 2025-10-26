@@ -6,7 +6,7 @@ import './globals.css'
 import Link from 'next/link'
 import { Phone, Mail, MapPin, ShoppingCart, User } from 'lucide-react'
 import { AuthProvider, useAuth } from '@/contexts/AuthContext'
-import { CartProvider, useCart } from '@/contexts/SimpleCartContext'
+import { CartProvider as MedusaCartProvider, useCart } from '@/contexts/MedusaCartContext'
 import CookieConsentBanner from '@/components/CookieConsent'
 import AnalyticsProvider from '@/components/AnalyticsProvider'
 
