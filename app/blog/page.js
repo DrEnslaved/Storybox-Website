@@ -56,7 +56,8 @@ export default async function BlogPage() {
               >
                 Всички
               </Link>
-              {categories.map((category) => (\n                <Link
+              {categories.map((category) => (
+                <Link
                   key={category._id}
                   href={`/blog/category/${category.slug.current}`}
                   className="px-6 py-2 bg-white border-2 rounded-md hover:bg-green-50 transition-all font-medium"
