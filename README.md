@@ -264,6 +264,7 @@ yarn test:e2e     # Run E2E tests
 ## 📚 Documentation
 
 - [Setup Guide](./SETUP_GUIDE.md) - Complete setup instructions
+- [Tools & Technologies](./docs/TOOLS_AND_TECHNOLOGIES.md) - Explanation of all tools used
 - [Product Management](./docs/PRODUCT_MANAGEMENT.md) - Product system documentation
 - [Backorder System](./docs/BACKORDER_SYSTEM.md) - Backorder functionality
 - [Admin Statistics](./docs/ADMIN_STATISTICS.md) - Dashboard calculations
