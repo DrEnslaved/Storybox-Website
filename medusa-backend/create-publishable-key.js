@@ -72,11 +72,13 @@ async function createPublishableKey() {
 
     // Link to sales channel
     console.log('Linking to sales channel...');
+    const linkId = `pksc_${crypto.randomBytes(16).toString('hex')}`;
     await client.query(`
       INSERT INTO publishable_api_key_sales_channel (
-        publishable_key_id, sales_channel_id
-      ) VALUES ($1, $2)
-    `, [keyId, salesChannelId]);
+        id, publishable_key_id, sales_channel_id,
+        created_at, updated_at
+      ) VALUES ($1, $2, $3, NOW(), NOW())
+    `, [linkId, keyId, salesChannelId]);
     
     console.log('✅ Linked to sales channel\n');
 
