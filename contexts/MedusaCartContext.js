@@ -120,9 +120,7 @@ export function CartProvider({ children }) {
 
   const clearCart = async () => {
     try {
-      // Create a new cart (effectively clearing the old one)
       localStorage.removeItem('medusa_cart_id')
-      
       const res = await fetch('/api/cart', { method: 'POST' })
       if (res.ok) {
         const { cart: newCart } = await res.json()
