@@ -1,118 +1,115 @@
-'use client'
-
-import Image from 'next/image'
+import { client, queries } from '@/lib/sanity'
+import BlogCard from '@/components/BlogCard'
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
-export default function BlogPage() {
-  const posts = [
-    {
-      id: 1,
-      title: 'Как да изберем правилната техника за персонализация',
-      excerpt: 'Разгледайте различните методи за персонализация на текстил и научете кога е най-подходящ всеки от тях.',
-      image: 'https://images.unsplash.com/photo-1497997092403-f091fcf5b6c4?w=800',
-      category: 'Съвети',
-      date: '15 Януари 2025',
-      author: 'Storybox Team'
-    },
-    {
-      id: 2,
-      title: 'Тенденции в корпоративното облекло за 2025',
-      excerpt: 'Открийте най-новите тенденции в дизайна на корпоративни униформи и работно облекло.',
-      image: 'https://images.unsplash.com/photo-1623919268210-99a34497afde?w=800',
-      category: 'Тенденции',
-      date: '10 Януари 2025',
-      author: 'Storybox Team'
-    },
-    {
-      id: 3,
-      title: 'Предимствата на машинната бродерия',
-      excerpt: 'Защо машинната бродерия е най-качественият метод за персонализация на текстил.',
-      image: 'https://images.unsplash.com/photo-1526290766257-c015850e4629?w=800',
-      category: 'Технологии',
-      date: '5 Януари 2025',
-      author: 'Storybox Team'
-    }
-  ]
+export const revalidate = 60 // Revalidate every 60 seconds
+
+async function getPosts() {
+  try {
+    const posts = await client.fetch(queries.posts)
+    return posts || []
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return []
+  }
+}
+
+async function getCategories() {
+  try {
+    const categories = await client.fetch(queries.categories)
+    return categories || []
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+    return []
+  }
+}
+
+export default async function BlogPage() {
+  const posts = await getPosts()
+  const categories = await getCategories()
+
+  const featuredPosts = posts.filter((post) => post.featured)
+  const regularPosts = posts.filter((post) => !post.featured)
 
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-brand-green to-green-900 text-white py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl font-bold mb-6">Блог</h1>
-          <p className="text-xl max-w-3xl mx-auto">
-            Полезни статии, съвети и новини от света на персонализацията на текстил
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">Блог</h1>
+          <p className="text-xl opacity-90">
+            Новини, съвети и вдъхновение за бродерия и печат
           </p>
         </div>
-      </section>
+      </div>
 
-      {/* Blog Posts Grid */}
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          {posts.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-xl text-gray-600">Очаквайте скоро нови статии...</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {posts.map((post) => (
-                <article
-                  key={post.id}
-                  className="bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-shadow"
+      <div className="container mx-auto px-4 py-12">
+        {/* Category Filter */}
+        {categories.length > 0 && (
+          <div className="mb-8">
+            <h2 className="text-lg font-semibold mb-4">Категории</h2>
+            <div className="flex flex-wrap gap-2">
+              <Link
+                href="/blog"
+                className="px-4 py-2 bg-white rounded-full shadow hover:shadow-md transition-shadow"
+              >
+                Всички
+              </Link>
+              {categories.map((category) => (
+                <Link
+                  key={category._id}
+                  href={`/blog/category/${category.slug.current}`}
+                  className="px-4 py-2 bg-white rounded-full shadow hover:shadow-md transition-shadow"
+                  style={{
+                    borderLeft: `4px solid ${category.color || '#10b981'}`,
+                  }}
                 >
-                  <div className="relative h-64">
-                    <Image
-                      src={post.image}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                    />
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-brand-green text-white px-3 py-1 rounded-full text-sm font-semibold">
-                        {post.category}
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <div className="text-sm text-gray-500 mb-2">
-                      {post.date} • {post.author}
-                    </div>
-                    <h2 className="text-2xl font-bold text-gray-900 mb-3">{post.title}</h2>
-                    <p className="text-gray-600 mb-4">{post.excerpt}</p>
-                    <Link
-                      href={`/blog/${post.id}`}
-                      className="text-brand-green font-semibold hover:text-brand-green-dark inline-flex items-center gap-1"
-                    >
-                      Прочети повече →
-                    </Link>
-                  </div>
-                </article>
+                  {category.title}
+                </Link>
               ))}
             </div>
-          )}
-        </div>
-      </section>
-
-      {/* Newsletter Section */}
-      <section className="bg-gray-50 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-6">Абонирайте се за новини</h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Получавайте последни новини, съвети и специални оферти директно на вашия имейл
-          </p>
-          <div className="max-w-md mx-auto flex gap-2">
-            <input
-              type="email"
-              placeholder="Вашият имейл адрес"
-              className="flex-1 px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-            />
-            <button className="bg-brand-green hover:bg-brand-green-dark text-white px-6 py-3 rounded-md font-semibold transition-colors">
-              Абонирай се
-            </button>
           </div>
-        </div>
-      </section>
+        )}
+
+        {/* Featured Posts */}
+        {featuredPosts.length > 0 && (
+          <div className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold">Избрани статии</h2>
+              <ArrowRight className="w-6 h-6 text-green-600" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {featuredPosts.map((post) => (
+                <BlogCard key={post._id} post={post} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* All Posts */}
+        {posts.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-600 text-lg">
+              Все още няма публикувани статии.
+            </p>
+            <p className="text-gray-500 mt-2">
+              Очаквайте скоро нови публикации!
+            </p>
+          </div>
+        ) : (
+          <div>
+            <h2 className="text-2xl font-bold mb-6">
+              {featuredPosts.length > 0 ? 'Всички статии' : 'Последни статии'}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {regularPosts.map((post) => (
+                <BlogCard key={post._id} post={post} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
