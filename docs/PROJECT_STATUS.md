@@ -334,7 +334,7 @@ yarn test:e2e:ui       # Playwright UI
 
 ### Current Environment
 - **Platform:** Kubernetes
-- **URL:** https://medusa-storybox.preview.emergentagent.com
+- **URL:** https://stitch-cms.preview.emergentagent.com
 - **Status:** ✅ Live and operational
 
 ### CI/CD Pipeline

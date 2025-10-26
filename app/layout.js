@@ -335,7 +335,7 @@ export default function RootLayout({ children }) {
         <meta name="geo.placename" content="Sofia" />
         <meta name="geo.position" content="42.697708;23.321868" />
         <meta name="ICBM" content="42.697708, 23.321868" />
-        <link rel="canonical" href="https://storvbox-business.preview.emergentagent.com" />
+        <link rel="canonical" href="https://stitch-cms.preview.emergentagent.com" />
         <title>Storybox - \u041c\u0430\u0448\u0438\u043d\u043d\u0430 \u0411\u0440\u043e\u0434\u0435\u0440\u0438\u044f \u0438 \u0422\u0435\u043a\u0441\u0442\u0438\u043b\u0435\u043d \u041f\u0435\u0447\u0430\u0442 | \u0421\u043e\u0444\u0438\u044f, \u0411\u044a\u043b\u0433\u0430\u0440\u0438\u044f</title>
       </head>
       <body>
