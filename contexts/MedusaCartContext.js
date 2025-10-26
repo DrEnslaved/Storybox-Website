@@ -1,83 +1,51 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useRef } from 'react'
 
 const CartContext = createContext({})
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState(null) // Medusa cart object
+  const [cart, setCart] = useState(null)
   const [loading, setLoading] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
-  const [initialized, setInitialized] = useState(false)
+  const initRef = useRef(false)
 
-  // Debug: Log cart changes
+  // Initialize cart only once
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      console.log('🛒 Cart updated:', cart?.id, 'Items:', cart?.items?.length || 0)
-    }
-  }, [cart])
-
-  // Initialize cart on mount
-  useEffect(() => {
-    if (!initialized && typeof window !== 'undefined') {
-      setInitialized(true)
-      initializeCart()
-    }
-  }, [initialized])
-
-  const initializeCart = async () => {
-    if (typeof window === 'undefined') return
+    if (initRef.current) return
+    initRef.current = true
     
-    console.log('🛒 Initializing cart...')
-    try {
-      // Check if we have a cart ID in localStorage
-      const savedCartId = localStorage.getItem('medusa_cart_id')
-      console.log('📦 Saved cart ID:', savedCartId)
-      
-      if (savedCartId) {
-        console.log('🔍 Fetching existing cart from:', `/api/cart/${savedCartId}`)
-        // Try to retrieve the existing cart
-        const response = await fetch(`/api/cart/${savedCartId}`)
-        console.log('📡 Cart fetch response status:', response.status)
+    const init = async () => {
+      try {
+        const savedCartId = localStorage.getItem('medusa_cart_id')
         
-        if (response.ok) {
-          const data = await response.json()
-          console.log('📦 Cart data received:', data)
-          console.log('✅ Setting cart with ID:', data.cart?.id, 'Items:', data.cart?.items?.length)
-          
-          if (data.cart) {
-            setCart(data.cart)
-            console.log('✅ Cart state should be set now')
-          } else {
-            console.error('❌ No cart in response data')
+        if (savedCartId) {
+          // Try to fetch existing cart
+          const res = await fetch(`/api/cart/${savedCartId}`)
+          if (res.ok) {
+            const { cart: fetchedCart } = await res.json()
+            setCart(fetchedCart)
+            setLoading(false)
+            return
           }
-          setLoading(false)
-          return
-        } else {
-          console.log('⚠️ Cart not found (status:', response.status, '), creating new...')
         }
-      } else {
-        console.log('ℹ️ No saved cart ID, creating new cart')
+        
+        // Create new cart if no valid one exists
+        const res = await fetch('/api/cart', { method: 'POST' })
+        if (res.ok) {
+          const { cart: newCart } = await res.json()
+          setCart(newCart)
+          localStorage.setItem('medusa_cart_id', newCart.id)
+        }
+      } catch (error) {
+        console.error('Cart init error:', error)
+      } finally {
+        setLoading(false)
       }
-      
-      // Create a new cart if no valid cart exists
-      await createNewCart()
-    } catch (error) {
-      console.error('❌ Error initializing cart:', error)
-      setLoading(false)
     }
-  }
-
-  const createNewCart = async () => {
-    console.log('🆕 Creating new cart...')
-    try {
-      const response = await fetch('/api/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      })
-      
-      if (response.ok) {
-        const data = await response.json()
+    
+    init()
+  }, [])
         console.log('✅ New cart created:', data.cart?.id)
         setCart(data.cart)
         localStorage.setItem('medusa_cart_id', data.cart.id)
