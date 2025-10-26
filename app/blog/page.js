@@ -1,7 +1,6 @@
 import { client, queries } from '@/lib/sanity'
 import BlogCard from '@/components/BlogCard'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
 
 export const revalidate = 60 // Revalidate every 60 seconds
 
@@ -33,12 +32,14 @@ export default async function BlogPage() {
   const regularPosts = posts.filter((post) => !post.featured)
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-green-600 to-green-700 text-white py-16">
+    <div className="min-h-screen">
+      {/* Hero Section - matching homepage style */}
+      <div className="relative bg-gradient-to-r from-green-600 to-green-700 py-20">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Блог</h1>
-          <p className="text-xl opacity-90">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            Блог
+          </h1>
+          <p className="text-xl text-white/90 max-w-2xl">
             Новини, съвети и вдъхновение за бродерия и печат
           </p>
         </div>
@@ -48,21 +49,19 @@ export default async function BlogPage() {
         {/* Category Filter */}
         {categories.length > 0 && (
           <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-4">Категории</h2>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-3">
               <Link
                 href="/blog"
-                className="px-4 py-2 bg-white rounded-full shadow hover:shadow-md transition-shadow"
+                className="px-6 py-2 bg-white border-2 border-gray-200 rounded-md hover:border-green-600 hover:bg-green-50 transition-all font-medium"
               >
                 Всички
               </Link>
-              {categories.map((category) => (
-                <Link
+              {categories.map((category) => (\n                <Link
                   key={category._id}
                   href={`/blog/category/${category.slug.current}`}
-                  className="px-4 py-2 bg-white rounded-full shadow hover:shadow-md transition-shadow"
+                  className="px-6 py-2 bg-white border-2 rounded-md hover:bg-green-50 transition-all font-medium"
                   style={{
-                    borderLeft: `4px solid ${category.color || '#10b981'}`,
+                    borderColor: category.color || '#10b981',
                   }}
                 >
                   {category.title}
@@ -75,11 +74,8 @@ export default async function BlogPage() {
         {/* Featured Posts */}
         {featuredPosts.length > 0 && (
           <div className="mb-12">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold">Избрани статии</h2>
-              <ArrowRight className="w-6 h-6 text-green-600" />
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <h2 className="text-2xl font-bold mb-6">Избрани статии</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {featuredPosts.map((post) => (
                 <BlogCard key={post._id} post={post} />
               ))}
@@ -89,20 +85,20 @@ export default async function BlogPage() {
 
         {/* All Posts */}
         {posts.length === 0 ? (
-          <div className="text-center py-12">
-            <p className="text-gray-600 text-lg">
+          <div className="text-center py-16 bg-gray-50 rounded-lg">
+            <p className="text-gray-600 text-lg mb-2">
               Все още няма публикувани статии.
             </p>
-            <p className="text-gray-500 mt-2">
+            <p className="text-gray-500">
               Очаквайте скоро нови публикации!
             </p>
           </div>
         ) : (
           <div>
-            <h2 className="text-2xl font-bold mb-6">
-              {featuredPosts.length > 0 ? 'Всички статии' : 'Последни статии'}
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredPosts.length > 0 && (
+              <h2 className="text-2xl font-bold mb-6">Всички статии</h2>
+            )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {regularPosts.map((post) => (
                 <BlogCard key={post._id} post={post} />
               ))}
