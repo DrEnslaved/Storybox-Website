@@ -257,7 +257,36 @@ export default function AdminProductsPage() {
       })
       if (response.ok) {
         const data = await response.json()
-        setFormData(data.product)
+        // Ensure all nested objects and arrays exist
+        const productData = {
+          ...data.product,
+          gallery: data.product.gallery || [],
+          tags: data.product.tags || [],
+          badges: data.product.badges || [],
+          variants: data.product.variants || [],
+          inventory: data.product.inventory || {
+            amount: 0,
+            status: 'in_stock',
+            minQuantity: 1,
+            maxQuantity: 999,
+            allowBackorder: false,
+            backorderMessage: '',
+            stockAlertThreshold: 10
+          },
+          shipping: data.product.shipping || {
+            weight: 0,
+            dimensions: { length: 0, width: 0, height: 0, unit: 'cm' },
+            class: 'standard'
+          },
+          seo: data.product.seo || { title: '', description: '', slug: '' },
+          b2b: data.product.b2b || {
+            moq: 1,
+            bulkPricing: [],
+            leadTime: '',
+            customFields: {}
+          }
+        }
+        setFormData(productData)
         setEditingProduct(product)
         setShowForm(true)
       }
