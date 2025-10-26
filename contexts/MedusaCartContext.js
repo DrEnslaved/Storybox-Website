@@ -26,6 +26,8 @@ export function CartProvider({ children }) {
   }, [initialized])
 
   const initializeCart = async () => {
+    if (typeof window === 'undefined') return
+    
     console.log('🛒 Initializing cart...')
     try {
       // Check if we have a cart ID in localStorage
@@ -33,20 +35,29 @@ export function CartProvider({ children }) {
       console.log('📦 Saved cart ID:', savedCartId)
       
       if (savedCartId) {
-        console.log('🔍 Fetching existing cart...')
+        console.log('🔍 Fetching existing cart from:', `/api/cart/${savedCartId}`)
         // Try to retrieve the existing cart
         const response = await fetch(`/api/cart/${savedCartId}`)
-        console.log('📡 Cart fetch response:', response.status)
+        console.log('📡 Cart fetch response status:', response.status)
         
         if (response.ok) {
           const data = await response.json()
-          console.log('✅ Cart loaded:', data.cart?.id, 'Items:', data.cart?.items?.length)
-          setCart(data.cart)
+          console.log('📦 Cart data received:', data)
+          console.log('✅ Setting cart with ID:', data.cart?.id, 'Items:', data.cart?.items?.length)
+          
+          if (data.cart) {
+            setCart(data.cart)
+            console.log('✅ Cart state should be set now')
+          } else {
+            console.error('❌ No cart in response data')
+          }
           setLoading(false)
           return
         } else {
-          console.log('⚠️ Cart not found, creating new...')
+          console.log('⚠️ Cart not found (status:', response.status, '), creating new...')
         }
+      } else {
+        console.log('ℹ️ No saved cart ID, creating new cart')
       }
       
       // Create a new cart if no valid cart exists
