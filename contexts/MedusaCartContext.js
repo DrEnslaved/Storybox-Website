@@ -10,9 +10,16 @@ export function CartProvider({ children }) {
   const [isOpen, setIsOpen] = useState(false)
   const [initialized, setInitialized] = useState(false)
 
+  // Debug: Log cart changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      console.log('🛒 Cart updated:', cart?.id, 'Items:', cart?.items?.length || 0)
+    }
+  }, [cart])
+
   // Initialize cart on mount
   useEffect(() => {
-    if (!initialized) {
+    if (!initialized && typeof window !== 'undefined') {
       setInitialized(true)
       initializeCart()
     }
