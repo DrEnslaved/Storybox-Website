@@ -6,8 +6,8 @@ export async function GET(request) {
     const MEDUSA_BACKEND_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
     const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
     
-    // Fetch products from Medusa store API
-    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products`, {
+    // Fetch products from Medusa store API with region context
+    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products?region_id=reg_01K8H69A87F81C7HE74RZENY8S&currency_code=bgn`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
