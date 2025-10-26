@@ -77,7 +77,8 @@ async function seedProduct() {
       status: 'published',
       options: [
         {
-          title: 'Размер'
+          title: 'Размер',
+          values: ['S', 'M', 'L', 'XL']
         }
       ],
       variants: [
