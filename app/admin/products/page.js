@@ -487,7 +487,7 @@ export default function AdminProductsPage() {
                     Галерия (2-5 изображения)
                   </label>
                   <div className="grid grid-cols-3 gap-4 mb-4">
-                    {formData.gallery.map((img, index) => (
+                    {(formData.gallery || []).map((img, index) => (
                       <div key={index} className="relative aspect-square border-2 border-gray-200 rounded-lg overflow-hidden">
                         <img src={img} alt={`Gallery ${index + 1}`} className="w-full h-full object-cover" />
                         <button
