@@ -66,6 +66,21 @@ a:focus-visible {
         flex-direction: column !important;
         gap: 12px !important;
         padding: 12px !important;
+        z-index: 50 !important; /* Lower than modal overlays but above content */
+        pointer-events: none !important; /* Allow clicks through the container */
+    }
+    
+    .CookieConsent > * {
+        pointer-events: auto !important; /* But the content itself catches clicks */
+    }
+    
+    .cookie-consent-container {
+        z-index: 50 !important;
+        pointer-events: none !important;
+    }
+    
+    .cookie-consent-container > * {
+        pointer-events: auto !important;
     }
     
     .cookie-consent-buttons {
