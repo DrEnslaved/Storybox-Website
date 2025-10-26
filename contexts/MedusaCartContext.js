@@ -15,30 +15,39 @@ export function CartProvider({ children }) {
   }, [])
 
   const initializeCart = async () => {
+    console.log('🛒 Initializing cart...')
     try {
       // Check if we have a cart ID in localStorage
       const savedCartId = localStorage.getItem('medusa_cart_id')
+      console.log('📦 Saved cart ID:', savedCartId)
       
       if (savedCartId) {
+        console.log('🔍 Fetching existing cart...')
         // Try to retrieve the existing cart
         const response = await fetch(`/api/cart/${savedCartId}`)
+        console.log('📡 Cart fetch response:', response.status)
+        
         if (response.ok) {
           const data = await response.json()
+          console.log('✅ Cart loaded:', data.cart?.id, 'Items:', data.cart?.items?.length)
           setCart(data.cart)
           setLoading(false)
           return
+        } else {
+          console.log('⚠️ Cart not found, creating new...')
         }
       }
       
       // Create a new cart if no valid cart exists
       await createNewCart()
     } catch (error) {
-      console.error('Error initializing cart:', error)
+      console.error('❌ Error initializing cart:', error)
       setLoading(false)
     }
   }
 
   const createNewCart = async () => {
+    console.log('🆕 Creating new cart...')
     try {
       const response = await fetch('/api/cart', {
         method: 'POST',
@@ -47,11 +56,14 @@ export function CartProvider({ children }) {
       
       if (response.ok) {
         const data = await response.json()
+        console.log('✅ New cart created:', data.cart?.id)
         setCart(data.cart)
         localStorage.setItem('medusa_cart_id', data.cart.id)
+      } else {
+        console.error('❌ Failed to create cart:', response.status)
       }
     } catch (error) {
-      console.error('Error creating cart:', error)
+      console.error('❌ Error creating cart:', error)
     } finally {
       setLoading(false)
     }
