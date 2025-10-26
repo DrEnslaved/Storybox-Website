@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+import fetch from 'node-fetch';
 
 async function seedProduct() {
   const MEDUSA_URL = 'http://localhost:9000';
