@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Test comprehensive product management system backend APIs including admin authentication, image upload with Sharp processing, categories CRUD, and products CRUD with comprehensive schema"
+user_problem_statement: "Run comprehensive frontend testing for the Storybox e-commerce website to identify bugs, missing features, and unwanted behavior. Test public pages (homepage, shop, product details, cart, checkout), admin panel (login, dashboard, products, orders, users), critical bugs (price display, backorder functionality, order management, shop filters), and user flows (customer browse & purchase, admin order management, admin product management)."
 
 backend:
   - task: "Admin Authentication API"
