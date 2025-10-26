@@ -240,15 +240,15 @@ frontend:
 
   - task: "Admin Login Testing"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/admin/login/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
-      - working: "NA"
+      - working: true
         agent: "testing"
-        comment: "Need to test login form display, authentication with admin@storybox.bg / yxlnLfy6F46vqM1lnF7tUrcdM, successful login redirect to dashboard, and token storage."
+        comment: "✅ Admin login works perfectly. Login form displays correctly, authentication successful with credentials admin@storybox.bg / yxlnLfy6F46vqM1lnF7tUrcdM, redirects to dashboard after login, token storage working. No issues found."
 
   - task: "Admin Dashboard Testing"
     implemented: true
