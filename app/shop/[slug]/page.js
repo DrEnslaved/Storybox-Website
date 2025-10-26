@@ -36,9 +36,16 @@ export default function ProductDetailPage() {
         const data = await response.json()
         setProduct(data.product)
         
-        // Set default variant if available
+        // Set default variant if available, or create a default one for products without variants
         if (data.product.variants && data.product.variants.length > 0) {
           setSelectedVariant(data.product.variants[0])
+        } else {
+          // Create a default variant for products without variants
+          setSelectedVariant({
+            id: data.product.id,
+            title: 'Standard',
+            price: data.product.price
+          })
         }
         
         setQuantity(data.product.inventory?.minQuantity || 1)
