@@ -353,10 +353,25 @@ export default function ShopPage() {
       {/* Products Grid */}
       <section className="py-8 md:py-12">
         <div className="container mx-auto px-4">
+          {/* Results Count */}
+          <div className="mb-6 flex items-center justify-between">
+            <p className="text-gray-600">
+              Показани <span className="font-semibold text-brand-green">{filteredProducts.length}</span> {filteredProducts.length === 1 ? 'продукт' : 'продукта'} от <span className="font-semibold">{products.length}</span>
+            </p>
+          </div>
+
           {filteredProducts.length === 0 ? (
-            <div className="text-center py-12 md:py-20">
-              <p className="text-xl text-gray-600">Няма намерени продукти</p>
-              <p className="text-gray-500 mt-2">Опитайте с различна категория или търсене</p>
+            <div className="text-center py-12 md:py-20 bg-white rounded-lg shadow">
+              <Package className="mx-auto mb-4 text-gray-400" size={64} />
+              <p className="text-xl font-semibold text-gray-900 mb-2">Няма намерени продукти</p>
+              <p className="text-gray-500 mb-4">Опитайте с различна категория или ценови диапазон</p>
+              <button
+                onClick={handleResetFilters}
+                className="inline-flex items-center gap-2 px-6 py-2 bg-brand-green text-white rounded-md hover:bg-green-600"
+              >
+                <X size={18} />
+                Изчисти филтрите
+              </button>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
