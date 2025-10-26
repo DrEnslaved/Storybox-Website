@@ -49,12 +49,11 @@ export function CartProvider({ children }) {
 
   const addToCart = async (variantId, quantity = 1) => {
     try {
-      // Ensure we have a cart
-      if (!cart) {
-        await createNewCart()
-      }
-
       const cartId = cart?.id || localStorage.getItem('medusa_cart_id')
+      if (!cartId) {
+        console.error('No cart available')
+        return { success: false, error: 'No cart' }
+      }
       
       const response = await fetch(`/api/cart/${cartId}/line-items`, {
         method: 'POST',
