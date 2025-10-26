@@ -9,6 +9,10 @@ import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Loader2 } from 'lucide-re
 export default function CartPage() {
   const { cart, removeFromCart, updateQuantity, getTotal, getItemCount, clearCart, loading } = useCart()
 
+  console.log('Cart state:', cart)
+  console.log('Cart items:', cart?.items)
+  console.log('Item count:', getItemCount())
+
   const handleUpdateQuantity = (lineItemId, newQuantity, min = 1, max = 5000) => {
     const validQuantity = Math.max(min, Math.min(max, newQuantity))
     updateQuantity(lineItemId, validQuantity)
