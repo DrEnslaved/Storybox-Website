@@ -14,7 +14,9 @@
         "test:e2e:ui": "playwright test --ui",
         "test:e2e:headed": "playwright test --headed",
         "lint": "next lint",
-        "type-check": "tsc --noEmit"
+        "type-check": "tsc --noEmit",
+        "sanity:dev": "sanity dev",
+        "sanity:deploy": "sanity deploy"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.1.1",
