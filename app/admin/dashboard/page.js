@@ -112,7 +112,8 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Общо поръчки</p>
+                <p className="text-sm text-gray-600">Завършени поръчки</p>
+                <p className="text-xs text-gray-500 mt-0.5">(В процес, Изпратени, Доставени)</p>
                 <p className="text-3xl font-bold text-gray-900 mt-1">{stats.orders}</p>
               </div>
               <div className="p-3 bg-green-100 rounded-lg">
@@ -124,7 +125,8 @@ export default function AdminDashboard() {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-600">Общ приход</p>
+                <p className="text-sm text-gray-600">Приход от продажби</p>
+                <p className="text-xs text-gray-500 mt-0.5">(Без анулирани/чакащи)</p>
                 <p className="text-3xl font-bold text-gray-900 mt-1">{stats.revenue.toFixed(2)} лв</p>
               </div>
               <div className="p-3 bg-purple-100 rounded-lg">
