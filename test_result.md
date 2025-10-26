@@ -192,15 +192,15 @@ frontend:
 
   - task: "Shop Page with Filters Testing"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/app/shop/page.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
-      - working: "NA"
+      - working: false
         agent: "testing"
-        comment: "Need to test products loading, search functionality, category filters, price range sliders, filter combinations, active filters display, product cards, backorder badges, and empty state."
+        comment: "❌ CRITICAL BUG FOUND: Shop page loads with title 'Нашият магазин', products grid visible, search functionality works, filters panel toggles correctly with 3 category buttons and 2 price range sliders. However, 1 out of 2 products shows 0.00 лв price - this is a critical price display bug. Products are loading from admin_products API (2 products total). All other functionality works correctly."
 
   - task: "Product Detail Page Testing"
     implemented: true
