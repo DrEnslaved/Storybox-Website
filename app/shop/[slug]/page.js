@@ -29,29 +29,19 @@ export default function ProductDetailPage() {
 
   const fetchProduct = async () => {
     try {
-      // Try Medusa first
-      let response = await fetch(`/api/medusa/products/${params.slug}`)
-      
-      if (!response.ok) {
-        // Fallback to MongoDB
-        response = await fetch(`/api/products/${params.slug}`)
-      }
+      // Fetch from admin products (MongoDB)
+      const response = await fetch(`/api/products/${params.slug}`)
       
       if (response.ok) {
         const data = await response.json()
         setProduct(data.product)
         
-        // Set default variant (based on user tier or first variant)
+        // Set default variant if available
         if (data.product.variants && data.product.variants.length > 0) {
-          const userTier = user?.priceTier || 'standard'
-          const defaultVariant = data.product.variants.find(v => 
-            v.title?.toLowerCase() === userTier
-          ) || data.product.variants[0]
-          
-          setSelectedVariant(defaultVariant)
+          setSelectedVariant(data.product.variants[0])
         }
         
-        setQuantity(data.product.minQuantity || 10)
+        setQuantity(data.product.inventory?.minQuantity || 1)
       } else {
         router.push('/shop')
       }
