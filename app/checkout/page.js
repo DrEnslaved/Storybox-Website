@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
-import { useCart } from '@/contexts/SimpleCartContext'
+import { useCart } from '@/contexts/MedusaCartContext'
 import { CreditCard, MapPin, Package, ArrowLeft, Loader2 } from 'lucide-react'
 
 export default function CheckoutPage() {
