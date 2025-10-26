@@ -32,7 +32,7 @@ echo.
 echo Installing dependencies...
 cd /d "%~dp0"
 call yarn install
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [31m- Failed to install dependencies[0m
     pause
     exit /b 1
