@@ -64,7 +64,7 @@ a:focus-visible {
 @media (max-width: 640px) {
 /* Cookie Consent Banner Styling */
 .cookie-consent-container {
-    z-index: 50 !important;
+    z-index: 999999 !important; /* Higher than Sentry's widget */
     pointer-events: none !important;
 }
 
@@ -73,12 +73,33 @@ a:focus-visible {
 }
 
 .CookieConsent {
-    z-index: 50 !important;
+    z-index: 999999 !important; /* Higher than Sentry's widget */
     pointer-events: none !important;
 }
 
 .CookieConsent > * {
     pointer-events: auto !important;
+}
+
+/* Sentry Report a Bug Widget - Position Adjustment */
+/* Sentry widget typically has z-index of 100000, we push it above content but below cookie */
+.widget__feedback-button {
+    bottom: 70px !important; /* Push up to avoid cookie banner */
+    z-index: 9999 !important; /* Below cookie banner */
+}
+
+/* Alternative: If Sentry uses different classes */
+[data-sentry-feedback] {
+    bottom: 70px !important;
+    z-index: 9999 !important;
+}
+
+/* Sentry's feedback button variations */
+button[aria-label*="Report"],
+button[aria-label*="Bug"],
+.sentry-feedback-button {
+    bottom: 70px !important;
+    z-index: 9999 !important;
 }
 
 /* Mobile responsive cookie consent */
@@ -100,6 +121,15 @@ a:focus-visible {
     .cookie-consent-buttons button {
         flex: 1 !important;
         min-width: 0 !important;
+    }
+    
+    /* Adjust Sentry widget on mobile too */
+    .widget__feedback-button,
+    [data-sentry-feedback],
+    button[aria-label*="Report"],
+    button[aria-label*="Bug"],
+    .sentry-feedback-button {
+        bottom: 100px !important; /* More space on mobile due to vertical cookie banner */
     }
 }
 }
