@@ -176,7 +176,14 @@ export default function ShopPage() {
                         fill
                         className="object-cover"
                       />
-                      {!product.inStock && (
+                      {product.inventory?.status === 'backorder' && (
+                        <div className="absolute top-2 right-2">
+                          <span className="bg-orange-500 text-white px-3 py-1 rounded-md font-semibold text-sm">
+                            Предварителна поръчка
+                          </span>
+                        </div>
+                      )}
+                      {product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder && (
                         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                           <span className="bg-red-600 text-white px-4 py-2 rounded-md font-semibold">
                             Изчерпан
