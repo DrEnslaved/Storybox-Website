@@ -8,11 +8,15 @@ export function CartProvider({ children }) {
   const [cart, setCart] = useState(null) // Medusa cart object
   const [loading, setLoading] = useState(true)
   const [isOpen, setIsOpen] = useState(false)
+  const [initialized, setInitialized] = useState(false)
 
   // Initialize cart on mount
   useEffect(() => {
-    initializeCart()
-  }, [])
+    if (!initialized) {
+      setInitialized(true)
+      initializeCart()
+    }
+  }, [initialized])
 
   const initializeCart = async () => {
     console.log('🛒 Initializing cart...')
