@@ -8,7 +8,7 @@ async function seedProduct() {
   try {
     // Authenticate as admin
     console.log('1️⃣ Authenticating...');
-    const authResponse = await fetch(`${MEDUSA_URL}/admin/auth`, {
+    const authResponse = await fetch(`${MEDUSA_URL}/auth/user/emailpass`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
