@@ -146,6 +146,15 @@ export default function AdminDashboard() {
             <p className="text-sm text-gray-600">Преглед и управление на поръчки</p>
           </Link>
 
+          <Link
+            href="/admin/products"
+            className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6"
+          >
+            <Package className="text-brand-green mb-3" size={32} />
+            <h3 className="text-lg font-semibold text-gray-900 mb-1">Продукти</h3>
+            <p className="text-sm text-gray-600">Инвентар и SKU управление</p>
+          </Link>
+
           <a
             href="https://sanity.io/manage"
             target="_blank"
@@ -158,20 +167,6 @@ export default function AdminDashboard() {
             </div>
             <h3 className="text-lg font-semibold text-gray-900 mb-1">Съдържание</h3>
             <p className="text-sm text-gray-600">Blog, Projects, Services (Sanity CMS)</p>
-          </a>
-
-          <a
-            href="https://analytics.google.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-white rounded-lg shadow hover:shadow-lg transition-shadow p-6"
-          >
-            <div className="flex items-center gap-2 mb-3">
-              <TrendingUp className="text-brand-green" size={32} />
-              <ExternalLink size={16} className="text-gray-400" />
-            </div>
-            <h3 className="text-lg font-semibold text-gray-900 mb-1">Аналитика</h3>
-            <p className="text-sm text-gray-600">Google Analytics & Mixpanel</p>
           </a>
         </div>
 
