@@ -270,11 +270,22 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Product Management System Backend APIs"
-    - "All backend APIs tested and working"
+    - "Homepage Public Page Testing"
+    - "Shop Page with Filters Testing"
+    - "Product Detail Page Testing"
+    - "Cart and Checkout Flow Testing"
+    - "Admin Panel Authentication Testing"
+    - "Admin Dashboard Statistics Testing"
+    - "Admin Products Management Testing"
+    - "Admin Orders Management Testing"
+    - "Price Display Bug Testing"
+    - "Backorder Functionality Testing"
+    - "Customer Browse & Purchase Flow"
+    - "Admin Order Management Flow"
+    - "Admin Product Management Flow"
   stuck_tasks: []
-  test_all: false
-  test_priority: "backend_complete"
+  test_all: true
+  test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
