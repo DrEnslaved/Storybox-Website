@@ -530,7 +530,7 @@ export default function AdminProductsPage() {
                     ))}
                   </div>
                   
-                  {formData.gallery.length < 5 && (
+                  {(formData.gallery || []).length < 5 && (
                     <div>
                       <input
                         type="file"
