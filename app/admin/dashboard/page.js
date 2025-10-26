@@ -44,10 +44,18 @@ export default function AdminDashboard() {
       })
       if (ordersRes.ok) {
         const ordersData = await ordersRes.json()
+        
+        // Only count completed orders (delivered, shipped, processing)
+        // Exclude: pending, cancelled, annulled, backorder_pending
+        const completedStatuses = ['delivered', 'shipped', 'processing']
+        const completedOrders = ordersData.orders.filter(order => 
+          completedStatuses.includes(order.status)
+        )
+        
         setStats(prev => ({ 
           ...prev, 
-          orders: ordersData.total,
-          revenue: ordersData.orders.reduce((sum, order) => sum + (order.total || 0), 0)
+          orders: completedOrders.length,
+          revenue: completedOrders.reduce((sum, order) => sum + (order.total || 0), 0)
         }))
       }
     } catch (error) {
