@@ -114,8 +114,8 @@ export function CartProvider({ children }) {
       const cartId = cart?.id
       if (!cartId) return
 
-      const response = await fetch(`/api/medusa/cart/${cartId}/line-items/${lineItemId}`, {
-        method: 'PUT',
+      const response = await fetch(`/api/cart/${cartId}/line-items/${lineItemId}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quantity })
       })
