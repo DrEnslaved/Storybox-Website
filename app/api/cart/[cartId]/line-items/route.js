@@ -1,0 +1,33 @@
+import { NextResponse } from 'next/server'
+
+const MEDUSA_BACKEND_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+
+// Add line item to cart
+export async function POST(request, { params }) {
+  try {
+    const { cartId } = params
+    const body = await request.json()
+
+    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/carts/${cartId}/line-items`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-publishable-api-key': PUBLISHABLE_KEY,
+      },
+      body: JSON.stringify(body)
+    })
+
+    if (!response.ok) {
+      const error = await response.text()
+      console.error('Failed to add line item:', error)
+      return NextResponse.json({ error: 'Failed to add item to cart' }, { status: 500 })
+    }
+
+    const data = await response.json()
+    return NextResponse.json({ cart: data.cart })
+  } catch (error) {
+    console.error('Error adding line item:', error)
+    return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+}
