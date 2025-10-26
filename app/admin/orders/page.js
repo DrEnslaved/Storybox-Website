@@ -406,30 +406,36 @@ export default function AdminOrdersPage() {
               {/* Products */}
               <div>
                 <h3 className="font-bold text-gray-900 mb-3">Продукти</h3>
-                <div className="border rounded-lg divide-y">
-                  {selectedOrder.items?.map((item, idx) => (
-                    <div key={idx} className="p-4 flex justify-between items-center">
-                      <div className="flex-1">
-                        <p className="font-medium text-gray-900">{item.title || item.name}</p>
-                        {item.sku && (
-                          <p className="text-sm text-gray-600">
-                            SKU: <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">{item.sku}</span>
+                {Array.isArray(selectedOrder.items) && selectedOrder.items.length > 0 ? (
+                  <div className="border rounded-lg divide-y">
+                    {selectedOrder.items.map((item, idx) => (
+                      <div key={idx} className="p-4 flex justify-between items-center">
+                        <div className="flex-1">
+                          <p className="font-medium text-gray-900">{item.title || item.name || 'Product'}</p>
+                          {item.sku && (
+                            <p className="text-sm text-gray-600">
+                              SKU: <span className="font-mono bg-gray-100 px-2 py-0.5 rounded">{item.sku}</span>
+                            </p>
+                          )}
+                          {item.variant_title && (
+                            <p className="text-sm text-gray-500">Вариант: {item.variant_title}</p>
+                          )}
+                          <p className="text-sm text-gray-500">Количество: {item.quantity || 1}</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-semibold text-gray-900">{(item.price || 0).toFixed(2)} лв</p>
+                          <p className="text-sm text-gray-500">
+                            Общо: {((item.price || 0) * (item.quantity || 1)).toFixed(2)} лв
                           </p>
-                        )}
-                        {item.variant_title && (
-                          <p className="text-sm text-gray-500">Вариант: {item.variant_title}</p>
-                        )}
-                        <p className="text-sm text-gray-500">Количество: {item.quantity}</p>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="font-semibold text-gray-900">{item.price?.toFixed(2)} лв</p>
-                        <p className="text-sm text-gray-500">
-                          Общо: {(item.price * item.quantity).toFixed(2)} лв
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="border rounded-lg p-8 text-center text-gray-500">
+                    <p>Няма продукти в тази поръчка</p>
+                  </div>
+                )}
               </div>
 
               {/* Order Summary */}
