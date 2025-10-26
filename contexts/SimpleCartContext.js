@@ -156,6 +156,10 @@ export function CartProvider({ children }) {
     return cart.items.reduce((total, item) => total + item.quantity, 0)
   }
 
+  const getTotal = () => {
+    return cart.total || 0
+  }
+
   const value = {
     cart,
     loading,
@@ -166,6 +170,7 @@ export function CartProvider({ children }) {
     updateQuantity,
     clearCart,
     getItemCount,
+    getTotal,
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
