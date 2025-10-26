@@ -4,22 +4,27 @@ import { NextResponse } from 'next/server'
 export async function GET(request) {
   try {
     const MEDUSA_BACKEND_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
+    const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
     
     // Fetch products from Medusa store API
     const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        ...(PUBLISHABLE_KEY && { 'x-publishable-api-key': PUBLISHABLE_KEY }),
       },
       cache: 'no-store', // Disable caching for fresh data
     })
 
     if (!response.ok) {
       console.error('Medusa API error:', response.status, response.statusText)
+      const errorText = await response.text()
+      console.error('Error details:', errorText)
       return NextResponse.json({ 
         products: [],
         source: 'medusa',
-        error: 'Failed to fetch from Medusa'
+        error: 'Failed to fetch from Medusa',
+        details: errorText
       }, { status: 200 }) // Return empty array instead of error
     }
 
@@ -36,7 +41,7 @@ export async function GET(request) {
 
       // Get product images
       const productImages = product.images || []
-      const firstImage = productImages[0]?.url || '/placeholder-product.jpg'
+      const firstImage = productImages[0]?.url || '/placeholder-product.svg'
 
       return {
         id: product.id,
