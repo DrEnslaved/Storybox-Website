@@ -204,11 +204,49 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Price */}
-              <div className="flex items-baseline gap-2">
-                <span className="text-4xl font-bold text-brand-green">
-                  {currentPrice.toFixed(2)} лв
-                </span>
-                <span className="text-gray-500">/ бр.</span>
+              <div className="space-y-2">
+                <div className="flex items-baseline gap-2">
+                  <span className="text-4xl font-bold text-brand-green">
+                    {currentPrice.toFixed(2)} лв
+                  </span>
+                  <span className="text-gray-500">/ бр.</span>
+                </div>
+                
+                {/* Stock Status */}
+                {product.inventory?.status === 'in_stock' && product.inventory?.amount > 0 && (
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-green-100 text-green-800">
+                      <Check className="w-4 h-4 mr-1" />
+                      В наличност ({product.inventory.amount} бр.)
+                    </span>
+                  </div>
+                )}
+                
+                {product.inventory?.status === 'backorder' && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-orange-100 text-orange-800">
+                        📦 Предварителна поръчка
+                      </span>
+                    </div>
+                    {product.inventory?.backorderMessage && (
+                      <p className="text-sm text-gray-600 italic">
+                        {product.inventory.backorderMessage}
+                      </p>
+                    )}
+                    <p className="text-sm text-gray-700 bg-orange-50 p-3 rounded-lg border border-orange-200">
+                      <strong>Забележка:</strong> Този продукт е на предварителна поръчка. Вашата заявка ще бъде изпратена за одобрение и ще получите потвърждение за срока на доставка.
+                    </p>
+                  </div>
+                )}
+                
+                {product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder && (
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-red-100 text-red-800">
+                      ❌ Изчерпан
+                    </span>
+                  </div>
+                )}
               </div>
 
               {/* Variant Selection - Only show if user logged in OR only 1 variant */}
