@@ -1,4 +1,4 @@
-const { Medusa } = require("@medusajs/medusa-js");
+const Medusa = require("@medusajs/medusa-js").default;
 
 const medusa = new Medusa({ baseUrl: "http://localhost:9000", maxRetries: 3 });
 
