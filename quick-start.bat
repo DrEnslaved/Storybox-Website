@@ -13,7 +13,7 @@ echo Quick prerequisite check...
 
 REM Check Node.js
 where node >nul 2>&1
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [31m- Node.js not found. Please run setup-local-dev.bat instead[0m
     pause
     exit /b 1
@@ -21,7 +21,7 @@ if %errorlevel% neq 0 (
 
 REM Check Yarn
 where yarn >nul 2>&1
-if %errorlevel% neq 0 (
+if errorlevel 1 (
     echo [33m! Yarn not found. Installing...[0m
     call npm install -g yarn
 )
