@@ -12,6 +12,7 @@ export default function CartPage() {
   console.log('Cart state:', cart)
   console.log('Cart items:', cart?.items)
   console.log('Item count:', getItemCount())
+  console.log('Loading:', loading)
 
   const handleUpdateQuantity = (lineItemId, newQuantity, min = 1, max = 5000) => {
     const validQuantity = Math.max(min, Math.min(max, newQuantity))
