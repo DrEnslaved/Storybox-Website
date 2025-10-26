@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
-import { useCart } from '@/contexts/MedusaCartContext' // Use Medusa cart
+import { useCart } from '@/contexts/SimpleCartContext'
 import { ShoppingCart, Check, Minus, Plus, ArrowLeft, Loader2 } from 'lucide-react'
 
 export default function ProductDetailPage() {
