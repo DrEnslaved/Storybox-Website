@@ -178,89 +178,173 @@ backend:
         comment: "Sentry server-side monitoring configured with Node.js profiling integration. DSN configured, environment detection enabled."
 
 frontend:
-  - task: "Mobile Navigation Menu"
+  - task: "Homepage Public Page Testing"
     implemented: true
-    working: true
-    file: "/app/app/layout.js"
+    working: "NA"
+    file: "/app/app/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Fully functional mobile hamburger menu with slide-out navigation, cart integration, and user account menu. Tested on 375px, 768px, 1920px viewports."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test homepage loading, hero section, navigation menu, links functionality, mobile responsive layout, and cookie consent banner."
 
-  - task: "Responsive Contact Bar & Homepage"
+  - task: "Shop Page with Filters Testing"
     implemented: true
-    working: true
-    file: "/app/app/layout.js, /app/app/page.js"
+    working: "NA"
+    file: "/app/app/shop/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Complete mobile optimization with responsive text sizing, spacing, grids, and cookie consent banner. All sections scale properly across devices."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test products loading, search functionality, category filters, price range sliders, filter combinations, active filters display, product cards, backorder badges, and empty state."
 
-  - task: "Sentry Client-side Integration"
+  - task: "Product Detail Page Testing"
     implemented: true
-    working: true
-    file: "/app/sentry.client.config.js"
+    working: "NA"
+    file: "/app/app/shop/[slug]/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Sentry client monitoring with session replay, error tracking, performance monitoring, and feedback widget. Integrated into Next.js config."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test product information loading, price display, SKU display, backorder status, image gallery, variant selection, quantity selector, add to cart functionality for backorder items."
 
-  - task: "Jest Testing Framework"
+  - task: "Cart Page Testing"
     implemented: true
-    working: true
-    file: "/app/jest.config.js, /app/jest.setup.js"
+    working: "NA"
+    file: "/app/app/cart/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Jest configured with React Testing Library, jsdom environment, coverage collection, and Next.js integration. Setup file includes router and image mocks."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test cart items display, product names/SKUs/prices, quantity updates, remove item functionality, cart total calculation, continue shopping and checkout buttons."
 
-  - task: "Playwright E2E Testing"
+  - task: "Checkout Page Testing"
     implemented: true
-    working: true
-    file: "/app/playwright.config.js, /app/e2e/*.spec.js"
+    working: "NA"
+    file: "/app/app/checkout/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Playwright configured with multi-browser and mobile testing. Created E2E tests for homepage, shopping flow, and authentication covering critical user journeys."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test form fields display, shipping address form, form validation, order summary, submit order functionality, order creation, and redirect to confirmation."
 
-  - task: "GitHub Actions CI/CD Pipeline"
+  - task: "Admin Login Testing"
     implemented: true
-    working: true
-    file: "/.github/workflows/ci-cd.yml"
+    working: "NA"
+    file: "/app/app/admin/login/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Complete CI/CD pipeline with lint, test, E2E, build, deploy, and notify stages. Includes Sentry release tracking, artifact uploads, and automated deployment on main branch."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test login form display, authentication with admin@storybox.bg / yxlnLfy6F46vqM1lnF7tUrcdM, successful login redirect to dashboard, and token storage."
 
-  - task: "Documentation"
+  - task: "Admin Dashboard Testing"
     implemented: true
-    working: true
-    file: "/app/docs/TESTING.md, /app/docs/CI-CD.md, /app/README.md"
+    working: "NA"
+    file: "/app/app/admin/dashboard/page.js"
     stuck_count: 0
-    priority: "medium"
-    needs_retesting: false
+    priority: "high"
+    needs_retesting: true
     status_history:
-      - working: true
-        agent: "main"
-        comment: "Comprehensive documentation created for testing guide, CI/CD pipeline, and updated main README with new testing and monitoring sections."
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test statistics loading (completed orders count, revenue calculation excluding pending/cancelled/annulled), users count display, and navigation links to users/orders/products."
+
+  - task: "Admin Products Management Testing"
+    implemented: true
+    working: "NA"
+    file: "/app/app/admin/products/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test products list loading, comprehensive product form (basic info, images, pricing, inventory, shipping, SEO, B2B, variants), image upload, create/edit/delete product functionality, and price field validation."
+
+  - task: "Admin Orders Management Testing"
+    implemented: true
+    working: "NA"
+    file: "/app/app/admin/orders/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test orders list loading, table display with products/SKU, search by order ID/customer/SKU, filter by status, status badges, inline status editor, order details modal, status update form, and admin notes functionality."
+
+  - task: "Price Display Bug Testing"
+    implemented: true
+    working: "NA"
+    file: "/app/app/shop/page.js, /app/app/shop/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to verify all products show correct prices (not 0.00 лв) in shop grid, product detail, cart, and getProductPrice() function works with both priceTiers and direct price field."
+
+  - task: "Backorder Functionality Testing"
+    implemented: true
+    working: "NA"
+    file: "/app/app/shop/page.js, /app/app/shop/[slug]/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test backorder products can be added to cart, products without variants have default variant created, backorder button shows correct text, backorder badge displays, and backorder message displays if set."
+
+  - task: "Customer Browse & Purchase Flow"
+    implemented: true
+    working: "NA"
+    file: "/app/app/page.js, /app/app/shop/page.js, /app/app/cart/page.js, /app/app/checkout/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test complete customer flow: visit homepage → navigate to shop → use category filter → adjust price range → click product → add to cart (including backorder item) → view cart → proceed to checkout → fill shipping info → complete order."
+
+  - task: "Admin Order Management Flow"
+    implemented: true
+    working: "NA"
+    file: "/app/app/admin/login/page.js, /app/app/admin/dashboard/page.js, /app/app/admin/orders/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test admin flow: login to admin → view dashboard statistics → go to orders → search by SKU → open order details → update order status → add admin notes → save changes."
+
+  - task: "Admin Product Management Flow"
+    implemented: true
+    working: "NA"
+    file: "/app/app/admin/login/page.js, /app/app/admin/products/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "Need to test admin flow: go to admin products → click add product → fill comprehensive form → upload images → set backorder settings → add variant → save product → verify product appears in shop → edit product → update price/inventory."
 
 metadata:
   created_by: "main_agent"
