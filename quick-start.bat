@@ -84,15 +84,15 @@ echo Checking MongoDB connection...
 
 REM Check if MongoDB is accessible
 where mongosh >nul 2>&1
-if %errorlevel% equ 0 (
-    mongosh --eval "db.version()" --quiet >nul 2>&1
-    if %errorlevel% equ 0 (
-        echo [32m+ MongoDB is running[0m
-    ) else (
-        echo [33m! MongoDB not accessible. Make sure it's running or update MONGO_URL in .env[0m
-    )
-) else (
+if errorlevel 1 (
     echo [33m! MongoDB client not found locally. Using configured MONGO_URL from .env[0m
+) else (
+    mongosh --eval "db.version()" --quiet >nul 2>&1
+    if errorlevel 1 (
+        echo [33m! MongoDB not accessible. Make sure it's running or update MONGO_URL in .env[0m
+    ) else (
+        echo [32m+ MongoDB is running[0m
+    )
 )
 
 echo.
