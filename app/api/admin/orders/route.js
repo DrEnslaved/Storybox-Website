@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { connectDB } from '@/lib/db'
+import { connectToDatabase } from '@/lib/db'
 import { requireAdmin } from '@/lib/admin-auth'
 
 export async function GET(request) {
@@ -14,7 +14,7 @@ export async function GET(request) {
     const limit = parseInt(searchParams.get('limit') || '50')
     const skip = parseInt(searchParams.get('skip') || '0')
 
-    const { db } = await connectDB()
+    const { db } = await connectToDatabase()
     
     let query = {}
     if (status) {
