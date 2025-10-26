@@ -334,7 +334,7 @@ yarn test:e2e:ui       # Playwright UI
 
 ### Current Environment
 - **Platform:** Kubernetes
-- **URL:** https://adminpanel-dev-1.preview.emergentagent.com
+- **URL:** https://storybox-blog.preview.emergentagent.com
 - **Status:** ✅ Live and operational
 
 ### CI/CD Pipeline

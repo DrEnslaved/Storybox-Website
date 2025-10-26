@@ -12,7 +12,7 @@ from io import BytesIO
 from PIL import Image
 
 # Configuration
-BASE_URL = "https://adminpanel-dev-1.preview.emergentagent.com"
+BASE_URL = "https://storybox-blog.preview.emergentagent.com"
 ADMIN_EMAIL = "admin@storybox.bg"
 ADMIN_PASSWORD = "yxlnLfy6F46vqM1lnF7tUrcdM"
 
