@@ -1,4 +1,4 @@
-module.exports = async ({container}) => {
+export default async ({container}) => {
   const productModuleService = container.resolve("productModuleService");
   const regionModuleService = container.resolve("regionModuleService");
   const salesChannelModuleService = container.resolve("salesChannelModuleService");
