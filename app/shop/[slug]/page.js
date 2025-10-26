@@ -363,10 +363,19 @@ export default function ProductDetailPage() {
               {/* Add to Cart Button */}
               <button
                 onClick={handleAddToCart}
-                disabled={!selectedVariant || addingToCart || cartLoading}
-                className="w-full bg-brand-green text-white py-4 rounded-lg font-semibold text-lg 
-                         hover:bg-green-600 transition-all flex items-center justify-center gap-2
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={
+                  !selectedVariant || 
+                  addingToCart || 
+                  cartLoading || 
+                  (product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder)
+                }
+                className={`w-full py-4 rounded-lg font-semibold text-lg 
+                         transition-all flex items-center justify-center gap-2
+                         disabled:opacity-50 disabled:cursor-not-allowed ${
+                           product.inventory?.status === 'backorder'
+                             ? 'bg-orange-500 hover:bg-orange-600 text-white'
+                             : 'bg-brand-green hover:bg-green-600 text-white'
+                         }`}
               >
                 {addingToCart ? (
                   <>
@@ -378,6 +387,13 @@ export default function ProductDetailPage() {
                     <Check className="w-5 h-5" />
                     <span>Добавено в количката!</span>
                   </>
+                ) : product.inventory?.status === 'backorder' ? (
+                  <>
+                    <ShoppingCart className="w-5 h-5" />
+                    <span>Заявка за предварителна поръчка</span>
+                  </>
+                ) : product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder ? (
+                  <span>Временно недостъпен</span>
                 ) : (
                   <>
                     <ShoppingCart className="w-5 h-5" />
@@ -385,6 +401,12 @@ export default function ProductDetailPage() {
                   </>
                 )}
               </button>
+              
+              {product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder && (
+                <p className="text-center text-sm text-gray-500">
+                  Свържете се с нас за наличност: <a href="tel:+359899973002" className="text-brand-green hover:underline">+359 899 973 002</a>
+                </p>
+              )}
 
               {!user && (
                 <p className="text-sm text-center text-gray-600">
