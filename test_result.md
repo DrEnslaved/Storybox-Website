@@ -252,15 +252,15 @@ frontend:
 
   - task: "Admin Dashboard Testing"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/app/admin/dashboard/page.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
-      - working: "NA"
+      - working: true
         agent: "testing"
-        comment: "Need to test statistics loading (completed orders count, revenue calculation excluding pending/cancelled/annulled), users count display, and navigation links to users/orders/products."
+        comment: "✅ Admin dashboard works perfectly. Dashboard title 'Admin Dashboard' displayed, 7 statistics cards found, completed orders statistics showing '1' with proper label '(В процес, Изпратени, Доставени)', revenue calculation showing '350.00 лв' with label '(Без анулирани/чакащи)', 3 management navigation links working. All statistics calculations working correctly."
 
   - task: "Admin Products Management Testing"
     implemented: true
