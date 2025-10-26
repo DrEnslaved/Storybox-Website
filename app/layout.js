@@ -341,7 +341,7 @@ export default function RootLayout({ children }) {
       <body>
         <AnalyticsProvider>
           <AuthProvider>
-            <MedusaCartProvider>
+            <CartProvider>
               {/* Skip to main content link for accessibility */}
               <a 
                 href="#main-content" 
