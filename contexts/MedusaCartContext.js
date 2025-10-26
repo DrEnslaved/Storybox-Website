@@ -21,7 +21,7 @@ export function CartProvider({ children }) {
       
       if (savedCartId) {
         // Try to retrieve the existing cart
-        const response = await fetch(`/api/medusa/cart/${savedCartId}`)
+        const response = await fetch(`/api/cart/${savedCartId}`)
         if (response.ok) {
           const data = await response.json()
           setCart(data.cart)
@@ -40,7 +40,7 @@ export function CartProvider({ children }) {
 
   const createNewCart = async () => {
     try {
-      const response = await fetch('/api/medusa/cart', {
+      const response = await fetch('/api/cart', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       })
@@ -66,7 +66,7 @@ export function CartProvider({ children }) {
 
       const cartId = cart?.id || localStorage.getItem('medusa_cart_id')
       
-      const response = await fetch(`/api/medusa/cart/${cartId}/line-items`, {
+      const response = await fetch(`/api/cart/${cartId}/line-items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ variant_id: variantId, quantity })
@@ -91,7 +91,7 @@ export function CartProvider({ children }) {
       const cartId = cart?.id
       if (!cartId) return
 
-      const response = await fetch(`/api/medusa/cart/${cartId}/line-items/${lineItemId}`, {
+      const response = await fetch(`/api/cart/${cartId}/line-items/${lineItemId}`, {
         method: 'DELETE'
       })
 
