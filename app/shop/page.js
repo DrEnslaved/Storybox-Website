@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
-import { Filter, Search, ShoppingCart } from 'lucide-react'
+import { Filter, Search, ShoppingCart, X, SlidersHorizontal } from 'lucide-react'
 
 export default function ShopPage() {
   const { user } = useAuth()
@@ -15,14 +15,8 @@ export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [showFilters, setShowFilters] = useState(false)
-
-  const categories = [
-    { value: 'all', label: 'Всички' },
-    { value: 'embroidery', label: 'Машинна бродерия' },
-    { value: 'sublimation', label: 'Сублимация' },
-    { value: 'transfer', label: 'Трансферен печат' },
-    { value: 'laser', label: 'Лазерно рязане' }
-  ]
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 })
+  const [activePriceRange, setActivePriceRange] = useState({ min: 0, max: 1000 })
 
   useEffect(() => {
     fetchProducts()
@@ -30,12 +24,23 @@ export default function ShopPage() {
 
   const fetchProducts = async () => {
     try {
-      // Fetch from admin products (MongoDB)
       const response = await fetch('/api/products')
       
       if (response.ok) {
         const data = await response.json()
         setProducts(data.products || [])
+        
+        // Calculate price range from products
+        if (data.products && data.products.length > 0) {
+          const prices = data.products.map(p => getProductPrice(p)).filter(p => p > 0)
+          if (prices.length > 0) {
+            const minPrice = Math.floor(Math.min(...prices))
+            const maxPrice = Math.ceil(Math.max(...prices))
+            setPriceRange({ min: minPrice, max: maxPrice })
+            setActivePriceRange({ min: minPrice, max: maxPrice })
+          }
+        }
+        
         console.log(`Products loaded from ${data.source}:`, data.products?.length)
       } else {
         console.error('Failed to fetch products')
@@ -47,8 +52,26 @@ export default function ShopPage() {
     }
   }
 
+  // Get unique categories from products
+  const categories = useMemo(() => {
+    const uniqueCategories = new Set()
+    products.forEach(product => {
+      if (product.category) {
+        uniqueCategories.add(product.category)
+      }
+    })
+    
+    return [
+      { value: 'all', label: 'Всички продукти', count: products.length },
+      ...Array.from(uniqueCategories).map(cat => ({
+        value: cat,
+        label: cat,
+        count: products.filter(p => p.category === cat).length
+      }))
+    ]
+  }, [products])
+
   const getProductPrice = (product) => {
-    // Try to get price from tiers first (for backwards compatibility)
     const userTier = user?.priceTier || 'standard'
     const tierPrice = product.priceTiers?.find(t => t.tierName === userTier)
     
@@ -56,21 +79,28 @@ export default function ShopPage() {
       return tierPrice.price
     }
     
-    // Fall back to direct price field (new admin products)
     if (product.price != null) {
       return product.price
     }
     
-    // Last resort: first tier price or 0
     return product.priceTiers?.[0]?.price || 0
   }
 
   const filteredProducts = products.filter(product => {
+    const price = getProductPrice(product)
     const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    return matchesCategory && matchesSearch
+    const matchesSearch = product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                         product.description?.toLowerCase().includes(searchQuery.toLowerCase())
+    const matchesPrice = price >= activePriceRange.min && price <= activePriceRange.max
+    
+    return matchesCategory && matchesSearch && matchesPrice
   })
+
+  const handleResetFilters = () => {
+    setSelectedCategory('all')
+    setSearchQuery('')
+    setActivePriceRange(priceRange)
+  }
 
   if (loading) {
     return (
