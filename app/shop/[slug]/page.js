@@ -62,11 +62,21 @@ export default function ProductDetailPage() {
       return selectedVariant.price
     }
     
-    // Fallback for old MongoDB products
+    // Try price tiers first (for backwards compatibility)
     if (product?.priceTiers) {
       const userTier = user?.priceTier || 'standard'
       const tierPrice = product.priceTiers.find(t => t.tierName === userTier)
-      return tierPrice ? tierPrice.price : product.priceTiers[0]?.price || 0
+      if (tierPrice) {
+        return tierPrice.price
+      }
+      if (product.priceTiers[0]?.price) {
+        return product.priceTiers[0].price
+      }
+    }
+    
+    // Fall back to direct price field (new admin products)
+    if (product?.price != null) {
+      return product.price
     }
     
     return 0
