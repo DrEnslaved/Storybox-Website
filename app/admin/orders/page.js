@@ -230,17 +230,21 @@ export default function AdminOrdersPage() {
                         </td>
                         <td className="px-6 py-4">
                           <div className="text-sm text-gray-900">
-                            {order.items?.map((item, idx) => (
-                              <div key={idx} className="mb-1">
-                                <span className="font-medium">{item.title || item.name}</span>
-                                {item.sku && (
-                                  <span className="ml-2 text-xs bg-gray-100 px-2 py-1 rounded font-mono">
-                                    SKU: {item.sku}
-                                  </span>
-                                )}
-                                <span className="text-gray-500 ml-2">x{item.quantity}</span>
-                              </div>
-                            ))}
+                            {Array.isArray(order.items) && order.items.length > 0 ? (
+                              order.items.map((item, idx) => (
+                                <div key={idx} className="mb-1">
+                                  <span className="font-medium">{item.title || item.name || 'Product'}</span>
+                                  {item.sku && (
+                                    <span className="ml-2 text-xs bg-gray-100 px-2 py-1 rounded font-mono">
+                                      SKU: {item.sku}
+                                    </span>
+                                  )}
+                                  <span className="text-gray-500 ml-2">x{item.quantity || 1}</span>
+                                </div>
+                              ))
+                            ) : (
+                              <span className="text-gray-500 italic">Няма продукти</span>
+                            )}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
