@@ -24,21 +24,33 @@ export default function CartPage() {
 
   if (!cart?.items || cart.items.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12">
-        <div className="text-center max-w-md mx-auto px-4">
-          <ShoppingBag className="mx-auto mb-6 text-gray-400" size={80} />
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
+        <div className="text-center max-w-lg mx-auto bg-white rounded-2xl shadow-lg p-8 md:p-12">
+          <div className="mb-6">
+            <ShoppingBag className="mx-auto text-gray-300" size={120} strokeWidth={1.5} />
+          </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
             Количката е празна
-          </h2>
-          <p className="text-gray-600 mb-8">
-            Добавете продукти от нашия магазин
+          </h1>
+          <p className="text-lg text-gray-600 mb-8">
+            Все още няма добавени продукти. Разгледайте нашия магазин и намерете нещо, което ви харесва!
           </p>
-          <Link
-            href="/shop"
-            className="inline-block bg-brand-green hover:bg-brand-green-dark text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold transition-colors"
-          >
-            Разгледай продукти
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link
+              href="/shop"
+              className="inline-flex items-center justify-center gap-2 bg-brand-green hover:bg-green-600 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all transform hover:scale-105 shadow-md"
+            >
+              <ShoppingBag size={20} />
+              Разгледай продукти
+              <ArrowRight size={20} />
+            </Link>
+            <Link
+              href="/"
+              className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-300 px-8 py-4 rounded-lg text-lg font-semibold transition-colors"
+            >
+              Начална страница
+            </Link>
+          </div>
         </div>
       </div>
     )
