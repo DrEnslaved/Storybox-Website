@@ -122,7 +122,13 @@ export function CartProvider({ children }) {
     try {
       // Create a new cart (effectively clearing the old one)
       localStorage.removeItem('medusa_cart_id')
-      await createNewCart()
+      
+      const res = await fetch('/api/cart', { method: 'POST' })
+      if (res.ok) {
+        const { cart: newCart } = await res.json()
+        setCart(newCart)
+        localStorage.setItem('medusa_cart_id', newCart.id)
+      }
     } catch (error) {
       console.error('Error clearing cart:', error)
     }
