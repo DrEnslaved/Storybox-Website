@@ -54,6 +54,48 @@ export default function AdminOrdersPage() {
     setShowOrderModal(true)
   }
 
+  const handleAnnulOrder = async (orderId) => {
+    const token = localStorage.getItem('admin_token')
+    if (!token) {
+      router.push('/admin/login')
+      return
+    }
+
+    if (!confirm('Сигурни ли сте, че искате да анулирате тази поръчка?')) {
+      return
+    }
+
+    try {
+      const response = await fetch(`/api/admin/orders/${orderId}/annul`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}` }
+      })
+
+      if (response.ok) {
+        // Update the order status in the local state
+        setOrders(orders.map(order => 
+          order.id === orderId 
+            ? { ...order, status: 'annulled' }
+            : order
+        ))
+        
+        // Update selected order if it's the one being annulled
+        if (selectedOrder && selectedOrder.id === orderId) {
+          setSelectedOrder({ ...selectedOrder, status: 'annulled' })
+        }
+        
+        alert('Поръчката беше успешно анулирана')
+      } else if (response.status === 401) {
+        router.push('/admin/login')
+      } else {
+        alert('Грешка при анулиране на поръчката')
+      }
+    } catch (error) {
+      console.error('Error annulling order:', error)
+      alert('Грешка при анулиране на поръчката')
+    }
+  }
+
   const filteredOrders = orders.filter(order =>
     order.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     order.userId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
