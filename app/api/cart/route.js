@@ -6,7 +6,12 @@ const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
 // Create a new cart
 export async function POST(request) {
   try {
-    const body = await request.json()
+    let body = {}
+    try {
+      body = await request.json()
+    } catch (e) {
+      // No body sent, use defaults
+    }
     const { region_id = 'reg_01K8H69A87F81C7HE74RZENY8S' } = body
 
     const response = await fetch(`${MEDUSA_BACKEND_URL}/store/carts`, {
