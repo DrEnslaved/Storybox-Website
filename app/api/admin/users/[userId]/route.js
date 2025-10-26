@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { connectDB } from '@/lib/db'
+import { connectToDatabase } from '@/lib/db'
 import { requireAdmin } from '@/lib/admin-auth'
 import { ObjectId } from 'mongodb'
 
@@ -13,7 +13,7 @@ export async function PATCH(request, { params }) {
     const { userId } = params
     const updates = await request.json()
 
-    const { db } = await connectDB()
+    const { db } = await connectToDatabase()
     
     // Only allow updating specific fields
     const allowedUpdates = {}
@@ -46,7 +46,7 @@ export async function DELETE(request, { params }) {
 
   try {
     const { userId } = params
-    const { db } = await connectDB()
+    const { db } = await connectToDatabase()
 
     const result = await db.collection('users').deleteOne({
       _id: new ObjectId(userId)
