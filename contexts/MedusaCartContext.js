@@ -46,18 +46,6 @@ export function CartProvider({ children }) {
     
     init()
   }, [])
-        console.log('✅ New cart created:', data.cart?.id)
-        setCart(data.cart)
-        localStorage.setItem('medusa_cart_id', data.cart.id)
-      } else {
-        console.error('❌ Failed to create cart:', response.status)
-      }
-    } catch (error) {
-      console.error('❌ Error creating cart:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   const addToCart = async (variantId, quantity = 1) => {
     try {
