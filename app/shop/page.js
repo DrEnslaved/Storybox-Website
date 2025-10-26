@@ -383,12 +383,15 @@ export default function ShopPage() {
                   <Link href={`/shop/${product.slug}`}>
                     <div className="relative h-48 md:h-64 bg-gray-200">
                       <Image
-                        src={product.image}
+                        src={product.image || '/placeholder-product.jpg'}
                         alt={product.name}
                         fill
                         className="object-cover"
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
                         priority={index === 0}
+                        onError={(e) => {
+                          e.currentTarget.src = '/placeholder-product.jpg'
+                        }}
                       />
                       {product.inventory?.status === 'backorder' && (
                         <div className="absolute top-2 right-2">
