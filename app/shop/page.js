@@ -30,20 +30,15 @@ export default function ShopPage() {
 
   const fetchProducts = async () => {
     try {
-      // Fetch from Medusa using new clean API
-      let response = await fetch('/api/medusa/products')
-      let source = 'medusa'
-      
-      if (!response.ok) {
-        // Fallback to MongoDB
-        response = await fetch('/api/products')
-        source = 'mongodb'
-      }
+      // Fetch from admin products (MongoDB)
+      const response = await fetch('/api/products')
       
       if (response.ok) {
         const data = await response.json()
         setProducts(data.products || [])
-        console.log(`Products loaded from ${source}:`, data.products?.length)
+        console.log(`Products loaded from ${data.source}:`, data.products?.length)
+      } else {
+        console.error('Failed to fetch products')
       }
     } catch (error) {
       console.error('Error fetching products:', error)
