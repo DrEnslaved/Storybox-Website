@@ -207,17 +207,26 @@ export default function ShopPage() {
                     </Link>
                     
                     <p className="text-gray-600 text-sm mb-4 line-clamp-2">
-                      {product.description}
+                      {product.description?.replace(/<[^>]*>/g, '') || 'Персонализирани продукти за вашия бизнес'}
                     </p>
+                    
+                    {/* Stock Status Badge */}
+                    {product.inventory?.status === 'backorder' && (
+                      <div className="mb-3">
+                        <span className="inline-flex items-center px-2 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-800">
+                          📦 Предварителна поръчка
+                        </span>
+                      </div>
+                    )}
                     
                     <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                       <div>
                         <div className="text-2xl font-bold text-brand-green">
-                          {getProductPrice(product).toFixed(2)} лв
+                          {product.price?.toFixed(2) || '0.00'} лв
                         </div>
-                        {product.minQuantity > 1 && (
+                        {product.inventory?.minQuantity > 1 && (
                           <div className="text-xs text-gray-500">
-                            Мин. {product.minQuantity} бр.
+                            Мин. {product.inventory.minQuantity} бр.
                           </div>
                         )}
                       </div>
