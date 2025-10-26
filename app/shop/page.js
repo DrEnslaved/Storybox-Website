@@ -375,7 +375,7 @@ export default function ShopPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
-              {filteredProducts.map((product) => (
+              {filteredProducts.map((product, index) => (
                 <div
                   key={product.id}
                   className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow flex flex-col h-full"
@@ -387,6 +387,8 @@ export default function ShopPage() {
                         alt={product.name}
                         fill
                         className="object-cover"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        priority={index === 0}
                       />
                       {product.inventory?.status === 'backorder' && (
                         <div className="absolute top-2 right-2">
