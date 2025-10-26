@@ -55,8 +55,8 @@ export default function CheckoutPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          items: cart,
-          total: getTotal(),
+          items: cart.items,
+          total: cart.total || getTotal(),
           shippingAddress,
           notes: shippingAddress.notes
         }),
@@ -64,8 +64,10 @@ export default function CheckoutPage() {
 
       if (response.ok) {
         const data = await response.json()
-        clearCart()
+        // Navigate first, then clear cart
         router.push(`/order-confirmation/${data.orderId}`)
+        // Clear cart after a short delay to ensure navigation completes
+        setTimeout(() => clearCart(), 1000)
       } else {
         const error = await response.json()
         setError(error.error || 'Грешка при поръчката')
