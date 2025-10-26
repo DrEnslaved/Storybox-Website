@@ -48,9 +48,21 @@ export default function ShopPage() {
   }
 
   const getProductPrice = (product) => {
+    // Try to get price from tiers first (for backwards compatibility)
     const userTier = user?.priceTier || 'standard'
     const tierPrice = product.priceTiers?.find(t => t.tierName === userTier)
-    return tierPrice ? tierPrice.price : product.priceTiers?.[0]?.price || 0
+    
+    if (tierPrice) {
+      return tierPrice.price
+    }
+    
+    // Fall back to direct price field (new admin products)
+    if (product.price != null) {
+      return product.price
+    }
+    
+    // Last resort: first tier price or 0
+    return product.priceTiers?.[0]?.price || 0
   }
 
   const filteredProducts = products.filter(product => {
