@@ -98,12 +98,20 @@ export default function AdminOrdersPage() {
     }
   }
 
-  const filteredOrders = orders.filter(order =>
-    order.id?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.userId?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.shippingAddress?.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    order.items?.some(item => item.sku?.toLowerCase().includes(searchTerm.toLowerCase()))
-  )
+  const filteredOrders = orders.filter(order => {
+    const searchLower = searchTerm.toLowerCase()
+    return (
+      order.id?.toLowerCase().includes(searchLower) ||
+      order.userId?.toLowerCase().includes(searchLower) ||
+      order.shippingAddress?.name?.toLowerCase().includes(searchLower) ||
+      order.shippingAddress?.email?.toLowerCase().includes(searchLower) ||
+      (Array.isArray(order.items) && order.items.some(item => 
+        item.sku?.toLowerCase().includes(searchLower) ||
+        item.title?.toLowerCase().includes(searchLower) ||
+        item.name?.toLowerCase().includes(searchLower)
+      ))
+    )
+  })
 
   const getStatusBadge = (status) => {
     const badges = {
