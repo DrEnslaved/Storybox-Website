@@ -178,7 +178,7 @@ export default function ShopPage() {
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
+                  className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow flex flex-col h-full"
                 >
                   <Link href={`/shop/${product.slug}`}>
                     <div className="relative h-48 md:h-64 bg-gray-200">
