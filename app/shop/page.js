@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/CartContext'
-import { Filter, Search, ShoppingCart, X, SlidersHorizontal } from 'lucide-react'
+import { Filter, Search, ShoppingCart, X, SlidersHorizontal, Package } from 'lucide-react'
 
 export default function ShopPage() {
   const { user } = useAuth()
