@@ -127,71 +127,226 @@ export default function ShopPage() {
       {/* Search and Filter Bar */}
       <section className="bg-white shadow-sm sticky top-[73px] z-40 py-4">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
-            {/* Search */}
-            <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-              <input
-                type="text"
-                placeholder="Търсене на продукти..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                aria-label="Търсене на продукти"
-              />
+          <div className="flex flex-col gap-4">
+            {/* Top Row: Search and Filter Button */}
+            <div className="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+              {/* Search */}
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                <input
+                  type="text"
+                  placeholder="Търсене на продукти..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                  aria-label="Търсене на продукти"
+                />
+              </div>
+
+              {/* Filter Toggle */}
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center justify-center gap-2 px-4 py-2 border-2 border-brand-green text-brand-green rounded-md hover:bg-brand-green hover:text-white transition-colors"
+                aria-label="Покажи филтри"
+                aria-expanded={showFilters}
+              >
+                <SlidersHorizontal size={20} />
+                <span>Филтри</span>
+                {(selectedCategory !== 'all' || activePriceRange.min !== priceRange.min || activePriceRange.max !== priceRange.max) && (
+                  <span className="ml-1 px-2 py-0.5 bg-brand-green text-white text-xs rounded-full">
+                    {[
+                      selectedCategory !== 'all' ? 1 : 0,
+                      (activePriceRange.min !== priceRange.min || activePriceRange.max !== priceRange.max) ? 1 : 0
+                    ].reduce((a, b) => a + b, 0)}
+                  </span>
+                )}
+              </button>
             </div>
 
-            {/* Mobile Filter Toggle */}
-            <button
-              onClick={() => setShowFilters(!showFilters)}
-              className="md:hidden flex items-center gap-2 px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50"
-              aria-label="Покажи филтри"
-              aria-expanded={showFilters}
-            >
-              <Filter size={20} />
-              Филтри
-            </button>
+            {/* Filters Panel */}
+            {showFilters && (
+              <div className="border-t pt-4 space-y-4">
+                {/* Category Filter */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-gray-900 flex items-center gap-2">
+                      <Filter size={18} />
+                      Категория
+                    </h3>
+                    {selectedCategory !== 'all' && (
+                      <button
+                        onClick={() => setSelectedCategory('all')}
+                        className="text-sm text-brand-green hover:underline"
+                      >
+                        Изчисти
+                      </button>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {categories.map((category) => (
+                      <button
+                        key={category.value}
+                        onClick={() => setSelectedCategory(category.value)}
+                        className={`px-4 py-2 rounded-full border-2 transition-colors text-sm ${
+                          selectedCategory === category.value
+                            ? 'bg-brand-green border-brand-green text-white'
+                            : 'border-gray-300 text-gray-700 hover:border-brand-green hover:text-brand-green'
+                        }`}
+                        aria-pressed={selectedCategory === category.value}
+                      >
+                        {category.label} ({category.count})
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
-            {/* Desktop Categories */}
-            <div className="hidden md:flex gap-2 flex-wrap">
-              {categories.map((category) => (
-                <button
-                  key={category.value}
-                  onClick={() => setSelectedCategory(category.value)}
-                  className={`px-4 py-2 rounded-full border-2 transition-colors ${
-                    selectedCategory === category.value
-                      ? 'bg-brand-green border-brand-green text-white'
-                      : 'border-brand-green text-brand-green hover:bg-brand-green hover:text-white'
-                  }`}
-                  aria-pressed={selectedCategory === category.value}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
+                {/* Price Range Filter */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <h3 className="font-semibold text-gray-900">Ценови диапазон</h3>
+                    {(activePriceRange.min !== priceRange.min || activePriceRange.max !== priceRange.max) && (
+                      <button
+                        onClick={() => setActivePriceRange(priceRange)}
+                        className="text-sm text-brand-green hover:underline"
+                      >
+                        Изчисти
+                      </button>
+                    )}
+                  </div>
+                  
+                  <div className="space-y-4">
+                    {/* Price Display */}
+                    <div className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-600">От:</span>
+                        <span className="font-semibold text-brand-green">{activePriceRange.min.toFixed(0)} лв</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-gray-600">До:</span>
+                        <span className="font-semibold text-brand-green">{activePriceRange.max.toFixed(0)} лв</span>
+                      </div>
+                    </div>
+
+                    {/* Range Sliders */}
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-xs text-gray-600 mb-1 block">Минимална цена</label>
+                        <input
+                          type="range"
+                          min={priceRange.min}
+                          max={priceRange.max}
+                          step="1"
+                          value={activePriceRange.min}
+                          onChange={(e) => {
+                            const newMin = parseInt(e.target.value)
+                            if (newMin <= activePriceRange.max) {
+                              setActivePriceRange(prev => ({ ...prev, min: newMin }))
+                            }
+                          }}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-green"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs text-gray-600 mb-1 block">Максимална цена</label>
+                        <input
+                          type="range"
+                          min={priceRange.min}
+                          max={priceRange.max}
+                          step="1"
+                          value={activePriceRange.max}
+                          onChange={(e) => {
+                            const newMax = parseInt(e.target.value)
+                            if (newMax >= activePriceRange.min) {
+                              setActivePriceRange(prev => ({ ...prev, max: newMax }))
+                            }
+                          }}
+                          className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-brand-green"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Number Inputs */}
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <input
+                          type="number"
+                          min={priceRange.min}
+                          max={activePriceRange.max}
+                          value={activePriceRange.min}
+                          onChange={(e) => {
+                            const newMin = parseInt(e.target.value) || priceRange.min
+                            if (newMin <= activePriceRange.max && newMin >= priceRange.min) {
+                              setActivePriceRange(prev => ({ ...prev, min: newMin }))
+                            }
+                          }}
+                          className="w-full px-3 py-2 border rounded-md text-sm"
+                          placeholder="Мин."
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          min={activePriceRange.min}
+                          max={priceRange.max}
+                          value={activePriceRange.max}
+                          onChange={(e) => {
+                            const newMax = parseInt(e.target.value) || priceRange.max
+                            if (newMax >= activePriceRange.min && newMax <= priceRange.max) {
+                              setActivePriceRange(prev => ({ ...prev, max: newMax }))
+                            }
+                          }}
+                          className="w-full px-3 py-2 border rounded-md text-sm"
+                          placeholder="Макс."
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Reset All Filters */}
+                {(selectedCategory !== 'all' || activePriceRange.min !== priceRange.min || activePriceRange.max !== priceRange.max || searchQuery) && (
+                  <div className="pt-3 border-t">
+                    <button
+                      onClick={handleResetFilters}
+                      className="w-full px-4 py-2 text-sm text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 flex items-center justify-center gap-2"
+                    >
+                      <X size={16} />
+                      Изчисти всички филтри
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Active Filters Summary */}
+            {!showFilters && (selectedCategory !== 'all' || activePriceRange.min !== priceRange.min || activePriceRange.max !== priceRange.max) && (
+              <div className="flex flex-wrap gap-2 items-center text-sm">
+                <span className="text-gray-600">Активни филтри:</span>
+                {selectedCategory !== 'all' && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-green text-white rounded-full">
+                    {categories.find(c => c.value === selectedCategory)?.label}
+                    <button
+                      onClick={() => setSelectedCategory('all')}
+                      className="hover:bg-green-600 rounded-full p-0.5"
+                    >
+                      <X size={14} />
+                    </button>
+                  </span>
+                )}
+                {(activePriceRange.min !== priceRange.min || activePriceRange.max !== priceRange.max) && (
+                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-green text-white rounded-full">
+                    {activePriceRange.min} - {activePriceRange.max} лв
+                    <button
+                      onClick={() => setActivePriceRange(priceRange)}
+                      className="hover:bg-green-600 rounded-full p-0.5"
+                    >
+                      <X size={14} />
+                    </button>
+                  </span>
+                )}
+              </div>
+            )}
           </div>
-
-          {/* Mobile Categories */}
-          {showFilters && (
-            <div className="md:hidden mt-4 flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category.value}
-                  onClick={() => {
-                    setSelectedCategory(category.value)
-                    setShowFilters(false)
-                  }}
-                  className={`px-4 py-2 rounded-full border-2 transition-colors ${
-                    selectedCategory === category.value
-                      ? 'bg-brand-green border-brand-green text-white'
-                      : 'border-brand-green text-brand-green hover:bg-brand-green hover:text-white'
-                  }`}
-                >
-                  {category.label}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </section>
 
