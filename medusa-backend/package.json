@@ -26,7 +26,9 @@
     "@medusajs/cli": "2.11.1",
     "@medusajs/framework": "2.11.1",
     "@medusajs/medusa": "2.11.1",
-    "@medusajs/medusa-js": "^6.1.10"
+    "@medusajs/medusa-js": "^6.1.10",
+    "node-fetch": "^3.3.2",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.11.1",
