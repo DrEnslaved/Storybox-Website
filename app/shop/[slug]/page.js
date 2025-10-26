@@ -95,24 +95,14 @@ export default function ProductDetailPage() {
     setAddingToCart(true)
     
     try {
-      // Create product object for cart
-      const cartProduct = {
-        id: selectedVariant.id,
-        variant_id: selectedVariant.id,
-        title: product.title,
-        description: product.description,
-        thumbnail: product.thumbnail || product.image,
-        price: selectedVariant.price || getCurrentPrice(),
-        variant_title: selectedVariant.title
-      }
-      
-      const result = await addToCart(cartProduct, quantity)
+      // Medusa cart expects just variant_id and quantity
+      const result = await addToCart(selectedVariant.id, quantity)
       
       if (result.success) {
         setAddedToCart(true)
         setTimeout(() => setAddedToCart(false), 3000)
       } else {
-        alert('Грешка при добавяне в количката: ' + (result.message || 'Моля опитайте отново'))
+        alert('Грешка при добавяне в количката: ' + (result.error || 'Моля опитайте отново'))
       }
     } catch (error) {
       console.error('Error adding to cart:', error)
