@@ -46,35 +46,55 @@ export default function CheckoutPage() {
       return
     }
 
+    // Validate shipping address
+    if (!shippingAddress.fullName || !shippingAddress.phone || !shippingAddress.address || 
+        !shippingAddress.city || !shippingAddress.postalCode) {
+      setError('Моля, попълнете всички задължителни полета')
+      return
+    }
+
     setIsProcessing(true)
 
     try {
+      // Split fullName into first and last name
+      const nameParts = shippingAddress.fullName.trim().split(' ')
+      const firstName = nameParts[0] || ''
+      const lastName = nameParts.slice(1).join(' ') || nameParts[0]
+
       const response = await fetch('/api/orders/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          items: cart.items,
-          total: cart.total || getTotal(),
-          shippingAddress,
+          cartId: cart.id,
+          email: user.email,
+          customerName: shippingAddress.fullName,
+          shippingAddress: {
+            firstName,
+            lastName,
+            phone: shippingAddress.phone,
+            address: shippingAddress.address,
+            city: shippingAddress.city,
+            postalCode: shippingAddress.postalCode,
+          },
           notes: shippingAddress.notes
         }),
       })
 
       if (response.ok) {
         const data = await response.json()
-        // Navigate first, then clear cart
+        // Clear cart immediately after successful order
+        await clearCart()
+        // Navigate to order confirmation
         router.push(`/order-confirmation/${data.orderId}`)
-        // Clear cart after a short delay to ensure navigation completes
-        setTimeout(() => clearCart(), 1000)
       } else {
         const error = await response.json()
-        setError(error.error || 'Грешка при поръчката')
+        setError(error.error || 'Грешка при поръчката. Моля опитайте отново.')
       }
     } catch (error) {
       console.error('Checkout error:', error)
-      setError('Грешка при обработка на поръчката')
+      setError('Грешка при обработка на поръчката. Моля опитайте отново.')
     } finally {
       setIsProcessing(false)
     }
