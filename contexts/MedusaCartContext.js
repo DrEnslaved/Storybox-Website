@@ -165,7 +165,7 @@ export function CartProvider({ children }) {
     if (!cartId) return
 
     try {
-      const response = await fetch(`/api/medusa/cart/${cartId}`)
+      const response = await fetch(`/api/cart/${cartId}`)
       if (response.ok) {
         const data = await response.json()
         setCart(data.cart)
