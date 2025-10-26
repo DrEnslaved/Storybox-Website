@@ -88,17 +88,28 @@ export default function ProductDetailPage() {
     setAddingToCart(true)
     
     try {
-      const result = await addToCart(selectedVariant.id, quantity)
+      // Create product object for cart
+      const cartProduct = {
+        id: selectedVariant.id,
+        variant_id: selectedVariant.id,
+        title: product.title,
+        description: product.description,
+        thumbnail: product.thumbnail || product.image,
+        price: selectedVariant.price || getCurrentPrice(),
+        variant_title: selectedVariant.title
+      }
+      
+      const result = await addToCart(cartProduct, quantity)
       
       if (result.success) {
         setAddedToCart(true)
         setTimeout(() => setAddedToCart(false), 3000)
       } else {
-        alert('Failed to add to cart: ' + result.error)
+        alert('Грешка при добавяне в количката: ' + (result.message || 'Моля опитайте отново'))
       }
     } catch (error) {
       console.error('Error adding to cart:', error)
-      alert('Failed to add to cart')
+      alert('Грешка при добавяне в количката')
     } finally {
       setAddingToCart(false)
     }
