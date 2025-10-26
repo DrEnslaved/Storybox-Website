@@ -205,7 +205,7 @@ export default function ShopPage() {
                     </div>
                   </Link>
                   
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col h-full">
                     <div className="mb-2">
                       <span className="inline-block bg-brand-green text-white text-xs px-2 py-1 rounded">
                         {product.categoryName}
@@ -218,7 +218,7 @@ export default function ShopPage() {
                       </h3>
                     </Link>
                     
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                    <p className="text-gray-600 text-sm mb-4 line-clamp-2 flex-grow">
                       {product.description?.replace(/<[^>]*>/g, '') || 'Персонализирани продукти за вашия бизнес'}
                     </p>
                     
@@ -231,26 +231,45 @@ export default function ShopPage() {
                       </div>
                     )}
                     
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-                      <div>
-                        <div className="text-2xl font-bold text-brand-green">
-                          {product.price?.toFixed(2) || '0.00'} лв
-                        </div>
-                        {product.inventory?.minQuantity > 1 && (
-                          <div className="text-xs text-gray-500">
-                            Мин. {product.inventory.minQuantity} бр.
+                    {/* Price and Button - Always at bottom */}
+                    <div className="mt-auto">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <div className="text-2xl font-bold text-brand-green">
+                            {getProductPrice(product)?.toFixed(2) || '0.00'} лв
                           </div>
-                        )}
+                          {product.inventory?.minQuantity > 1 && (
+                            <div className="text-xs text-gray-500">
+                              Мин. {product.inventory.minQuantity} бр.
+                            </div>
+                          )}
+                        </div>
                       </div>
                       
                       <Link
                         href={`/shop/${product.slug}`}
-                        className="w-full sm:w-auto bg-brand-green hover:bg-brand-green-dark text-white px-4 py-2 rounded-md font-semibold transition-colors text-center flex items-center justify-center gap-2"
+                        className={`w-full block text-center px-4 py-3 rounded-md font-semibold transition-colors ${
+                          product.inventory?.status === 'backorder'
+                            ? 'bg-orange-500 hover:bg-orange-600 text-white'
+                            : product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder
+                            ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            : 'bg-brand-green hover:bg-brand-green-dark text-white'
+                        }`}
                         aria-label={`Виж ${product.name}`}
                       >
-                        <ShoppingCart size={16} />
-                        <span className="hidden sm:inline">Виж</span>
-                        <span className="sm:hidden">Детайли</span>
+                        {product.inventory?.status === 'backorder' ? (
+                          <span className="flex items-center justify-center gap-2">
+                            <ShoppingCart size={18} />
+                            Заявка за поръчка
+                          </span>
+                        ) : product.inventory?.status === 'out_of_stock' && !product.inventory?.allowBackorder ? (
+                          'Изчерпан'
+                        ) : (
+                          <span className="flex items-center justify-center gap-2">
+                            <ShoppingCart size={18} />
+                            Виж детайли
+                          </span>
+                        )}
                       </Link>
                     </div>
                   </div>
