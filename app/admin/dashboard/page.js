@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Users, ShoppingBag, FileText, TrendingUp, LogOut, ExternalLink } from 'lucide-react'
+import { Users, ShoppingBag, FileText, TrendingUp, LogOut, ExternalLink, Package } from 'lucide-react'
 
 export default function AdminDashboard() {
   const router = useRouter()
