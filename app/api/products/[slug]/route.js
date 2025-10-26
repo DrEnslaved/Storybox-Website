@@ -18,13 +18,18 @@ export async function GET(request, { params }) {
     })
 
     if (!response.ok) {
+      console.error('Medusa API error for product detail:', response.status)
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
 
     const data = await response.json()
+    console.log(`Found ${data.products?.length || 0} products, searching for slug: ${slug}`)
+    
     const medusaProduct = data.products?.find(p => p.handle === slug)
 
     if (!medusaProduct) {
+      console.error(`Product not found with slug: ${slug}`)
+      console.log('Available handles:', data.products?.map(p => p.handle))
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
 
