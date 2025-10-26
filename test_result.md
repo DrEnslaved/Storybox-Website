@@ -288,15 +288,15 @@ frontend:
 
   - task: "Price Display Bug Testing"
     implemented: true
-    working: "NA"
+    working: false
     file: "/app/app/shop/page.js, /app/app/shop/[slug]/page.js"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
-      - working: "NA"
+      - working: false
         agent: "testing"
-        comment: "Need to verify all products show correct prices (not 0.00 лв) in shop grid, product detail, cart, and getProductPrice() function works with both priceTiers and direct price field."
+        comment: "❌ CRITICAL BUG CONFIRMED: Price display issue found in shop page. Out of 2 products tested, 1 product shows 0.00 лв price while 1 shows valid price. This indicates the getProductPrice() function has issues with either priceTiers or direct price field handling. Admin products page shows correct prices (50.00 лв, 5.00 лв) but shop frontend displays one as 0.00 лв. This is a critical bug affecting customer experience."
 
   - task: "Backorder Functionality Testing"
     implemented: true
