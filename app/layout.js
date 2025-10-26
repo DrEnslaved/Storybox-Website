@@ -356,7 +356,7 @@ export default function RootLayout({ children }) {
               </main>
               <Footer />
               <CookieConsentBanner />
-            </MedusaCartProvider>
+            </CartProvider>
           </AuthProvider>
         </AnalyticsProvider>
       </body>
