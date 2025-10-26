@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useCart } from '@/contexts/MedusaCartContext'
+import { useCart } from '@/contexts/SimpleCartContext'
 import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Loader2 } from 'lucide-react'
 
 export default function CartPage() {
