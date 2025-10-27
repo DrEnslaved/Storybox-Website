@@ -28,11 +28,9 @@ next-env.d.ts
 # Production builds
 /build
 dist/
+dist
 
-# Environment files - NEVER commit these
-*.env
-*.env.*
-!.env.example
+# Environment files (comprehensive coverage)
 *token.json*
 *credentials.json*
 
@@ -49,7 +47,7 @@ dump.rdb
 
 # Python
 __pycache__/
-*.pyc
+*pyc*
 venv/
 .venv/
 
@@ -64,8 +62,6 @@ chainlit.md
 
 # Data and databases
 agenthub/agents/youtube/db
-*.db
-*.sqlite
 
 # Archive files and large assets
 **/*.zip
@@ -80,6 +76,70 @@ agenthub/agents/youtube/db
 .cache/
 
 # Mobile development
-android-sdk/
-node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
+android-sdk/ node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
+node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
+-e 
+# Environment files
+*.env
+*.env.*
