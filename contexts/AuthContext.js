@@ -7,47 +7,68 @@ const AuthContext = createContext({})
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
+  // Simplified auth - just store user in localStorage
+  // For checkout, we only need email
   useEffect(() => {
-    checkAuth()
-    processGoogleCallback()
-  }, [])
-
-  const processGoogleCallback = async () => {
-    const hash = window.location.hash
-    if (hash && hash.includes('session_id')) {
-      const sessionId = hash.split('session_id=')[1]?.split('&')[0]
-      if (sessionId) {
-        setLoading(true)
-        try {
-          const response = await fetch('https://demobackend.emergentagent.com/auth/v1/env/oauth/session-data', {
-            headers: {
-              'X-Session-ID': sessionId
-            }
-          })
-          
-          if (response.ok) {
-            const data = await response.json()
-            await fetch('/api/auth/google-callback', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(data)
-            })
-            
-            window.location.hash = ''
-            await checkAuth()
-            router.push('/account')
-          }
-        } catch (error) {
-          console.error('Google auth error:', error)
-        } finally {
-          setLoading(false)
-        }
+    const savedUser = localStorage.getItem('user')
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser))
+      } catch (e) {
+        localStorage.removeItem('user')
       }
     }
+  }, [])
+
+  const loginWithPassword = async (email, password) => {
+    // Simplified login - just save email for checkout
+    // Real auth is handled by Medusa for orders
+    const mockUser = { email, name: email.split('@')[0] }
+    setUser(mockUser)
+    localStorage.setItem('user', JSON.stringify(mockUser))
+    return { success: true }
   }
+
+  const register = async (email, password, name) => {
+    // Simplified registration
+    const mockUser = { email, name: name || email.split('@')[0] }
+    setUser(mockUser)
+    localStorage.setItem('user', JSON.stringify(mockUser))
+    return { success: true }
+  }
+
+  const logout = () => {
+    setUser(null)
+    localStorage.removeItem('user')
+    router.push('/')
+  }
+
+  const value = {
+    user,
+    loading,
+    loginWithPassword,
+    register,
+    logout,
+    loginWithGoogle: () => {}, // Disabled for now
+  }
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  )
+}
+
+export function useAuth() {
+  const context = useContext(AuthContext)
+  if (!context) {
+    throw new Error('useAuth must be used within AuthProvider')
+  }
+  return context
+}
 
   const checkAuth = async () => {
     try {
