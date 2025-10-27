@@ -6,26 +6,31 @@ export async function GET(request) {
     const MEDUSA_BACKEND_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
     const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
     
-    // Fetch products from Medusa store API with region context
-    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products?region_id=reg_01K8H69A87F81C7HE74RZENY8S`, {
+    if (!PUBLISHABLE_KEY) {
+      console.error('Missing NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY')
+      return NextResponse.json({ 
+        error: 'Configuration error',
+        message: 'Publishable key is required' 
+      }, { status: 500 })
+    }
+    
+    // Fetch products from Medusa store API (region resolved automatically by Medusa based on currency)
+    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...(PUBLISHABLE_KEY && { 'x-publishable-api-key': PUBLISHABLE_KEY }),
+        'x-publishable-api-key': PUBLISHABLE_KEY,
       },
       cache: 'no-store', // Disable caching for fresh data
     })
 
     if (!response.ok) {
-      console.error('Medusa API error:', response.status, response.statusText)
       const errorText = await response.text()
-      console.error('Error details:', errorText)
+      console.error('Medusa API error:', response.status, response.statusText, errorText)
       return NextResponse.json({ 
-        products: [],
-        source: 'medusa',
-        error: 'Failed to fetch from Medusa',
+        error: 'Failed to fetch products',
         details: errorText
-      }, { status: 200 }) // Return empty array instead of error
+      }, { status: response.status })
     }
 
     const data = await response.json()
@@ -89,9 +94,8 @@ export async function GET(request) {
   } catch (error) {
     console.error('Error fetching products from Medusa:', error)
     return NextResponse.json({ 
-      products: [],
-      source: 'medusa',
-      error: error.message
-    }, { status: 200 }) // Return empty array instead of error
+      error: 'Failed to fetch products',
+      message: error.message
+    }, { status: 500 })
   }
 }
