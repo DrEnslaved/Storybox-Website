@@ -7,29 +7,35 @@ export async function GET(request, { params }) {
     const MEDUSA_BACKEND_URL = process.env.MEDUSA_BACKEND_URL || 'http://localhost:9000'
     const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
     
-    // Fetch all products and find by handle (slug)
-    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products?region_id=reg_01K8H69A87F81C7HE74RZENY8S`, {
+    if (!PUBLISHABLE_KEY) {
+      console.error('Missing NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY')
+      return NextResponse.json({ error: 'Configuration error' }, { status: 500 })
+    }
+    
+    // Fetch product directly by handle (slug) with query parameter
+    const response = await fetch(`${MEDUSA_BACKEND_URL}/store/products?handle=${slug}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        ...(PUBLISHABLE_KEY && { 'x-publishable-api-key': PUBLISHABLE_KEY }),
+        'x-publishable-api-key': PUBLISHABLE_KEY,
       },
       cache: 'no-store',
     })
 
     if (!response.ok) {
-      console.error('Medusa API error for product detail:', response.status)
-      return NextResponse.json({ error: 'Product not found' }, { status: 404 })
+      const errorText = await response.text()
+      console.error('Medusa API error for product detail:', response.status, errorText)
+      return NextResponse.json({ 
+        error: 'Product not found',
+        details: errorText 
+      }, { status: response.status })
     }
 
     const data = await response.json()
-    console.log(`Found ${data.products?.length || 0} products, searching for slug: ${slug}`)
-    
-    const medusaProduct = data.products?.find(p => p.handle === slug)
+    const medusaProduct = data.products?.[0]
 
     if (!medusaProduct) {
       console.error(`Product not found with slug: ${slug}`)
-      console.log('Available handles:', data.products?.map(p => p.handle))
       return NextResponse.json({ error: 'Product not found' }, { status: 404 })
     }
 
@@ -84,6 +90,9 @@ export async function GET(request, { params }) {
     })
   } catch (error) {
     console.error('Error fetching product:', error)
-    return NextResponse.json({ error: 'Failed to fetch product' }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Failed to fetch product',
+      message: error.message 
+    }, { status: 500 })
   }
 }
