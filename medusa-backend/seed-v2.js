@@ -2,7 +2,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 
 const MEDUSA_URL = 'http://localhost:9000';
 const ADMIN_EMAIL = 'admin@storybox.bg';
-const ADMIN_PASSWORD = 'admin123456';
+const ADMIN_PASSWORD = 'StoryBox2025_lcNccnQnCssbHF9d';
 
 async function seedData() {
   try {
