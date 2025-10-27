@@ -296,55 +296,60 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
-                    Адрес *
-                  </label>
-                  <input
-                    type="text"
-                    id="address"
-                    name="address"
-                    value={shippingAddress.address}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="ул. ..., № ..."
-                    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                  />
-                </div>
+                {/* Show address fields only for courier delivery */}
+                {deliveryMethod === 'courier' && (
+                  <>
+                    <div>
+                      <label htmlFor="address" className="block text-sm font-medium text-gray-700 mb-2">
+                        Адрес *
+                      </label>
+                      <input
+                        type="text"
+                        id="address"
+                        name="address"
+                        value={shippingAddress.address}
+                        onChange={handleInputChange}
+                        required={deliveryMethod === 'courier'}
+                        placeholder="ул. ..., № ..."
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      />
+                    </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
-                      Град *
-                    </label>
-                    <input
-                      type="text"
-                      id="city"
-                      name="city"
-                      value={shippingAddress.city}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="София"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                    />
-                  </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-2">
+                          Град *
+                        </label>
+                        <input
+                          type="text"
+                          id="city"
+                          name="city"
+                          value={shippingAddress.city}
+                          onChange={handleInputChange}
+                          required={deliveryMethod === 'courier'}
+                          placeholder="София"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                        />
+                      </div>
 
-                  <div>
-                    <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-2">
-                      Пощенски код *
-                    </label>
-                    <input
-                      type="text"
-                      id="postalCode"
-                      name="postalCode"
-                      value={shippingAddress.postalCode}
-                      onChange={handleInputChange}
-                      required
-                      placeholder="1000"
-                      className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                    />
-                  </div>
-                </div>
+                      <div>
+                        <label htmlFor="postalCode" className="block text-sm font-medium text-gray-700 mb-2">
+                          Пощенски код *
+                        </label>
+                        <input
+                          type="text"
+                          id="postalCode"
+                          name="postalCode"
+                          value={shippingAddress.postalCode}
+                          onChange={handleInputChange}
+                          required={deliveryMethod === 'courier'}
+                          placeholder="1000"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
 
                 <div>
                   <label htmlFor="notes" className="block text-sm font-medium text-gray-700 mb-2">
