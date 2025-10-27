@@ -1,4 +1,4 @@
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
 const MEDUSA_URL = 'http://localhost:9000';
 const ADMIN_EMAIL = 'admin@storybox.bg';
