@@ -6,13 +6,35 @@ const PUBLISHABLE_KEY = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
 // Create a new cart
 export async function POST(request) {
   try {
-    let body = {}
-    try {
-      body = await request.json()
-    } catch (e) {
-      // No body sent, use defaults
+    if (!PUBLISHABLE_KEY) {
+      console.error('Missing NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY')
+      return NextResponse.json({ 
+        error: 'Configuration error',
+        message: 'Publishable key is required'
+      }, { status: 500 })
     }
-    const { region_id = 'reg_01K8H69A87F81C7HE74RZENY8S' } = body
+
+    // Get Bulgaria region dynamically
+    const regionsRes = await fetch(`${MEDUSA_BACKEND_URL}/store/regions`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-publishable-api-key': PUBLISHABLE_KEY,
+      }
+    })
+
+    let region_id
+    if (regionsRes.ok) {
+      const regionsData = await regionsRes.json()
+      const bgRegion = regionsData.regions?.find(r => r.currency_code === 'bgn')
+      region_id = bgRegion?.id || regionsData.regions?.[0]?.id
+    }
+
+    if (!region_id) {
+      return NextResponse.json({ 
+        error: 'No region found',
+        message: 'Please create a region in Medusa admin'
+      }, { status: 500 })
+    }
 
     const response = await fetch(`${MEDUSA_BACKEND_URL}/store/carts`, {
       method: 'POST',
@@ -24,15 +46,18 @@ export async function POST(request) {
     })
 
     if (!response.ok) {
-      const error = await response.text()
-      console.error('Failed to create cart:', error)
-      return NextResponse.json({ error: 'Failed to create cart' }, { status: 500 })
+      const errorData = await response.json().catch(() => ({ error: 'Unknown error' }))
+      console.error('Failed to create cart:', response.status, errorData)
+      return NextResponse.json(errorData, { status: response.status })
     }
 
     const data = await response.json()
     return NextResponse.json({ cart: data.cart })
   } catch (error) {
     console.error('Error creating cart:', error)
-    return NextResponse.json({ error: error.message }, { status: 500 })
+    return NextResponse.json({ 
+      error: 'Failed to create cart',
+      message: error.message 
+    }, { status: 500 })
   }
 }
