@@ -334,7 +334,7 @@ yarn test:e2e:ui       # Playwright UI
 
 ### Current Environment
 - **Platform:** Kubernetes
-- **URL:** https://storybox-blog.preview.emergentagent.com
+- **URL:** https://postgres-cart-flow.preview.emergentagent.com
 - **Status:** ✅ Live and operational
 
 ### CI/CD Pipeline

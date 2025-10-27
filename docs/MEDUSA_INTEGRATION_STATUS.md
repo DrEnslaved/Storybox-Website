@@ -56,7 +56,7 @@ Added to `/app/medusa-backend/.env`:
 ```
 DATABASE_URL=postgres://medusa_user:medusa_password@localhost:5432/medusa_db
 REDIS_URL=redis://localhost:6379
-STORE_CORS=http://localhost:3000,https://storybox-blog.preview.emergentagent.com
+STORE_CORS=http://localhost:3000,https://postgres-cart-flow.preview.emergentagent.com
 ADMIN_CORS=http://localhost:7001,http://localhost:9000
 JWT_SECRET=storybox_medusa_secret_key_2025
 COOKIE_SECRET=storybox_cookie_secret_2025

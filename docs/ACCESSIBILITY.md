@@ -129,10 +129,10 @@ Target: **WCAG 2.1 Level AA Compliance**
 ### Automated Testing
 ```bash
 # Run axe-core accessibility tests
-npx @axe-core/cli https://storybox-blog.preview.emergentagent.com
+npx @axe-core/cli https://postgres-cart-flow.preview.emergentagent.com
 
 # Pa11y accessibility scanner
-npx pa11y https://storybox-blog.preview.emergentagent.com
+npx pa11y https://postgres-cart-flow.preview.emergentagent.com
 ```
 
 ### Manual Testing

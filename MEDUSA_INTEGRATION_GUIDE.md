@@ -106,7 +106,7 @@ Legacy endpoint, maintained for backwards compatibility.
 ```env
 MONGO_URL=mongodb://localhost:27017
 DB_NAME=your_database_name
-NEXT_PUBLIC_BASE_URL=https://storybox-blog.preview.emergentagent.com
+NEXT_PUBLIC_BASE_URL=https://postgres-cart-flow.preview.emergentagent.com
 CORS_ORIGINS=*
 
 # Medusa Configuration
