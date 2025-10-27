@@ -184,9 +184,82 @@ export default function CheckoutPage() {
           {/* Shipping Form */}
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 md:p-8">
+              {/* Delivery Method Selection */}
+              <div className="mb-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Метод на доставка</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Courier Option */}
+                  <button
+                    type="button"
+                    onClick={() => setDeliveryMethod('courier')}
+                    className={`relative p-6 border-2 rounded-lg transition-all ${
+                      deliveryMethod === 'courier'
+                        ? 'border-brand-green bg-green-50'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <Truck className={deliveryMethod === 'courier' ? 'text-brand-green' : 'text-gray-400'} size={32} />
+                      <div className="flex-1 text-left">
+                        <h3 className="font-bold text-lg mb-1">Куриер</h3>
+                        <p className="text-sm text-gray-600">Доставка до адрес</p>
+                        <p className="text-sm text-gray-500 mt-2">2-3 работни дни</p>
+                      </div>
+                    </div>
+                    {deliveryMethod === 'courier' && (
+                      <div className="absolute top-3 right-3 bg-brand-green text-white rounded-full p-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+
+                  {/* Pickup Option */}
+                  <button
+                    type="button"
+                    onClick={() => setDeliveryMethod('pickup')}
+                    className={`relative p-6 border-2 rounded-lg transition-all ${
+                      deliveryMethod === 'pickup'
+                        ? 'border-brand-green bg-green-50'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                  >
+                    <div className="flex items-start gap-4">
+                      <Home className={deliveryMethod === 'pickup' ? 'text-brand-green' : 'text-gray-400'} size={32} />
+                      <div className="flex-1 text-left">
+                        <h3 className="font-bold text-lg mb-1">Вдигане</h3>
+                        <p className="text-sm text-gray-600">От офис</p>
+                        <p className="text-sm text-gray-500 mt-2">Безплатно</p>
+                      </div>
+                    </div>
+                    {deliveryMethod === 'pickup' && (
+                      <div className="absolute top-3 right-3 bg-brand-green text-white rounded-full p-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                  </button>
+                </div>
+
+                {/* Pickup Location Info */}
+                {deliveryMethod === 'pickup' && (
+                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 mb-2">📍 Локация за вдигане:</h4>
+                    <p className="text-sm text-gray-700"><strong>{pickupLocation.name}</strong></p>
+                    <p className="text-sm text-gray-600">{pickupLocation.address}, {pickupLocation.city} {pickupLocation.postalCode}</p>
+                    <p className="text-sm text-gray-600">Телефон: {pickupLocation.phone}</p>
+                    <p className="text-sm text-gray-500 mt-1">{pickupLocation.workingHours}</p>
+                  </div>
+                )}
+              </div>
+
               <div className="flex items-center gap-3 mb-6">
                 <MapPin className="text-brand-green" size={24} />
-                <h2 className="text-2xl font-bold text-gray-900">Адрес за доставка</h2>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  {deliveryMethod === 'courier' ? 'Адрес за доставка' : 'Информация за контакт'}
+                </h2>
               </div>
 
               <div className="space-y-6">
