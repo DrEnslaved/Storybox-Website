@@ -1,12 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCart } from '@/contexts/MedusaCartContext'
-import { CreditCard, MapPin, Package, ArrowLeft, Loader2 } from 'lucide-react'
+import { CreditCard, MapPin, Package, ArrowLeft, Loader2, Truck, Home } from 'lucide-react'
 
 export default function CheckoutPage() {
   const router = useRouter()
@@ -14,6 +14,7 @@ export default function CheckoutPage() {
   const { cart, getTotal, clearCart, loading } = useCart()
   const [isProcessing, setIsProcessing] = useState(false)
   const [error, setError] = useState('')
+  const [deliveryMethod, setDeliveryMethod] = useState('courier') // 'courier' or 'pickup'
   
   const [shippingAddress, setShippingAddress] = useState({
     fullName: user?.name || '',
@@ -22,6 +23,15 @@ export default function CheckoutPage() {
     city: '',
     postalCode: '',
     notes: ''
+  })
+
+  const [pickupLocation] = useState({
+    name: 'Storybox Централен Офис',
+    address: 'ул. Примерна 123',
+    city: 'София',
+    postalCode: '1000',
+    phone: '+359899973002',
+    workingHours: 'Понеделник-Петък: 9:00-18:00'
   })
 
   const handleInputChange = (e) => {
@@ -46,11 +56,19 @@ export default function CheckoutPage() {
       return
     }
 
-    // Validate shipping address
-    if (!shippingAddress.fullName || !shippingAddress.phone || !shippingAddress.address || 
-        !shippingAddress.city || !shippingAddress.postalCode) {
-      setError('Моля, попълнете всички задължителни полета')
-      return
+    // Validate based on delivery method
+    if (deliveryMethod === 'courier') {
+      if (!shippingAddress.fullName || !shippingAddress.phone || !shippingAddress.address || 
+          !shippingAddress.city || !shippingAddress.postalCode) {
+        setError('Моля, попълнете всички задължителни полета за адрес на доставка')
+        return
+      }
+    } else {
+      // For pickup, only phone and name are required
+      if (!shippingAddress.fullName || !shippingAddress.phone) {
+        setError('Моля, попълнете име и телефон за вдигане на поръчката')
+        return
+      }
     }
 
     setIsProcessing(true)
@@ -61,6 +79,25 @@ export default function CheckoutPage() {
       const firstName = nameParts[0] || ''
       const lastName = nameParts.slice(1).join(' ') || nameParts[0]
 
+      // Prepare address based on delivery method
+      const addressData = deliveryMethod === 'pickup' 
+        ? {
+            firstName,
+            lastName,
+            phone: shippingAddress.phone,
+            address: pickupLocation.address,
+            city: pickupLocation.city,
+            postalCode: pickupLocation.postalCode,
+          }
+        : {
+            firstName,
+            lastName,
+            phone: shippingAddress.phone,
+            address: shippingAddress.address,
+            city: shippingAddress.city,
+            postalCode: shippingAddress.postalCode,
+          }
+
       const response = await fetch('/api/orders/create', {
         method: 'POST',
         headers: {
@@ -70,15 +107,9 @@ export default function CheckoutPage() {
           cartId: cart.id,
           email: user.email,
           customerName: shippingAddress.fullName,
-          shippingAddress: {
-            firstName,
-            lastName,
-            phone: shippingAddress.phone,
-            address: shippingAddress.address,
-            city: shippingAddress.city,
-            postalCode: shippingAddress.postalCode,
-          },
-          notes: shippingAddress.notes
+          shippingAddress: addressData,
+          deliveryMethod,
+          notes: shippingAddress.notes || (deliveryMethod === 'pickup' ? 'Вдигане от офис' : '')
         }),
       })
 
